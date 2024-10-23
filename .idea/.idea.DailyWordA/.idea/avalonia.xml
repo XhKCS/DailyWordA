@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="DailyWordA/App.axaml" value="DailyWordA/DailyWordA.csproj" />
+        <entry key="DailyWordA/Views/MainView.axaml" value="DailyWordA/DailyWordA.csproj" />
+        <entry key="DailyWordA/Views/MainWindow.axaml" value="DailyWordA/DailyWordA.csproj" />
+        <entry key="DailyWordA/Views/ResultView.axaml" value="DailyWordA/DailyWordA.csproj" />
+        <entry key="DailyWordA/Views/TodayMottoView.axaml" value="DailyWordA/DailyWordA.csproj" />
+        <entry key="DailyWordA/Views/TranslateView.axaml" value="DailyWordA/DailyWordA.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

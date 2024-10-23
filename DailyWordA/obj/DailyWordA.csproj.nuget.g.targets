@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)system.text.json\8.0.4\buildTransitive\net6.0\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\8.0.4\buildTransitive\net6.0\System.Text.Json.targets')" />
+    <Import Project="$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net7.0\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.1.2\buildTransitive\net7.0\SQLitePCLRaw.lib.e_sqlite3.targets')" />
+    <Import Project="$(NuGetPackageRoot)skiasharp.nativeassets.webassembly\2.88.8\buildTransitive\netstandard1.0\SkiaSharp.NativeAssets.WebAssembly.targets" Condition="Exists('$(NuGetPackageRoot)skiasharp.nativeassets.webassembly\2.88.8\buildTransitive\netstandard1.0\SkiaSharp.NativeAssets.WebAssembly.targets')" />
+    <Import Project="$(NuGetPackageRoot)avalonia.buildservices\0.0.29\buildTransitive\Avalonia.BuildServices.targets" Condition="Exists('$(NuGetPackageRoot)avalonia.buildservices\0.0.29\buildTransitive\Avalonia.BuildServices.targets')" />
+    <Import Project="$(NuGetPackageRoot)avalonia\11.1.4\buildTransitive\Avalonia.targets" Condition="Exists('$(NuGetPackageRoot)avalonia\11.1.4\buildTransitive\Avalonia.targets')" />
+    <Import Project="$(NuGetPackageRoot)harfbuzzsharp.nativeassets.webassembly\7.3.0.2\buildTransitive\netstandard1.0\HarfBuzzSharp.NativeAssets.WebAssembly.targets" Condition="Exists('$(NuGetPackageRoot)harfbuzzsharp.nativeassets.webassembly\7.3.0.2\buildTransitive\netstandard1.0\HarfBuzzSharp.NativeAssets.WebAssembly.targets')" />
+    <Import Project="$(NuGetPackageRoot)communitytoolkit.mvvm\8.3.2\buildTransitive\CommunityToolkit.Mvvm.targets" Condition="Exists('$(NuGetPackageRoot)communitytoolkit.mvvm\8.3.2\buildTransitive\CommunityToolkit.Mvvm.targets')" />
+  </ImportGroup>
+</Project>

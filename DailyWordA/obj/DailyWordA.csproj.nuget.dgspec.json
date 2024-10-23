@@ -1,0 +1,208 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\RiderProjects\\DailyWordA\\DailyWordA\\DailyWordA.csproj": {}
+  },
+  "projects": {
+    "D:\\RiderProjects\\DailyWordA\\DailyWordA.Library\\DailyWordA.Library.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\RiderProjects\\DailyWordA\\DailyWordA.Library\\DailyWordA.Library.csproj",
+        "projectName": "DailyWordA.Library",
+        "projectPath": "D:\\RiderProjects\\DailyWordA\\DailyWordA.Library\\DailyWordA.Library.csproj",
+        "packagesPath": "C:\\Users\\86135\\.nuget\\packages\\",
+        "outputPath": "D:\\RiderProjects\\DailyWordA\\DailyWordA.Library\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\86135\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://www.nuget.org/api/v2/": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AvaloniaInfiniteScrolling.Collection": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.3.2, )"
+            },
+            "sqlite-net-pcl": {
+              "target": "Package",
+              "version": "[1.9.172, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\RiderProjects\\DailyWordA\\DailyWordA\\DailyWordA.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\RiderProjects\\DailyWordA\\DailyWordA\\DailyWordA.csproj",
+        "projectName": "DailyWordA",
+        "projectPath": "D:\\RiderProjects\\DailyWordA\\DailyWordA\\DailyWordA.csproj",
+        "packagesPath": "C:\\Users\\86135\\.nuget\\packages\\",
+        "outputPath": "D:\\RiderProjects\\DailyWordA\\DailyWordA\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\86135\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://www.nuget.org/api/v2/": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\RiderProjects\\DailyWordA\\DailyWordA.Library\\DailyWordA.Library.csproj": {
+                "projectPath": "D:\\RiderProjects\\DailyWordA\\DailyWordA.Library\\DailyWordA.Library.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Avalonia": {
+              "target": "Package",
+              "version": "[11.1.4, )"
+            },
+            "Avalonia.Desktop": {
+              "target": "Package",
+              "version": "[11.1.4, )"
+            },
+            "Avalonia.Diagnostics": {
+              "target": "Package",
+              "version": "[11.1.4, )"
+            },
+            "Avalonia.Fonts.Inter": {
+              "target": "Package",
+              "version": "[11.1.4, )"
+            },
+            "Avalonia.Themes.Fluent": {
+              "target": "Package",
+              "version": "[11.1.4, )"
+            },
+            "Avalonia.Xaml.Behaviors": {
+              "target": "Package",
+              "version": "[11.1.0.4, )"
+            },
+            "AvaloniaInfiniteScrolling.Control": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.3.2, )"
+            },
+            "Irihi.Ursa": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "Irihi.Ursa.Themes.Semi": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Projektanker.Icons.Avalonia.FontAwesome": {
+              "target": "Package",
+              "version": "[9.4.1, )"
+            },
+            "Semi.Avalonia": {
+              "target": "Package",
+              "version": "[11.1.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

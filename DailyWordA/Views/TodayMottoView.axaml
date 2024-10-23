@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.TodayMottoView"
+             DataContext="{Binding TodayMottoViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding OnInitializedCommand}"></ia:InvokeCommandAction>
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
+    <Grid Background="LightPink">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Background="#66000000"
+                    VerticalAlignment="Bottom">
+            <StackPanel Margin="8">
+                <Label FontSize="24"
+                       Foreground="White"
+                       Margin="0,0,0,8"
+                       Content="{Binding TodayMotto.Content}" />
+                <StackPanel x:Name="DetailStackLayout">
+                    <Label FontSize="18"
+                           Foreground="White"
+                           Margin="0,0,8,8"
+                           Content="{Binding TodayMotto.Date}"
+                           VerticalAlignment="Center" />
+                    <Label FontSize="18"
+                           Foreground="White"
+                           Margin="0,0,8,8"
+                           Content="{Binding TodayMotto.Translation}"
+                           VerticalAlignment="Center" />
+                    <Button HorizontalAlignment="Left"
+                            Margin="0,0,0,8"
+                            Content="查看详细"
+                            Command="{Binding ShowDetailCommand}"
+                            VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="5"
+                        HorizontalAlignment="Right">
+                <Button Command="{Binding NavigateToResultViewCommand}" 
+                        Content="今日单词推荐" 
+                        Foreground="Black"  />
+            </StackPanel>
+
+            <StackPanel Background="#66000000">
+                <Label Foreground="White"
+                       Margin="8"
+                       FontSize="12"
+                       Content="{Binding TodayImage.Copyright}">
+                </Label>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

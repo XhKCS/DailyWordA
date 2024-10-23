@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyWordA", "DailyWordA\DailyWordA.csproj", "{7CD8EC72-253F-44EF-9FB9-A8ECAB0DF7A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyWordA.Library", "DailyWordA.Library\DailyWordA.Library.csproj", "{7330F206-01D1-4301-98ED-2C93FB850B3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CD8EC72-253F-44EF-9FB9-A8ECAB0DF7A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD8EC72-253F-44EF-9FB9-A8ECAB0DF7A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD8EC72-253F-44EF-9FB9-A8ECAB0DF7A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD8EC72-253F-44EF-9FB9-A8ECAB0DF7A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7330F206-01D1-4301-98ED-2C93FB850B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7330F206-01D1-4301-98ED-2C93FB850B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7330F206-01D1-4301-98ED-2C93FB850B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7330F206-01D1-4301-98ED-2C93FB850B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

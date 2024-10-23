@@ -1,0 +1,130 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="https://github.com/projektanker/icons.avalonia"
+             xmlns:lvm="using:DailyWordA.Library.ViewModels"
+             xmlns:lc="using:DailyWordA.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.MainView"
+             DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    
+    <UserControl.Resources>
+        <lc:CountToBoolConverter x:Key="CountToBoolConverter"></lc:CountToBoolConverter>
+    </UserControl.Resources>
+    
+    <SplitView DisplayMode="Overlay"
+               IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}">
+        <SplitView.Pane>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            Background="#3498DB"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding ClosePaneCommand}">
+                        <icon:Icon Foreground="#ffffff"
+                                   Value="fa-x">
+                        </icon:Icon>
+                    </Button>
+
+                    <Grid Grid.Column="1">
+                        <Label Foreground="#3498DB"
+                               VerticalAlignment="Center"
+                               FontSize="20"
+                               Margin="10,0,0,0"
+                               Content="每日单词，不止单词" />
+                    </Grid>
+                </Grid>
+
+                <ListBox Grid.Row="1"
+                         ItemsSource="{Binding Source={x:Static lvm:MenuItem.MenuItems}}"
+                         SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}">
+                    <Interaction.Behaviors>
+                        <EventTriggerBehavior EventName="Tapped">
+                            <InvokeCommandAction
+                                Command="{Binding OnMenuTappedCommand}">
+                            </InvokeCommandAction>
+                        </EventTriggerBehavior>
+                    </Interaction.Behaviors>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}"
+                                   FontSize="20"
+                                   Margin="50,5,0,5">
+                            </Label>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </SplitView.Pane>
+        
+        <SplitView.Content>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="0"
+                            Width="50"
+                            Height="50"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Command="{Binding OpenPaneCommand}"
+                            >
+                        <icon:Icon Foreground="#3498DB"
+                                   Value="fa-bars">
+                        </icon:Icon>
+                    </Button>
+                    <Button Grid.Column="1" 
+                           Width="50"
+                           Height="50"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                           Command="{Binding GoBackCommand}"
+                           IsVisible="True"
+                           >
+                        <icon:Icon Foreground="#3498DB"
+                                   Value="fa-arrow-left">
+                        </icon:Icon>
+                    </Button>
+                    <Grid Grid.Column="2"
+                          Background="#3498DB">
+                        <Label Foreground="#ffffff"
+                               VerticalAlignment="Center"
+                               FontSize="20"
+                               Margin="10, 0, 0, 0"
+                               Content="{Binding Title}" >
+                        </Label>
+                    </Grid>
+                </Grid>
+                
+                <ContentControl Grid.Row="1"
+                                Content="{Binding Content}">
+                </ContentControl>
+                
+                
+            </Grid>
+            
+        </SplitView.Content>
+    </SplitView>
+</UserControl>

@@ -1,0 +1,89 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:ais="using:AvaloniaInfiniteScrolling"
+             xmlns:u="https://irihi.tech/ursa"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.WordResultView"
+             DataContext="{Binding WordResultViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding OnInitializedCommand}"></ia:InvokeCommandAction>
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
+    <!-- <ais:AvaloniaInfiniteScrollControl ItemsSource="{Binding WordCollection}"> -->
+    <!--     <ais:AvaloniaInfiniteScrollControl.ItemTemplate> -->
+    <!--         <DataTemplate> -->
+    <!--             <TextBlock Text="{Binding Word}"></TextBlock> -->
+    <!--         </DataTemplate> -->
+    <!--     </ais:AvaloniaInfiniteScrollControl.ItemTemplate> -->
+    <!-- </ais:AvaloniaInfiniteScrollControl> -->
+    
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+    
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+    
+        <StackPanel Background="#66000000"
+                    VerticalAlignment="Bottom">
+            <StackPanel Margin="8">
+                <Label FontSize="28"
+                       Foreground="White"
+                       Margin="0,0,0,8"
+                       Content="{Binding TodayWord.Word}" />
+                <Label FontSize="20"
+                       Foreground="White"
+                       Margin="5,0,8,8"
+                       Content="{Binding TodayWord.Accent}"
+                       VerticalAlignment="Center" />
+                <Label FontSize="18"
+                       Foreground="White"
+                       Margin="5,0,8,8"
+                       Content="{Binding TodayWord.CnMeaning}"
+                       VerticalAlignment="Center" />
+                <StackPanel x:Name="DetailStackLayout">
+                    <Label FontSize="18"
+                           Foreground="White"
+                           Margin="0,0,8,8"
+                           Content="{Binding TodayWord.Sentence}"
+                           VerticalAlignment="Center" />
+                    <Label FontSize="18"
+                           Foreground="White"
+                           Margin="0,0,8,8"
+                           Content="{Binding TodayWord.SentenceTrans}"
+                           VerticalAlignment="Center" />
+                    <Button HorizontalAlignment="Left"
+                            Margin="0,0,0,8"
+                            Content="查看详细"
+                            Command="{Binding ShowDetailCommand}"
+                            VerticalAlignment="Center" />
+                </StackPanel>
+                
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="5"
+                        HorizontalAlignment="Right">
+                <Button Command="{Binding NavigateToTodayMottoViewCommand}" Content="今日格言推荐" />
+            </StackPanel>
+            
+            <StackPanel Background="#66000000">
+                <Label Foreground="White"
+                       Margin="8"
+                       FontSize="12"
+                       Content="{Binding TodayImage.Copyright}">
+                </Label>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

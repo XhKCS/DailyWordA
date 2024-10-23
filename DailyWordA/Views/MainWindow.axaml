@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DailyWordA.Library.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        mc:Ignorable="d" 
+        d:DesignWidth="800" 
+        d:DesignHeight="450"
+        x:Class="DailyWordA.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="DailyWordA"
+        DataContext="{Binding MainWindowViewModel, Source={StaticResource ServiceLocator}}"
+        Content="{Binding Content}"
+        >
+     
+     <i:Interaction.Behaviors>
+         <ia:EventTriggerBehavior EventName="Initialized">
+             <ia:InvokeCommandAction Command="{Binding OnInitializedCommand}"></ia:InvokeCommandAction>
+         </ia:EventTriggerBehavior>
+     </i:Interaction.Behaviors>
+    
+</Window>

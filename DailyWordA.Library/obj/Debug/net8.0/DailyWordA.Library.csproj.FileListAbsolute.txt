@@ -1,0 +1,12 @@
+D:\RiderProjects\DailyWordA\DailyWordA.Library\bin\Debug\net8.0\DailyWordA.Library.deps.json
+D:\RiderProjects\DailyWordA\DailyWordA.Library\bin\Debug\net8.0\DailyWordA.Library.dll
+D:\RiderProjects\DailyWordA\DailyWordA.Library\bin\Debug\net8.0\DailyWordA.Library.pdb
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\DailyWordA.Library.csproj.AssemblyReference.cache
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\DailyWordA.Library.GeneratedMSBuildEditorConfig.editorconfig
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\DailyWordA.Library.AssemblyInfoInputs.cache
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\DailyWordA.Library.AssemblyInfo.cs
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\DailyWordA.Library.csproj.CoreCompileInputs.cache
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\DailyWordA.Library.dll
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\refint\DailyWordA.Library.dll
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\DailyWordA.Library.pdb
+D:\RiderProjects\DailyWordA\DailyWordA.Library\obj\Debug\net8.0\ref\DailyWordA.Library.dll
