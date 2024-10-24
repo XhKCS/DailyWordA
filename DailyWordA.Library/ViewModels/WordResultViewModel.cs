@@ -15,14 +15,14 @@ public class WordResultViewModel : ViewModelBase {
     public  WordResultViewModel(IWordStorage wordStorage, IRootNavigationService rootNavigationService) {
         _wordStorage = wordStorage;
         _rootNavigationService = rootNavigationService;
-        if (_wordStorage.IsInitialized == false) {
-            // 不要使用RunSynchronously，否则似乎会一直卡住
-            Console.WriteLine("begin initializing wordStorage");
-            _wordStorage.InitializeAsync();
-        }
+        // if (_wordStorage.IsInitialized == false) {
+        //     // 不要使用RunSynchronously，否则似乎会一直卡住
+        //     Console.WriteLine("begin initializing wordStorage");
+        //     _wordStorage.InitializeAsync();
+        // }
         
         // Console.WriteLine("begin initializing wordStorage");
-        // _wordStorage.InitializeAsync();
+        _wordStorage.InitializeAsync();
         // Console.WriteLine("WordStorage initialization exited.");
         
         OnInitializedCommand = new AsyncRelayCommand(OnInitializedAsync);

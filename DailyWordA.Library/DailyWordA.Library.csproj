@@ -12,4 +12,10 @@
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Remove="wordsdb.sqlite3"/>
+        <EmbeddedResource Include="wordsdb.sqlite3">
+            <LogicalName>wordsdb.sqlite3</LogicalName>
+        </EmbeddedResource>
+    </ItemGroup>
 </Project>
