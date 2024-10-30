@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:lc="using:DailyWordA.Converters"
              xmlns:ais="using:AvaloniaInfiniteScrolling"
              xmlns:u="https://irihi.tech/ursa"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -11,6 +12,10 @@
              DataContext="{Binding WordResultViewModel, Source={StaticResource ServiceLocator}}"
              >
     
+    <UserControl.Resources>
+        <lc:ByteArrayToBitmapConverter x:Key="ByteArrayToBitmapConverter"></lc:ByteArrayToBitmapConverter>
+        <lc:NegativeConverter x:Key="NegativeConverter"></lc:NegativeConverter>
+    </UserControl.Resources>
     <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Initialized">
             <ia:InvokeCommandAction Command="{Binding OnInitializedCommand}"></ia:InvokeCommandAction>
@@ -33,10 +38,31 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        
+        <Image
+            Source="{Binding TodayImage.ImageBytes, Converter={StaticResource ByteArrayToBitmapConverter}}"
+            Stretch="UniformToFill" />
     
         <StackPanel Background="#66000000"
                     VerticalAlignment="Bottom">
-            <StackPanel Margin="8">
+            <StackPanel Margin="8"
+                        IsVisible="{Binding IsLoading}">
+                <ProgressBar Foreground="White"
+                             IsIndeterminate="{Binding IsLoading}"
+                             Width="50"
+                             Height="50"
+                             Margin="0,0,0,8"
+                             Theme="{DynamicResource ProgressRing}"
+                             ShowProgressText="False" />
+                <Label Foreground="White"
+                       Content="正在载入"
+                       HorizontalAlignment="Center" />
+            </StackPanel>
+            
+            <StackPanel Margin="8"
+                        IsVisible="{Binding IsLoading, 
+                        Converter={StaticResource NegativeConverter}}"
+                        >
                 <Label FontSize="28"
                        Foreground="White"
                        Margin="0,0,0,8"
@@ -65,7 +91,12 @@
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"
                             Content="查看详细"
-                            Command="{Binding ShowDetailCommand}"
+                            
+                            VerticalAlignment="Center" />
+                    <Button HorizontalAlignment="Left"
+                            Margin="0,0,0,8"
+                            Content="切换单词"
+                            Command="{Binding UpdateWordCommand}"
                             VerticalAlignment="Center" />
                 </StackPanel>
                 
@@ -73,7 +104,8 @@
             
             <StackPanel Orientation="Horizontal" Spacing="5"
                         HorizontalAlignment="Right">
-                <Button Command="{Binding NavigateToTodayMottoViewCommand}" Content="今日格言推荐" />
+                <Button Command="{Binding NavigateToTodayMottoViewCommand}" 
+                        Content="今日格言推荐" />
             </StackPanel>
             
             <StackPanel Background="#66000000">

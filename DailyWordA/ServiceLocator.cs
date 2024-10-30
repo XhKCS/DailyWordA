@@ -60,6 +60,8 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<IRootNavigationService, RootNavigationService>();
         serviceCollection.AddSingleton<IMenuNavigationService, MenuNavigationService>();
         serviceCollection.AddSingleton<ITranslateService, TranslateService>();
+        serviceCollection.AddSingleton<ITodayImageService, TodayImageService>();
+        serviceCollection.AddSingleton<ITodayImageStorage, TodayImageStorage>();
         
         serviceCollection.AddSingleton<MainWindowViewModel>();
         serviceCollection.AddSingleton<WordResultViewModel>();

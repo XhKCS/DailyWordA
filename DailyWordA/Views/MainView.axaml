@@ -101,7 +101,7 @@
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Stretch"
                            Command="{Binding GoBackCommand}"
-                           IsVisible="True"
+                           IsVisible="{Binding ContentStack.Count, Converter={StaticResource CountToBoolConverter}, ConverterParameter=1}"
                            >
                         <icon:Icon Foreground="#3498DB"
                                    Value="fa-arrow-left">

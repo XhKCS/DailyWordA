@@ -62,7 +62,7 @@ public class DailyMottoService : IDailyMottoService {
             return null;
         }
 
-        var mottoResult = mottoResponse.result;
+        var mottoResult = mottoResponse.Result;
         if (mottoResult == null) {
             return null;
         }
@@ -117,9 +117,7 @@ public class DailyMottoService : IDailyMottoService {
 
 // 每日英语API的返回对象类；该API优势在于同一天多次请求返回的内容并不会重复，缺点是每天限制使用50次
 public class MeiriyingyuResponse {
-    public string reason { get; set; }
-    public MeiriyingyuResult result { get; set; }
-    public int error_code { get; set; }
+    public MeiriyingyuResult Result { get; set; }
 }
 public class MeiriyingyuResult {
     public int Id { get; set; }
@@ -131,31 +129,21 @@ public class MeiriyingyuResult {
 
 // 扇贝单词API的返回对象类；该API优势在于没有限制使用次数，缺点是同一天的请求只会返回相同的结果
 public class ShanbaydanciResponse {
-    public string id { get; set; }
     public string content { get; set; }
     public string author { get; set; }
     public string assign_date { get; set; }
-    public object ad_url { get; set; }
-    public string[] share_img_urls { get; set; }
-    public string[] poster_img_urls { get; set; }
-    public Track_object track_object { get; set; }
-    public object daily_audio_urls { get; set; }
-    public string[] origin_img_urls { get; set; }
-    public string share_url { get; set; }
-    public Share_urls share_urls { get; set; }
-    public int join_num { get; set; }
     public string translation { get; set; }
 }
-public class Track_object {
-    public string code { get; set; }
-    public string share_url { get; set; }
-    public int object_id { get; set; }
-}
-public class Share_urls {
-    public string wechat { get; set; }
-    public string wechat_user { get; set; }
-    public string qzone { get; set; }
-    public string weibo { get; set; }
-    public string shanbay { get; set; }
-}
+// public class Track_object {
+//     public string code { get; set; }
+//     public string share_url { get; set; }
+//     public int object_id { get; set; }
+// }
+// public class Share_urls {
+//     public string wechat { get; set; }
+//     public string wechat_user { get; set; }
+//     public string qzone { get; set; }
+//     public string weibo { get; set; }
+//     public string shanbay { get; set; }
+// }
 

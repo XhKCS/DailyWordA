@@ -11,14 +11,17 @@ public class TranslateService : ITranslateService {
     }
     
     public async Task<string> Translate(string sourceText) {
+        Console.WriteLine("1");
         const string server = "夏柔谷歌翻译服务器";
         using var httpClient = new HttpClient();
         HttpResponseMessage response;
         try {
+            Console.WriteLine("2");
             response =
                 await httpClient.GetAsync(
                     $"https://findmyip.net/api/translate.php?text={sourceText}");
-            response.EnsureSuccessStatusCode();
+            // response.EnsureSuccessStatusCode();
+            Console.WriteLine("3");
         } catch (Exception e) {
             await _alertService.AlertAsync(
                 ErrorMessageHelper.HttpClientErrorTitle,
@@ -34,6 +37,7 @@ public class TranslateService : ITranslateService {
                 new JsonSerializerOptions {
                     PropertyNameCaseInsensitive = true
                 }) ?? throw new JsonException();
+            Console.WriteLine("4");
         } catch (Exception e) {
             await _alertService.AlertAsync(
                 ErrorMessageHelper.JsonDeserializationErrorTitle,
