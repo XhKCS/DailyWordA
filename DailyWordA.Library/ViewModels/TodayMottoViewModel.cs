@@ -8,19 +8,23 @@ namespace DailyWordA.Library.ViewModels;
 public class TodayMottoViewModel : ViewModelBase {
     private readonly IDailyMottoService _dailyMottoService;
     private readonly ITodayImageService _todayImageService;
+    private readonly IContentNavigationService _contentNavigationService;
     
     private readonly IRootNavigationService _rootNavigationService;
 
     public TodayMottoViewModel(IDailyMottoService dailyMottoService, 
         ITodayImageService todayImageService,
+        IContentNavigationService contentNavigationService,
         IRootNavigationService rootNavigationService) {
         _dailyMottoService = dailyMottoService;
         _todayImageService = todayImageService;
+        _contentNavigationService = contentNavigationService;
         _rootNavigationService = rootNavigationService;
         
         UpdateAsync();
         
-        UpdateCommand = new AsyncRelayCommand(UpdateAsync);
+        UpdateCommand = new RelayCommand(UpdateAsync);
+        ShowDetailCommand = new RelayCommand(ShowDetail);
         NavigateToResultViewCommand = new RelayCommand(NavigateToResultView);
     }
     
@@ -43,19 +47,27 @@ public class TodayMottoViewModel : ViewModelBase {
     }
     
     public ICommand UpdateCommand { get; }
+    public void UpdateAsync() {
+        Task.Run(async () => {
+            IsLoading = true;
+            TodayImage = await _todayImageService.GetRandomImageAsync();
+            IsLoading = false;
+        });
 
-    public async Task UpdateAsync() {
-        IsLoading = true;
-        // TodayImage = await _todayImageService.GetTodayImageAsync(); //先读本地的
-        TodayImage = await _todayImageService.GetRandomImageAsync(); //再更新
-        
-        TodayMotto = await _dailyMottoService.GetTodayMottoAsync();
-        // await Task.Delay(100);
-        IsLoading = false;
+        Task.Run(async () => {
+            TodayMotto = await _dailyMottoService.GetTodayMottoAsync();
+        });
+    }
+    
+    // 跳转至格言详情页
+    public ICommand ShowDetailCommand { get; }
+    private void ShowDetail() {
+        // 跳转至详情页面，注意要传参：当前的TodayMotto
+        _contentNavigationService.NavigateTo(
+            ContentNavigationConstant.MottoDetailView, TodayMotto);
     }
     
     public ICommand NavigateToResultViewCommand { get; }
-
     private void NavigateToResultView() {
         _rootNavigationService.NavigateTo(nameof(WordResultViewModel));
     }

@@ -50,6 +50,12 @@ public class ServiceLocator {
     public TranslateViewModel TranslateViewModel =>
         _serviceProvider.GetRequiredService<TranslateViewModel>();
     
+    public WordDetailViewModel WordDetailViewModel =>
+        _serviceProvider.GetRequiredService<WordDetailViewModel>();
+    
+    public MottoDetailViewModel MottoDetailViewModel =>
+        _serviceProvider.GetRequiredService<MottoDetailViewModel>();
+    
     public ServiceLocator() {
         var serviceCollection = new ServiceCollection();
 
@@ -59,6 +65,7 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<IAlertService, AlertService>();
         serviceCollection.AddSingleton<IRootNavigationService, RootNavigationService>();
         serviceCollection.AddSingleton<IMenuNavigationService, MenuNavigationService>();
+        serviceCollection.AddSingleton<IContentNavigationService, ContentNavigationService>();
         serviceCollection.AddSingleton<ITranslateService, TranslateService>();
         serviceCollection.AddSingleton<ITodayImageService, TodayImageService>();
         serviceCollection.AddSingleton<ITodayImageStorage, TodayImageStorage>();
@@ -68,7 +75,8 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<TodayMottoViewModel>();
         serviceCollection.AddSingleton<MainViewModel>();
         serviceCollection.AddSingleton<TranslateViewModel>();
-        
+        serviceCollection.AddSingleton<WordDetailViewModel>();
+        serviceCollection.AddSingleton<MottoDetailViewModel>();
 
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }

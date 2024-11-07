@@ -56,7 +56,8 @@
                 <Label FontSize="24"
                        Foreground="White"
                        Margin="0,0,0,8"
-                       Content="{Binding TodayMotto.Content}" />
+                       Content="{Binding TodayMotto.Content}" 
+                       />
                 <StackPanel x:Name="DetailStackLayout">
                     <Label FontSize="18"
                            Foreground="White"
@@ -71,7 +72,7 @@
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"
                             Content="查看详细"
-                            
+                            Command="{Binding ShowDetailCommand}"
                             VerticalAlignment="Center" />
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"

@@ -10,50 +10,53 @@ namespace DailyWordA.Library.ViewModels;
 public class WordResultViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly ITodayImageService _todayImageService;
+    private readonly IContentNavigationService _contentNavigationService;
     
     private readonly IRootNavigationService _rootNavigationService;
     
     public  WordResultViewModel(IWordStorage wordStorage, 
         ITodayImageService todayImageService,
+        IContentNavigationService contentNavigationService,
         IRootNavigationService rootNavigationService) {
         _wordStorage = wordStorage;
         _todayImageService = todayImageService;
+        _contentNavigationService = contentNavigationService;
         _rootNavigationService = rootNavigationService;
         if (_wordStorage.IsInitialized == false) {
             // 不要使用RunSynchronously，否则似乎会一直卡住
             Console.WriteLine("begin initializing wordStorage");
             _wordStorage.InitializeAsync();
         }
-        
         // _wordStorage.InitializeAsync();
-        // Console.WriteLine("WordStorage initialization exited.");
         
-        OnInitializedCommand = new AsyncRelayCommand(OnInitializedAsync);
+        // OnInitializedCommand = new AsyncRelayCommand(OnInitializedAsync);
+        OnInitialized();
         UpdateWordCommand = new AsyncRelayCommand(UpdateWordAsync);
+        ShowDetailCommand = new RelayCommand(ShowDetail);
         NavigateToTodayMottoViewCommand = new RelayCommand(NavigateToTodayMottoView);
 
-        WordCollection = new AvaloniaInfiniteScrollCollection<WordObject> {
-            OnCanLoadMore = () => _canLoadMore,
-            OnLoadMore = async () => {
-                Status = Loading;
-                var wordList = await _wordStorage.GetWordsAsync(
-                    Expression.Lambda<Func<WordObject, bool>>(
-                        Expression.Constant(true),
-                        Expression.Parameter(typeof(WordObject), "p")),
-                    WordCollection.Count, PageSize);
-                Status = string.Empty;
-
-                if (wordList.Count < PageSize) {
-                    _canLoadMore = false;
-                    Status = NoMoreResult;
-                }
-                if (WordCollection.Count == 0 && wordList.Count == 0) {
-                    Status = NoResult;
-                }
-
-                return wordList;
-            }
-        };
+        // WordCollection = new AvaloniaInfiniteScrollCollection<WordObject> {
+        //     OnCanLoadMore = () => _canLoadMore,
+        //     OnLoadMore = async () => {
+        //         Status = Loading;
+        //         var wordList = await _wordStorage.GetWordsAsync(
+        //             Expression.Lambda<Func<WordObject, bool>>(
+        //                 Expression.Constant(true),
+        //                 Expression.Parameter(typeof(WordObject), "p")),
+        //             WordCollection.Count, PageSize);
+        //         Status = string.Empty;
+        //
+        //         if (wordList.Count < PageSize) {
+        //             _canLoadMore = false;
+        //             Status = NoMoreResult;
+        //         }
+        //         if (WordCollection.Count == 0 && wordList.Count == 0) {
+        //             Status = NoResult;
+        //         }
+        //
+        //         return wordList;
+        //     }
+        // };
     }
     
     public AvaloniaInfiniteScrollCollection<WordObject> WordCollection { get;  }
@@ -93,30 +96,40 @@ public class WordResultViewModel : ViewModelBase {
     }
     
     public ICommand OnInitializedCommand { get; }
+    public void OnInitialized() {
+        Task.Run(async () => {
+            TodayImage = await _todayImageService.GetTodayImageAsync();
+            var updateResult = await _todayImageService.CheckUpdateAsync();
+            if (updateResult.HasUpdate) {
+                TodayImage = updateResult.TodayImage;
+            }
+        });
 
-    public async Task OnInitializedAsync() {
-        IsLoading = true;
-        TodayImage = await _todayImageService.GetTodayImageAsync();
-        var updateResult = await _todayImageService.CheckUpdateAsync();
-        if (updateResult.HasUpdate) {
-            TodayImage = updateResult.TodayImage;
-        }
-        
-        TodayWord = await _wordStorage.GetRandomWordAsync();
-        await Task.Delay(200);
-        IsLoading = false;
+        Task.Run(async () => {
+            IsLoading = true;
+            TodayWord = await _wordStorage.GetRandomWordAsync();
+            await Task.Delay(200);
+            IsLoading = false;
+        });
     }
 
     public ICommand UpdateWordCommand { get; }
-    public async Task UpdateWordAsync() {
+    private async Task UpdateWordAsync() {
         IsLoading = true;
         TodayWord = await _wordStorage.GetRandomWordAsync();
         await Task.Delay(300);
         IsLoading = false;
     }
     
+    // 跳转至单词详情页
+    public ICommand ShowDetailCommand { get; }
+    public void ShowDetail() {
+        // 跳转至详情页面，注意要传参：当前的TodayPoetry
+        _contentNavigationService.NavigateTo(
+            ContentNavigationConstant.WordDetailView, TodayWord);
+    }
+    
     public ICommand NavigateToTodayMottoViewCommand { get; }
-
     private void NavigateToTodayMottoView() {
        _rootNavigationService.NavigateTo(nameof(TodayMottoViewModel));
     }

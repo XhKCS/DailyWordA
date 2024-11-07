@@ -1,0 +1,107 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.WordDetailView"
+             DataContext="{Binding WordDetailViewModel, Source={StaticResource ServiceLocator}}"
+             >
+   
+    <ScrollViewer>
+        <StackPanel Margin="8">
+            <Label FontSize="28"
+                   Margin="0,0,0,8"
+                   HorizontalAlignment="Center"
+                   Content="{Binding TodayWord.Word}" />
+            <Label FontSize="22"
+                   Margin="0,0,0,8"
+                   HorizontalAlignment="Center"
+                   Content="{Binding TodayWord.Accent}" />
+            <!-- 注意下面的StackPanel内部是水平布局 -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8">
+                <Label FontSize="18"
+                       Content="中文释义： " />
+                <Label FontSize="18"
+                       Content="{Binding TodayWord.CnMeaning}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8">
+                   <Label FontSize="18"
+                          Content="英文释义： " />
+                   <TextBlock FontSize="16"
+                              Margin="0,0,0,8"
+                              HorizontalAlignment="Center"
+                              Text="{Binding TodayWord.EnMeaning}"
+                              Width="600"
+                              TextWrapping="Wrap"
+                   />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8">
+                   <Label FontSize="18"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Content="例句：" />
+                   <TextBlock FontSize="16"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Text="{Binding TodayWord.Sentence}"
+                          Width="600"
+                          TextWrapping="Wrap"
+                          />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8">
+                   <Label FontSize="18"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Content="例句翻译：" />
+                   <TextBlock FontSize="16"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Text="{Binding TodayWord.SentenceTrans}"
+                          Width="500"
+                          TextWrapping="Wrap"
+                          />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8"
+                        IsVisible="{Binding CanShowEtyma}"
+            >
+                   <Label FontSize="18"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Content="词根：" />
+                   <Label FontSize="16"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Content="{Binding TodayWord.Etyma}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8"
+                        IsVisible="{Binding CanShowPhrase}"
+            >
+                   <Label FontSize="18"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Content="相关词组搭配：" />
+                   <Label FontSize="18"
+                          Margin="0,0,0,8"
+                          HorizontalAlignment="Center"
+                          Content="{Binding TodayWord.Phrase}" />
+            </StackPanel>
+            <Button HorizontalAlignment="Center"
+                    Content="在本地数据库中查找"
+                    Command="{Binding QueryCommand}"
+            />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

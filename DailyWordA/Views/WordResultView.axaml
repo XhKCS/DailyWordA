@@ -16,11 +16,11 @@
         <lc:ByteArrayToBitmapConverter x:Key="ByteArrayToBitmapConverter"></lc:ByteArrayToBitmapConverter>
         <lc:NegativeConverter x:Key="NegativeConverter"></lc:NegativeConverter>
     </UserControl.Resources>
-    <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Initialized">
-            <ia:InvokeCommandAction Command="{Binding OnInitializedCommand}"></ia:InvokeCommandAction>
-        </ia:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
+    <!-- <i:Interaction.Behaviors> -->
+    <!--     <ia:EventTriggerBehavior EventName="Initialized"> -->
+    <!--         <ia:InvokeCommandAction Command="{Binding OnInitializedCommand}"></ia:InvokeCommandAction> -->
+    <!--     </ia:EventTriggerBehavior> -->
+    <!-- </i:Interaction.Behaviors> -->
     
     <!-- <ais:AvaloniaInfiniteScrollControl ItemsSource="{Binding WordCollection}"> -->
     <!--     <ais:AvaloniaInfiniteScrollControl.ItemTemplate> -->
@@ -91,7 +91,7 @@
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"
                             Content="查看详细"
-                            
+                            Command="{Binding ShowDetailCommand}"
                             VerticalAlignment="Center" />
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"

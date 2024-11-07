@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.MottoDetailView"
+             DataContext="{Binding MottoDetailViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    
+    <ScrollViewer>
+        <StackPanel Margin="8">
+            <Label FontSize="24"
+                   Margin="0,0,0,8"
+                   HorizontalAlignment="Center"
+                   Content="{Binding TodayMotto.Date}" />
+            <Label FontSize="20"
+                   Margin="0,0,0,8"
+                   HorizontalAlignment="Center"
+                   Content="今日格言详情" />
+            <TextBlock FontSize="24"
+                   Margin="0,0,0,8"
+                   HorizontalAlignment="Center"
+                   Text="{Binding TodayMotto.Content}"
+                   Width="700"
+                   TextWrapping="Wrap"
+                   />
+            
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8">
+                <Label FontSize="18"
+                       Content="中文释义： " />
+                <TextBlock FontSize="18"
+                       Text="{Binding TodayMotto.Translation}"
+                       Width="600"
+                       TextWrapping="Wrap"
+                       />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8"
+                        IsVisible="{Binding CanShowSource}">
+                   <Label FontSize="18"
+                          Content="来源： " />
+                   <Label FontSize="18"
+                          Content="{Binding TodayMotto.Source}" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,8"
+                        IsVisible="{Binding CanShowAuthor}">
+                   <Label FontSize="18"
+                          Content="————by： " />
+                   <Label FontSize="18"
+                          Content="{Binding TodayMotto.Author}" />
+            </StackPanel>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
