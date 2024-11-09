@@ -10,22 +10,22 @@ public class TodayMottoViewModel : ViewModelBase {
     private readonly ITodayImageService _todayImageService;
     private readonly IContentNavigationService _contentNavigationService;
     
-    private readonly IRootNavigationService _rootNavigationService;
+    private readonly IMenuNavigationService _menuNavigationService;
 
     public TodayMottoViewModel(IDailyMottoService dailyMottoService, 
         ITodayImageService todayImageService,
         IContentNavigationService contentNavigationService,
-        IRootNavigationService rootNavigationService) {
+        IMenuNavigationService menuNavigationService) {
         _dailyMottoService = dailyMottoService;
         _todayImageService = todayImageService;
         _contentNavigationService = contentNavigationService;
-        _rootNavigationService = rootNavigationService;
+        _menuNavigationService = menuNavigationService;
         
         UpdateAsync();
         
         UpdateCommand = new RelayCommand(UpdateAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
-        NavigateToResultViewCommand = new RelayCommand(NavigateToResultView);
+        NavigateToResultViewCommand = new RelayCommand(NavigateToTodayWordView);
     }
     
     private DailyMotto _todayMotto;
@@ -68,7 +68,7 @@ public class TodayMottoViewModel : ViewModelBase {
     }
     
     public ICommand NavigateToResultViewCommand { get; }
-    private void NavigateToResultView() {
-        _rootNavigationService.NavigateTo(nameof(WordResultViewModel));
+    private void NavigateToTodayWordView() {
+        _menuNavigationService.NavigateTo(MenuNavigationConstant.TodayWordView);
     }
 }

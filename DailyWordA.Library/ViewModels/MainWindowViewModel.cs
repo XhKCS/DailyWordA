@@ -27,6 +27,12 @@ public class MainWindowViewModel : ViewModelBase {
     public ICommand OnInitializedCommand { get; }
 
     public void OnInitialized() {
-        _rootNavigationService.NavigateTo(RootNavigationConstant.MainView);
+        if (!_wordStorage.IsInitialized) {
+            _rootNavigationService.NavigateTo(RootNavigationConstant.InitializationView);
+        }
+        else {
+            _rootNavigationService.NavigateTo(RootNavigationConstant.MainView);
+        }
+        
     }
 }

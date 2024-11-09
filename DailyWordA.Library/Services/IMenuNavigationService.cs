@@ -8,10 +8,12 @@ public static class MenuNavigationConstant {
     public const string TodayWordView = nameof(TodayWordView);
 
     public const string TodayMottoView = nameof(TodayMottoView);
-
-    public const string FavoriteWordView = nameof(FavoriteWordView);
     
-    public const string FavoriteMottoView = nameof(FavoriteMottoView);
+    public const string WordQueryView = nameof(WordQueryView);
+
+    public const string WordFavoriteView = nameof(WordFavoriteView);
+    
+    // public const string MottoFavoriteView = nameof(MottoFavoriteView);
     
     public const string TranslateView = nameof(TranslateView);
 }

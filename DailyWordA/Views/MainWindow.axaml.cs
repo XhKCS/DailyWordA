@@ -10,7 +10,7 @@ public partial class MainWindow : Window
         InitializeComponent();
         //调用RootNavigationService
         // ServiceLocator.Current.RootNavigationService.NavigateTo(
-        //     nameof(WordResultViewModel));
+        //     nameof(TodayWordViewModel));
         // ServiceLocator.Current.RootNavigationService.NavigateTo(
         //     nameof(TodayMottoViewModel));
     }

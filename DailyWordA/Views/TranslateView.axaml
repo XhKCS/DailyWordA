@@ -9,15 +9,15 @@
              DataContext="{Binding TranslateViewModel, Source={StaticResource ServiceLocator}}"
              >
     
-    <StackPanel Margin="20">
-        <Label Margin="0 15 0 5" 
+    <StackPanel Margin="15">
+        <Label Margin="0 10 0 5" 
                Content="请输入待翻译的文本：" FontSize="22" Foreground="#3498DB">
         </Label>
         <TextBox Height="200" Text="{Binding SourceText}"
                  AcceptsReturn="True" TextWrapping="Wrap"
                  FontSize="20" />
         
-        <StackPanel Orientation="Horizontal" Spacing="15"
+        <StackPanel Orientation="Vertical" Spacing="10"
                     >
             <Label Content="(本翻译使用谷歌api，如果响应速度慢的话建议挂梯子再试试~)"
                    HorizontalAlignment="Center"></Label>
@@ -28,8 +28,7 @@
                     HorizontalAlignment="Center" />
         </StackPanel>
         
-        
-        <Label Margin="0 15 0 5" 
+        <Label Margin="0 10 0 5" 
                Content="翻译后的文本：" FontSize="22" Foreground="#3498DB">
         </Label>
         <TextBox Height="200" 
@@ -39,8 +38,6 @@
                FontSize="20" FontStyle="Italic"
                Background="Lavender" 
                IsReadOnly="True" />
-           
-        
         
     </StackPanel>
 </UserControl>

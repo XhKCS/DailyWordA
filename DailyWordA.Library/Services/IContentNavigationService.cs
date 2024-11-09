@@ -5,11 +5,11 @@ public interface IContentNavigationService {
 }
 
 public static class ContentNavigationConstant {
-    public const string WordDetailView = nameof(WordDetailView);
+    public const string WordDetailView = nameof(WordDetailView); // 有收藏按钮
     
     public const string MottoDetailView = nameof(MottoDetailView);
 
-    public const string ResultView = nameof(ResultView);
+    public const string WordQueryResultView = nameof(WordQueryResultView);
 
-    public const string DetailView = nameof(DetailView);
+    
 }

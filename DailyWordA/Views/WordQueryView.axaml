@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvm="using:DailyWordA.Library.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.WordQueryView"
+             DataContext="{Binding WordQueryViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Label Margin="0 15 10 5" 
+                   Content="选择查找方式：" FontSize="18" Foreground="#3498DB">
+            </Label>
+            <ComboBox Margin="8, 12, 4, 4"
+                      ItemsSource="{x:Static lvm:FilterType.FilterTypes}"
+                      SelectedItem="{Binding Filter.Type}"
+                      DisplayMemberBinding="{Binding Name}"
+                      Width="200"
+            />
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="12">
+            <Border Background="#3498DB">
+            </Border>
+            <TextBox Margin="4,0,0,4"
+                     Text="{Binding Filter.QueryText}"
+                     Watermark="{Binding CommentText}"
+                     Width="500"
+                     />
+        </StackPanel>
+        
+        <Button Margin="12"
+                Content="查询"
+                Command="{Binding QueryCommand}" />
+    </StackPanel>
+</UserControl>

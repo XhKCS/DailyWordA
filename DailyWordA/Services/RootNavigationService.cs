@@ -6,20 +6,15 @@ namespace DailyWordA.Services;
 public class RootNavigationService : IRootNavigationService {
     public void NavigateTo(string view) {
         // 在这里给MainWindowViewModel中的Content赋值
-        if (view == nameof(RootNavigationConstant.MainView)) {
+        if (view == RootNavigationConstant.MainView) {
             ServiceLocator.Current.MainWindowViewModel.Content = 
                 ServiceLocator.Current.MainViewModel;
-            ServiceLocator.Current.MainViewModel.PushContent(ServiceLocator.Current.WordResultViewModel);
+            ServiceLocator.Current.MainViewModel.SetMenuAndContent(
+                MenuNavigationConstant.TodayWordView, ServiceLocator.Current.TodayWordViewModel);
         }
-        else if (view == nameof(WordResultViewModel)) {
+        else if (view == RootNavigationConstant.InitializationView) {
             ServiceLocator.Current.MainWindowViewModel.Content = 
-                ServiceLocator.Current.MainViewModel;
-            ServiceLocator.Current.MainViewModel.SetMenuAndContent(MenuNavigationConstant.TodayWordView, ServiceLocator.Current.WordResultViewModel);
-        } 
-        else if (view == nameof(TodayMottoViewModel)) {
-            ServiceLocator.Current.MainWindowViewModel.Content = 
-                ServiceLocator.Current.MainViewModel;
-            ServiceLocator.Current.MainViewModel.SetMenuAndContent(MenuNavigationConstant.TodayMottoView, ServiceLocator.Current.TodayMottoViewModel);
+                ServiceLocator.Current.InitializationViewModel;
         }
         
     }

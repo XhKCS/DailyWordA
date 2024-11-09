@@ -31,8 +31,8 @@ public class ServiceLocator {
     }
     
     //对外暴露
-    public WordResultViewModel WordResultViewModel => 
-        _serviceProvider.GetRequiredService<WordResultViewModel>();
+    public TodayWordViewModel TodayWordViewModel => 
+        _serviceProvider.GetRequiredService<TodayWordViewModel>();
     
     public MainWindowViewModel MainWindowViewModel =>
         _serviceProvider.GetRequiredService<MainWindowViewModel>();
@@ -56,6 +56,18 @@ public class ServiceLocator {
     public MottoDetailViewModel MottoDetailViewModel =>
         _serviceProvider.GetRequiredService<MottoDetailViewModel>();
     
+    public InitializationViewModel InitializationViewModel =>
+        _serviceProvider.GetRequiredService<InitializationViewModel>();
+    
+    public WordQueryViewModel WordQueryViewModel =>
+        _serviceProvider.GetRequiredService<WordQueryViewModel>();
+    
+    public WordQueryResultViewModel WordQueryResultViewModel =>
+        _serviceProvider.GetRequiredService<WordQueryResultViewModel>();
+    
+    public WordFavoriteViewModel WordFavoriteViewModel =>
+        _serviceProvider.GetRequiredService<WordFavoriteViewModel>();
+    
     public ServiceLocator() {
         var serviceCollection = new ServiceCollection();
 
@@ -71,12 +83,16 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<ITodayImageStorage, TodayImageStorage>();
         
         serviceCollection.AddSingleton<MainWindowViewModel>();
-        serviceCollection.AddSingleton<WordResultViewModel>();
+        serviceCollection.AddSingleton<TodayWordViewModel>();
         serviceCollection.AddSingleton<TodayMottoViewModel>();
         serviceCollection.AddSingleton<MainViewModel>();
         serviceCollection.AddSingleton<TranslateViewModel>();
         serviceCollection.AddSingleton<WordDetailViewModel>();
         serviceCollection.AddSingleton<MottoDetailViewModel>();
+        serviceCollection.AddSingleton<InitializationViewModel>();
+        serviceCollection.AddSingleton<WordQueryViewModel>();
+        serviceCollection.AddSingleton<WordQueryResultViewModel>();
+        serviceCollection.AddSingleton<WordFavoriteViewModel>();
 
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }

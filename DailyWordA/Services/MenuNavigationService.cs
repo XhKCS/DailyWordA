@@ -8,11 +8,15 @@ public class MenuNavigationService : IMenuNavigationService {
     public void NavigateTo(string view, object parameter = null) {
         ViewModelBase viewModel = view switch {
             MenuNavigationConstant.TodayWordView => ServiceLocator.Current
-                .WordResultViewModel,
+                .TodayWordViewModel,
             MenuNavigationConstant.TodayMottoView => ServiceLocator.Current
                 .TodayMottoViewModel,
             MenuNavigationConstant.TranslateView => ServiceLocator.Current.
                 TranslateViewModel,
+            MenuNavigationConstant.WordQueryView => ServiceLocator.Current.
+                WordQueryViewModel,
+            MenuNavigationConstant.WordFavoriteView => ServiceLocator.Current.
+                WordFavoriteViewModel,
             _ => throw new Exception("未知的视图。")
         };
 

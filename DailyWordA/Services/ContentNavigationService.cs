@@ -11,10 +11,8 @@ public class ContentNavigationService : IContentNavigationService {
                 .WordDetailViewModel,
             ContentNavigationConstant.MottoDetailView => ServiceLocator.Current
                 .MottoDetailViewModel,
-            // ContentNavigationConstant.ResultView => ServiceLocator.Current
-            //     .ResultViewModel,
-            // ContentNavigationConstant.DetailView => ServiceLocator.Current
-            //     .DetailViewModel,
+            ContentNavigationConstant.WordQueryResultView => ServiceLocator.Current
+                .WordQueryResultViewModel,
             _ => throw new Exception("未知的视图。")
         };
         

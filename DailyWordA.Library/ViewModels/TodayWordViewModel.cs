@@ -7,21 +7,21 @@ using DailyWordA.Library.Services;
 
 namespace DailyWordA.Library.ViewModels;
 
-public class WordResultViewModel : ViewModelBase {
+public class TodayWordViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly ITodayImageService _todayImageService;
     private readonly IContentNavigationService _contentNavigationService;
     
-    private readonly IRootNavigationService _rootNavigationService;
+    private readonly IMenuNavigationService _menuNavigationService;
     
-    public  WordResultViewModel(IWordStorage wordStorage, 
+    public  TodayWordViewModel(IWordStorage wordStorage, 
         ITodayImageService todayImageService,
         IContentNavigationService contentNavigationService,
-        IRootNavigationService rootNavigationService) {
+        IMenuNavigationService menuNavigationService) {
         _wordStorage = wordStorage;
         _todayImageService = todayImageService;
         _contentNavigationService = contentNavigationService;
-        _rootNavigationService = rootNavigationService;
+        _menuNavigationService = menuNavigationService;
         if (_wordStorage.IsInitialized == false) {
             // 不要使用RunSynchronously，否则似乎会一直卡住
             Console.WriteLine("begin initializing wordStorage");
@@ -66,7 +66,6 @@ public class WordResultViewModel : ViewModelBase {
     private string _status;
     public string Status {
         get => _status;
-        //必须用SetProperty函数才能触发PropertyChanged事件，直接用等号给属性赋值不能触发事件
         private set => SetProperty(ref _status, value); //注意前一个参数需要传ref，这样在函数内部就真的会修改_status的值（类似指针）
     }
     
@@ -131,6 +130,6 @@ public class WordResultViewModel : ViewModelBase {
     
     public ICommand NavigateToTodayMottoViewCommand { get; }
     private void NavigateToTodayMottoView() {
-       _rootNavigationService.NavigateTo(nameof(TodayMottoViewModel));
+       _menuNavigationService.NavigateTo(MenuNavigationConstant.TodayMottoView);
     }
 }

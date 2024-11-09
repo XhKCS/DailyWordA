@@ -99,15 +99,15 @@ public class MenuItem {
     
     private static MenuItem TranslateView =>
         new() { Name = "中英互译", View = MenuNavigationConstant.TranslateView };
-
-    private static MenuItem FavoriteWordView =>
-        new() { Name = "单词收藏", View = MenuNavigationConstant.FavoriteWordView };
     
-    private static MenuItem FavoriteMottoView =>
-        new() { Name = "格言收藏", View = MenuNavigationConstant.FavoriteMottoView };
+    private static MenuItem WordQueryView =>
+        new() { Name = "单词查找", View = MenuNavigationConstant.WordQueryView };
+
+    private static MenuItem WordFavoriteView =>
+        new() { Name = "单词收藏", View = MenuNavigationConstant.WordFavoriteView };
     
     public static IEnumerable<MenuItem> MenuItems { get; } = [
         TodayWordView, TodayMottoView, TranslateView, 
-        // FavoriteWordView, FavoriteMottoView
+        WordQueryView, WordFavoriteView
     ];
 }
