@@ -9,6 +9,7 @@
     <ItemGroup>
         <PackageReference Include="AvaloniaInfiniteScrolling.Collection" Version="1.0.1" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+        <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
 
@@ -22,4 +23,5 @@
             <LogicalName>todayImage.bin</LogicalName>
         </EmbeddedResource>
     </ItemGroup>
+    
 </Project>

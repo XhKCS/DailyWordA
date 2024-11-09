@@ -7,11 +7,14 @@ namespace DailyWordA.Library.ViewModels;
 public class InitializationViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly IRootNavigationService _rootNavigationService;
+    private readonly IWordFavoriteStorage _wordFavoriteStorage;
 
     public InitializationViewModel(IWordStorage wordStorage, 
-        IRootNavigationService rootNavigationService) {
+        IRootNavigationService rootNavigationService,
+        IWordFavoriteStorage wordFavoriteStorage) {
         _wordStorage = wordStorage;
         _rootNavigationService = rootNavigationService;
+        _wordFavoriteStorage = wordFavoriteStorage;
         
         OnInitializedCommand = new AsyncRelayCommand(OnInitializedAsync);
     }
@@ -23,9 +26,9 @@ public class InitializationViewModel : ViewModelBase {
             await _wordStorage.InitializeAsync();
         }
         
-        // if (!_favoriteStorage.IsInitialized) {
-        //     await _favoriteStorage.InitializeAsync();
-        // }
+        if (!_wordFavoriteStorage.IsInitialized) {
+            await _wordFavoriteStorage.InitializeAsync();
+        }
 
         await Task.Delay(3000);
 

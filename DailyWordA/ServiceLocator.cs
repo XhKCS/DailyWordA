@@ -81,6 +81,7 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<ITranslateService, TranslateService>();
         serviceCollection.AddSingleton<ITodayImageService, TodayImageService>();
         serviceCollection.AddSingleton<ITodayImageStorage, TodayImageStorage>();
+        serviceCollection.AddSingleton<IWordFavoriteStorage, WordFavoriteStorage>();
         
         serviceCollection.AddSingleton<MainWindowViewModel>();
         serviceCollection.AddSingleton<TodayWordViewModel>();
