@@ -95,7 +95,7 @@ public class MenuItem {
         new() { Name = "今日单词推荐", View = MenuNavigationConstant.TodayWordView };
 
     private static MenuItem TodayMottoView =>
-        new() { Name = "今日格言推荐", View = MenuNavigationConstant.TodayMottoView };
+        new() { Name = "今日短句推荐", View = MenuNavigationConstant.TodayMottoView };
     
     private static MenuItem TranslateView =>
         new() { Name = "中英互译", View = MenuNavigationConstant.TranslateView };

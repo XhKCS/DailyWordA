@@ -76,7 +76,7 @@
                             VerticalAlignment="Center" />
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"
-                            Content="切换格言"
+                            Content="切换短句"
                             Command="{Binding UpdateCommand}"
                             VerticalAlignment="Center" />
                     

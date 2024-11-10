@@ -18,10 +18,18 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <ais:AvaloniaInfiniteScrollControl Grid.Row="0"
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <Label Content="已载入结果条数："
+                   Foreground="#3498DB"
+                   FontWeight="Bold"></Label>
+            <Label Content="{Binding WordCollection.Count}"></Label>
+        </StackPanel>
+        <ais:AvaloniaInfiniteScrollControl Grid.Row="1"
                                            ItemsSource="{Binding WordCollection}"
                                            Margin="12,12,12,0">
             <ais:AvaloniaInfiniteScrollControl.ItemTemplate>
@@ -44,7 +52,7 @@
                 </DataTemplate>
             </ais:AvaloniaInfiniteScrollControl.ItemTemplate>
         </ais:AvaloniaInfiniteScrollControl>
-        <TextBlock Grid.Row="1"
+        <TextBlock Grid.Row="2"
                    Text="{Binding Status}"
                    Margin="12"
                    HorizontalAlignment="Center">

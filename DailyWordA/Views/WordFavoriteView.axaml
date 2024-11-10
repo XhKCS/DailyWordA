@@ -20,27 +20,41 @@
         <lc:WordToStringConverter x:Key="WordToStringConverter"></lc:WordToStringConverter>
     </UserControl.Resources>
     
-    <ais:AvaloniaInfiniteScrollControl 
-        ItemsSource="{Binding WordFavoriteCollection}"
-        Margin="12">
-        <ais:AvaloniaInfiniteScrollControl.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Margin="0,0,0,12"
-                            Background="Transparent">
-                    <i:Interaction.Behaviors>
-                        <ia:EventTriggerBehavior EventName="Tapped">
-                            <ia:InvokeCommandAction
-                                Command="{Binding DataContext.ShowWordDetailCommand, ElementName=TheWordFavoriteView}"
-                                CommandParameter="{Binding WordObject}">
-                            </ia:InvokeCommandAction>
-                        </ia:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
-                    <TextBlock Text="{Binding WordObject.Word}"
-                               FontWeight="Bold" />
-                    <TextBlock
-                        Text="{Binding WordObject, Converter={StaticResource WordToStringConverter}}" />
-                </StackPanel>
-            </DataTemplate>
-        </ais:AvaloniaInfiniteScrollControl.ItemTemplate>
-    </ais:AvaloniaInfiniteScrollControl>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <Label Content="已载入结果条数："
+                   Foreground="#3498DB"
+                   FontWeight="Bold"></Label>
+            <Label Content="{Binding WordFavoriteCollection.Count}"></Label>
+        </StackPanel>
+        <ais:AvaloniaInfiniteScrollControl Grid.Row="1"
+            ItemsSource="{Binding WordFavoriteCollection}"
+            Margin="12">
+            <ais:AvaloniaInfiniteScrollControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,0,0,12"
+                                Background="Transparent">
+                        <i:Interaction.Behaviors>
+                            <ia:EventTriggerBehavior EventName="Tapped">
+                                <ia:InvokeCommandAction
+                                    Command="{Binding DataContext.ShowWordDetailCommand, ElementName=TheWordFavoriteView}"
+                                    CommandParameter="{Binding WordObject}">
+                                </ia:InvokeCommandAction>
+                            </ia:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                        <TextBlock Text="{Binding WordObject.Word}"
+                                   FontWeight="Bold" />
+                        <TextBlock
+                            Text="{Binding WordObject, Converter={StaticResource WordToStringConverter}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ais:AvaloniaInfiniteScrollControl.ItemTemplate>
+        </ais:AvaloniaInfiniteScrollControl>
+    </Grid>
 </UserControl>

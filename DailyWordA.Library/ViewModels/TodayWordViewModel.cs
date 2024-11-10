@@ -22,58 +22,19 @@ public class TodayWordViewModel : ViewModelBase {
         _todayImageService = todayImageService;
         _contentNavigationService = contentNavigationService;
         _menuNavigationService = menuNavigationService;
-        if (_wordStorage.IsInitialized == false) {
-            // 不要使用RunSynchronously，否则似乎会一直卡住
-            Console.WriteLine("begin initializing wordStorage");
-            _wordStorage.InitializeAsync();
-        }
-        // _wordStorage.InitializeAsync();
+        // if (_wordStorage.IsInitialized == false) {
+        //     // 不要使用RunSynchronously，否则似乎会一直卡住
+        //     Console.WriteLine("begin initializing wordStorage");
+        //     _wordStorage.InitializeAsync();
+        // }
+        _wordStorage.InitializeAsync();
         
-        // OnInitializedCommand = new AsyncRelayCommand(OnInitializedAsync);
+        // OnInitializedCommand = new RelayCommand(OnInitialized);
         OnInitialized();
         UpdateWordCommand = new AsyncRelayCommand(UpdateWordAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
         NavigateToTodayMottoViewCommand = new RelayCommand(NavigateToTodayMottoView);
-
-        // WordCollection = new AvaloniaInfiniteScrollCollection<WordObject> {
-        //     OnCanLoadMore = () => _canLoadMore,
-        //     OnLoadMore = async () => {
-        //         Status = Loading;
-        //         var wordList = await _wordStorage.GetWordsAsync(
-        //             Expression.Lambda<Func<WordObject, bool>>(
-        //                 Expression.Constant(true),
-        //                 Expression.Parameter(typeof(WordObject), "p")),
-        //             WordCollection.Count, PageSize);
-        //         Status = string.Empty;
-        //
-        //         if (wordList.Count < PageSize) {
-        //             _canLoadMore = false;
-        //             Status = NoMoreResult;
-        //         }
-        //         if (WordCollection.Count == 0 && wordList.Count == 0) {
-        //             Status = NoResult;
-        //         }
-        //
-        //         return wordList;
-        //     }
-        // };
     }
-    
-    public AvaloniaInfiniteScrollCollection<WordObject> WordCollection { get;  }
-    
-    private bool _canLoadMore = true;
-    
-    private string _status;
-    public string Status {
-        get => _status;
-        private set => SetProperty(ref _status, value); //注意前一个参数需要传ref，这样在函数内部就真的会修改_status的值（类似指针）
-    }
-    
-    public const int PageSize = 20;
-    
-    public const string Loading = "正在载入";
-    public const string NoResult = "没有满足条件的结果";
-    public const string NoMoreResult = "没有更多结果";
 
     // 今日推荐单词
     private WordObject _todayWord;
@@ -94,7 +55,7 @@ public class TodayWordViewModel : ViewModelBase {
         private set => SetProperty(ref _isLoading, value);
     }
     
-    public ICommand OnInitializedCommand { get; }
+    // public ICommand OnInitializedCommand { get; }
     public void OnInitialized() {
         Task.Run(async () => {
             TodayImage = await _todayImageService.GetTodayImageAsync();

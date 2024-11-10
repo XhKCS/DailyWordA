@@ -16,12 +16,12 @@
             <Label FontSize="20"
                    Margin="0,0,0,8"
                    HorizontalAlignment="Center"
-                   Content="今日格言详情" />
+                   Content="今日短句详情" />
             <TextBlock FontSize="24"
                    Margin="0,0,0,8"
                    HorizontalAlignment="Center"
                    Text="{Binding TodayMotto.Content}"
-                   Width="700"
+                   Width="800"
                    TextWrapping="Wrap"
                    />
             

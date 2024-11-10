@@ -22,13 +22,6 @@
     <!--     </ia:EventTriggerBehavior> -->
     <!-- </i:Interaction.Behaviors> -->
     
-    <!-- <ais:AvaloniaInfiniteScrollControl ItemsSource="{Binding WordCollection}"> -->
-    <!--     <ais:AvaloniaInfiniteScrollControl.ItemTemplate> -->
-    <!--         <DataTemplate> -->
-    <!--             <TextBlock Text="{Binding Word}"></TextBlock> -->
-    <!--         </DataTemplate> -->
-    <!--     </ais:AvaloniaInfiniteScrollControl.ItemTemplate> -->
-    <!-- </ais:AvaloniaInfiniteScrollControl> -->
     
     <Grid Background="Black">
         <Grid.RowDefinitions>
@@ -105,7 +98,7 @@
             <StackPanel Orientation="Horizontal" Spacing="5"
                         HorizontalAlignment="Right">
                 <Button Command="{Binding NavigateToTodayMottoViewCommand}" 
-                        Content="今日格言推荐" />
+                        Content="今日短句推荐" />
             </StackPanel>
             
             <StackPanel Background="#66000000">
