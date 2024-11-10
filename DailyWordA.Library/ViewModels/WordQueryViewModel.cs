@@ -91,7 +91,6 @@ public class FilterType {
         Name = name;
         PropertyName = propertyName;
     }
-    
     public string Name { get; }
     public string PropertyName { get; }
 }

@@ -2,40 +2,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:i="using:Avalonia.Xaml.Interactivity"
-             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:lvm="using:DailyWordA.Library.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DailyWordA.Views.TranslateView"
              DataContext="{Binding TranslateViewModel, Source={StaticResource ServiceLocator}}"
              >
     
-    <StackPanel Margin="15">
-        <Label Margin="0 10 0 5" 
-               Content="请输入待翻译的文本：" FontSize="22" Foreground="#3498DB">
+    <StackPanel Margin="10">
+        <Label Margin="0 5 0 5" 
+               Content="请输入待翻译的文本：" FontSize="20" Foreground="#3498DB">
         </Label>
         <TextBox Height="200" Text="{Binding SourceText}"
                  AcceptsReturn="True" TextWrapping="Wrap"
-                 FontSize="20" />
+                 FontSize="18" />
         
-        <StackPanel Orientation="Vertical" Spacing="10"
-                    >
-            <Label Content="(本翻译使用谷歌api，如果响应速度慢的话建议挂梯子再试试~)"
-                   HorizontalAlignment="Center"></Label>
-            <Button Command="{Binding TranslateCommand}" 
-                    Content="开始翻译" FontSize="18"
-                    Foreground="#3498DB" 
-                    Margin="0 10 0 5"
-                    HorizontalAlignment="Center" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Label Margin="0 15 10 5" 
+                   Content="选择目标语言：" FontSize="18" Foreground="#3498DB">
+            </Label>
+            <ComboBox Margin="5, 12, 4, 4"
+                      ItemsSource="{x:Static lvm:TargetLanguageType.TargetLanguageTypes}"
+                      SelectedItem="{Binding LanguageType}"
+                      DisplayMemberBinding="{Binding Name}"
+                      Width="180"
+            />
         </StackPanel>
         
-        <Label Margin="0 10 0 5" 
-               Content="翻译后的文本：" FontSize="22" Foreground="#3498DB">
+        <Button Command="{Binding TranslateCommand}" 
+                Content="开始翻译" FontSize="18"
+                Foreground="#3498DB" 
+                Margin="0 10 0 5"
+                HorizontalAlignment="Center" />
+        
+        <Label Margin="0 5 0 5" 
+               Content="翻译后的文本：" FontSize="20" Foreground="#3498DB">
         </Label>
         <TextBox Height="200" 
                Text="{Binding TargetText}" 
                xml:space="preserve"
                TextWrapping="Wrap"
-               FontSize="20" FontStyle="Italic"
+               FontSize="18" FontWeight="Bold"
                Background="Lavender" 
                IsReadOnly="True" />
         

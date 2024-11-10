@@ -26,8 +26,10 @@
                     Orientation="Horizontal">
             <Label Content="已载入结果条数："
                    Foreground="#3498DB"
-                   FontWeight="Bold"></Label>
-            <Label Content="{Binding WordCollection.Count}"></Label>
+                   FontWeight="Bold"
+                   Margin="8,5,0,0"></Label>
+            <Label Content="{Binding WordCollection.Count}"
+                   Margin="0,5,0,0"></Label>
         </StackPanel>
         <ais:AvaloniaInfiniteScrollControl Grid.Row="1"
                                            ItemsSource="{Binding WordCollection}"
