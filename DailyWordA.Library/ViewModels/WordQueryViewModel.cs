@@ -54,7 +54,7 @@ public class WordQueryViewModel : ViewModelBase {
 
         // "something"
         var condition =
-            Expression.Constant(filterViewModel.QueryText, typeof(string));
+            Expression.Constant(filterViewModel.QueryText.Replace("\n", "").Replace(" ",""), typeof(string));
 
         // p.Word.Contains("something")
         // or p.CnMeaning.Contains("something")
