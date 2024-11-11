@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +12,7 @@ public class TranslateService : ITranslateService {
         _alertService = alertService;
     }
     
-    private readonly Random _random = new Random();
+    private readonly Random _random = new();
     
     // MD5加密为32位字符串
     private static string Md5Crypto(string plainText) {
@@ -27,12 +26,10 @@ public class TranslateService : ITranslateService {
         return sign;
     }
     
-    // 使用百度翻译API
     public async Task<string> Translate(string sourceText, string from="auto", string to="zh") {
-        string q = sourceText;
-        string salt = _random.Next(1000, 10000).ToString();
-        string originalSign = BaiduTranslateArgs.Appid + q + salt + BaiduTranslateArgs.SecretKey;
-        string sign = Md5Crypto(originalSign);
+        var q = sourceText;
+        var salt = _random.Next(1000, 10000).ToString();
+        var sign = GetSign(q, salt);
         
         // Console.WriteLine("1");
         const string server = "百度翻译服务器";
@@ -43,7 +40,7 @@ public class TranslateService : ITranslateService {
             response =
                 await httpClient.GetAsync(
                     $"http://api.fanyi.baidu.com/api/trans/vip/translate?q={q}&from={from}&to={to}" +
-                    $"&appid={BaiduTranslateArgs.Appid}&salt={salt}&sign={sign}");
+                    $"&appid={GetOriginal1(BaiduArgs.GetId())}&salt={salt}&sign={sign}");
             response.EnsureSuccessStatusCode();
             // Console.WriteLine("3");
         } catch (Exception e) {
@@ -73,6 +70,48 @@ public class TranslateService : ITranslateService {
         return baiduTranslateResponse.trans_result[0].Dst;
     }
     
+    private static string GetOriginal1(string strPath) {
+        string returnData;
+        byte[] bpath = Convert.FromBase64String(strPath);
+        try {
+            returnData = Encoding.UTF8.GetString(bpath);
+        }
+        catch {
+            returnData = strPath;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < returnData.Length; i++) {
+            int x = int.Parse(returnData.Substring(i, 1));
+            x -= i;
+            while (x < 0) {
+                x += 10;
+            }
+            sb.Append(x);
+        }
+        return sb.ToString();
+    }
+
+    private static string GetSign(string q, string salt) {
+        string originalSign = GetOriginal1(BaiduArgs.GetId()) + q + salt + GetOriginal2(BaiduArgs.GetKey());
+        return Md5Crypto(originalSign);
+    }
+    
+    private static string GetOriginal2(string strPath) {
+        string returnData;
+        byte[] bpath = Convert.FromBase64String(strPath);
+        try {
+            returnData = Encoding.UTF8.GetString(bpath);
+        }
+        catch {
+            returnData = strPath;
+        }
+
+        var chars = returnData.ToCharArray();
+        Array.Reverse(chars);
+        return new string(chars);
+    }
+    
 }
 
 // 翻译API的返回格式
@@ -86,7 +125,12 @@ public class BaiduTransResult {
     public string Dst { get; set; }
 }
 
-public class BaiduTranslateArgs {
-    public const string Appid = "20241022002182855";
-    public const string SecretKey = "W4vjMu2svaTGNvplmQVa";
+public static class BaiduArgs {
+    public static string GetId() {
+        return "MjE0NzU1ODk4OTIyMDUyMDE=";
+    }
+
+    public static string GetKey() {
+        return "YVZRbWxwdk5HVGF2czJ1TWp2NFc=";
+    }
 }
