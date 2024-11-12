@@ -27,6 +27,18 @@ public class WordQueryViewModel : ViewModelBase {
         private set => SetProperty(ref _commentText, value);
     }
     
+    public override void SetParameter(object parameter) {
+        if (parameter is not WordQuery wordQuery) {
+            return;
+        }
+
+        if (Filter.Type == FilterType.EnglishWordFilter) {
+            Filter.QueryText = wordQuery.Word;
+        }
+        else {
+            Filter.QueryText = wordQuery.CnMeaning;
+        }
+    }
     
     public ICommand QueryCommand { get; }
 

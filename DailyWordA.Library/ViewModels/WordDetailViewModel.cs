@@ -69,7 +69,9 @@ public class WordDetailViewModel : ViewModelBase {
     public ICommand QueryCommand { get; }
     public void Query() {
         _menuNavigationService.NavigateTo(MenuNavigationConstant.WordQueryView, 
-            null);
+            new WordQuery {
+                Word = CurrentWord.Word, CnMeaning = CurrentWord.CnMeaning
+            });
     }
 
 }
