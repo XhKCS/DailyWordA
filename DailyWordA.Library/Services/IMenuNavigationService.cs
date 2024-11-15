@@ -16,4 +16,6 @@ public static class MenuNavigationConstant {
     // public const string MottoFavoriteView = nameof(MottoFavoriteView);
     
     public const string TranslateView = nameof(TranslateView);
+    
+    public const string WordQuizView = nameof(WordQuizView); //单词测验
 }

@@ -16,4 +16,7 @@ public interface IWordStorage {
         Expression<Func<WordObject, bool>> where, int skip, int take);
     
     Task SaveWordAsync(WordObject wordObject);
+    
+    // 获取与correctWord不相同的三个单词，四个单词一起作为List返回，作为单词测验的选项
+    Task<IList<WordObject>> GetWordQuizOptionsAsync(WordObject correctWord);
 }

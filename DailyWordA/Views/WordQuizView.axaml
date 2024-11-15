@@ -1,0 +1,125 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.WordQuizView"
+             x:Name="TheWordQuizView"
+             d:DataContext="{Binding WordQuizViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding UpdateCommand}"></ia:InvokeCommandAction>
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <StackPanel Margin="8"
+                HorizontalAlignment="Center">
+        
+        <Label Content="英文选义"
+               HorizontalAlignment="Center"
+               Foreground="#3498DB"
+               FontSize="24"
+               FontWeight="Bold"
+               Margin="0, 10, 0, 10" />
+        <Label Content="{Binding CorrectWord.Word}"
+               HorizontalAlignment="Center"
+               FontSize="28"
+               Margin="0, 0, 0, 12"
+               FontWeight="Bold"/> 
+        
+        <Label Content="中文释义选项："
+               HorizontalAlignment="Left"
+               FontSize="22"
+               Margin="0, 0, 0, 8"></Label>
+        
+        <RadioButton GroupName="OptionGroup"
+                     IsEnabled="{Binding !HasAnswered}"
+                     IsChecked="False"
+                     Content="{Binding QuizOptions[0].CnMeaning}"
+                     FontSize="22"
+                     Margin="0, 0, 0, 8"
+                     Width="600"
+                     Command="{Binding RadioCheckedCommand}"
+                     CommandParameter="{Binding QuizOptions[0]}" /> 
+        <RadioButton GroupName="OptionGroup"
+                     IsEnabled="{Binding !HasAnswered}"
+                     IsChecked="False"
+                     Content="{Binding QuizOptions[1].CnMeaning}"
+                     FontSize="22"
+                     Margin="0, 0, 0, 8"
+                     Width="600"
+                     Command="{Binding RadioCheckedCommand}"
+                     CommandParameter="{Binding QuizOptions[1]}" /> 
+        <RadioButton GroupName="OptionGroup"
+                     IsEnabled="{Binding !HasAnswered}"
+                     IsChecked="False"
+                     Content="{Binding QuizOptions[2].CnMeaning}"
+                     FontSize="22"
+                     Margin="0, 0, 5, 8"
+                     Width="600"
+                     Command="{Binding RadioCheckedCommand}"
+                     CommandParameter="{Binding QuizOptions[2]}" /> 
+        <RadioButton GroupName="OptionGroup"
+                     IsEnabled="{Binding !HasAnswered}"
+                     IsChecked="False"
+                     Content="{Binding QuizOptions[3].CnMeaning}"
+                     FontSize="22"
+                     Margin="0, 0, 5, 8"
+                     Width="600"
+                     Command="{Binding RadioCheckedCommand}"
+                     CommandParameter="{Binding QuizOptions[3]}" /> 
+        
+        <Button HorizontalAlignment="Center"
+                Margin="0,20,0,8"
+                Content="提交"
+                IsEnabled="{Binding !HasAnswered}"
+                IsVisible="{Binding HasSelected}"
+                FontSize="20"
+                Command="{Binding CommitCommand}"
+                VerticalAlignment="Center" />
+        
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="5"
+                    IsVisible="{Binding HasAnswered}">
+            <Label Content="您选择的选项是："
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   Margin="0, 0, 5, 8"/>
+            <Label Content="{Binding SelectedOption.CnMeaning}"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   Margin="0, 0, 0, 8"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="5"
+                    IsVisible="{Binding HasAnswered}">
+            <Label Content="正确的选项是："
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   Margin="0, 0, 5, 8"/>
+            <Label Content="{Binding CorrectWord.CnMeaning}"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   Margin="0, 0, 0, 8"/>
+        </StackPanel>
+        <TextBlock Text="{Binding ResultText}"
+                   IsVisible="{Binding HasAnswered}"
+                   FontSize="20"
+                   Foreground="#3498DB"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"/>
+        <Button HorizontalAlignment="Center"
+                IsVisible="{Binding HasAnswered}"
+                Margin="0,10,0,8"
+                Content="下一题"
+                FontSize="20"
+                Command="{Binding UpdateCommand}"
+                VerticalAlignment="Center" />
+    </StackPanel>
+   
+</UserControl>

@@ -83,7 +83,7 @@
                            VerticalAlignment="Center" />
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"
-                            Content="查看详细"
+                            Content="查看详情"
                             Command="{Binding ShowDetailCommand}"
                             VerticalAlignment="Center" />
                     <Button HorizontalAlignment="Left"

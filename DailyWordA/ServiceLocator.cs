@@ -68,6 +68,9 @@ public class ServiceLocator {
     public WordFavoriteViewModel WordFavoriteViewModel =>
         _serviceProvider.GetRequiredService<WordFavoriteViewModel>();
     
+    public WordQuizViewModel WordQuizViewModel =>
+        _serviceProvider.GetRequiredService<WordQuizViewModel>();
+    
     public ServiceLocator() {
         var serviceCollection = new ServiceCollection();
 
@@ -94,6 +97,7 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<WordQueryViewModel>();
         serviceCollection.AddSingleton<WordQueryResultViewModel>();
         serviceCollection.AddSingleton<WordFavoriteViewModel>();
+        serviceCollection.AddSingleton<WordQuizViewModel>();
 
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }

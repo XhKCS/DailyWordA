@@ -172,7 +172,17 @@ public class WordStorage : IWordStorage {
     {
         await Connection.InsertOrReplaceAsync(wordObject);
     }
-    
+
+    public async Task<IList<WordObject>> GetWordQuizOptionsAsync(WordObject correctWord) {
+        Random random = new Random();
+        List<WordObject> wordList = await Connection.Table<WordObject>().Where(
+                p=>p.Word != correctWord.Word).Skip(random.Next(5000)).Take(3)
+            .ToListAsync();
+        var randomIndex = random.Next(0,3);
+        wordList.Insert(randomIndex, correctWord);
+        return wordList;
+    }
+
     //在实现类中提供一个数据库关闭函数；为什么不放在接口中：因为它与业务无关
     public async Task CloseAsync() => await Connection.CloseAsync();
 }
