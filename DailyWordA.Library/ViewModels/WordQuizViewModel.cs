@@ -12,9 +12,12 @@ public class WordQuizViewModel : ViewModelBase {
     public WordQuizViewModel(IWordStorage wordStorage) {
         _wordStorage = wordStorage;
         
-        UpdateCommand = new AsyncRelayCommand(UpdateAsync);
+        UpdateCommand = new RelayCommand(Update);
         CommitCommand = new RelayCommand(Commit);
         RadioCheckedCommand = new RelayCommand<WordObject>(RadioChecked);
+        SelectModeCommand = new RelayCommand<string>(SelectMode);
+        
+        Update();
     }
     
     private WordObject _correctWord;
@@ -23,13 +26,34 @@ public class WordQuizViewModel : ViewModelBase {
         set => SetProperty(ref _correctWord, value);
     }
 
-    public static IEnumerable<string> QuizModes { get; } 
+    public static ObservableRangeCollection<string> QuizModes { get; } 
         = ["英文选义", "中文选词"];
     
-    private string _selectedMode = "英文选义";
+    private string _selectedMode = QuizModes[0];
     public string SelectedMode {
         get => _selectedMode;
-        set => SetProperty(ref _selectedMode, value);
+        private set => SetProperty(ref _selectedMode, value);
+    }
+
+    private bool _showMode1 = true;
+    public bool ShowMode1 {
+        get => _showMode1;
+        private set => SetProperty(ref _showMode1, value);
+    }
+    
+    public ICommand SelectModeCommand { get; }
+
+    private void SelectMode(string mode) {
+        if (mode == QuizModes[0]) {
+            SelectedMode = mode;
+            ShowMode1 = true;
+            Update();
+        }
+        else if (mode == QuizModes[1]) {
+            SelectedMode = mode;
+            ShowMode1 = false;
+            Update();
+        }
     }
 
     private string _resultText;
@@ -65,18 +89,20 @@ public class WordQuizViewModel : ViewModelBase {
     private bool _isLoading;
     
     public ICommand UpdateCommand { get; }
-    private async Task UpdateAsync() {
-        IsLoading = true;
-        HasSelected = false;
-        HasAnswered = false;
+    private void Update() {
+        Task.Run(async () => {
+            IsLoading = true;
+            HasSelected = false;
+            HasAnswered = false;
         
-        CorrectWord = await _wordStorage.GetRandomWordAsync();
+            CorrectWord = await _wordStorage.GetRandomWordAsync();
         
-        QuizOptions.Clear();
-        var wordList = await _wordStorage.GetWordQuizOptionsAsync(_correctWord);
-        QuizOptions.AddRange(wordList);
+            QuizOptions.Clear();
+            var wordList = await _wordStorage.GetWordQuizOptionsAsync(_correctWord);
+            QuizOptions.AddRange(wordList);
         
-        IsLoading = false;
+            IsLoading = false;
+        });
     }
     
     public ICommand RadioCheckedCommand { get; }
