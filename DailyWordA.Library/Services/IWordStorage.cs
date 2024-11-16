@@ -7,6 +7,8 @@ public interface IWordStorage {
     bool IsInitialized { get; }
 
     Task InitializeAsync();
+
+    Task InitializeAsyncForFirstTime(); //只在第一次获取单词保存为数据库表时用到
     
     Task<WordObject> GetWordAsync(int id);
     

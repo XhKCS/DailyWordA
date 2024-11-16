@@ -42,22 +42,19 @@ public class WordStorage : IWordStorage {
     public async Task InitializeAsyncForFirstTime() {
         await Connection.CreateTableAsync<WordObject>(); //如果该表已经存在则不会重复创建
         
-        // 插入初始数据
+        // 获取单词列表
         using var httpClient = new HttpClient();
         HttpResponseMessage response;
         try {
             response =
                 await httpClient.GetAsync("https://cdn.jsdelivr.net/gh/lyc8503/baicizhan-word-meaning-API/data/list.json");
             response.EnsureSuccessStatusCode();
-            // Console.WriteLine("111");
         } catch (Exception e) {
             await _alertService.AlertAsync(
                 ErrorMessageHelper.HttpClientErrorTitle,
                 ErrorMessageHelper.GetHttpClientError(Server, e.Message));
             return;
         }
-        
-        
         var json = await response.Content.ReadAsStringAsync();
         BaicizhanListResult baicizhanListResult;
         try {
@@ -65,7 +62,6 @@ public class WordStorage : IWordStorage {
                 new JsonSerializerOptions {
                     PropertyNameCaseInsensitive = true
                 }) ?? throw new JsonException();
-            // Console.WriteLine("222");
         } catch (Exception e) {
             await _alertService.AlertAsync(
                 ErrorMessageHelper.JsonDeserializationErrorTitle,
@@ -78,10 +74,10 @@ public class WordStorage : IWordStorage {
         baicizhanListResult.List[7769] = "may";
         baicizhanListResult.List[7913] = "pacific";
         baicizhanListResult.List[7916] = "Turkey";
-        // 测试中，待修改
+        // 逐个获取单词详情，并保存到本地数据库表中
         Console.WriteLine("BaicizhanListResult returns successfully, begin to insert one by one.");
         List<WordObject> wordObjects = new List<WordObject>();
-        for (var i = 7700; i < 10000; i++) {
+        for (var i = 0; i < 10926; i++) {
             var word = baicizhanListResult.List[i];
             if (word.Contains(' ') || word.Contains('/') || word.Contains('_')) {
                 continue;
@@ -92,7 +88,7 @@ public class WordStorage : IWordStorage {
             HttpResponseMessage response2 = 
                 await httpClient.GetAsync($"https://cdn.jsdelivr.net/gh/lyc8503/baicizhan-word-meaning-API/data/words/{word}.json");
             response2.EnsureSuccessStatusCode();
-            //别写成上面的json了
+            
             var json2 = await response2.Content.ReadAsStringAsync();
             BaicizhanWordResult baicizhanWordResult = JsonSerializer.Deserialize<BaicizhanWordResult>(json2,
                 new JsonSerializerOptions {
@@ -108,13 +104,11 @@ public class WordStorage : IWordStorage {
                 Phrase = baicizhanWordResult.sentence_phrase,
                 Etyma = baicizhanWordResult.word_etyma
             };
-            
             wordObjects.Add(wordObject);
             Console.WriteLine($"{i+1}: {wordObject.Word}");
             // await Connection.InsertAsync(wordObject);
-            
             if ((i + 1) % 50 == 0) {
-                await Connection.InsertAllAsync(wordObjects);
+                // await Connection.InsertAllAsync(wordObjects);
                 wordObjects.Clear();
                 Console.WriteLine("Inserted---");
             }
@@ -152,11 +146,10 @@ public class WordStorage : IWordStorage {
     
     // 从本地数据库随机获取一个单词，不能是空
     public async Task<WordObject> GetRandomWordAsync() {
-        // 不能直接产生一个随机数，因为随机数可能在id中不存在
         var words = await GetWordsAsync(
             Expression.Lambda<Func<WordObject, bool>>(Expression.Constant(true),
                 Expression.Parameter(typeof(WordObject), "p")),
-            new Random().Next(1000), 1);
+            new Random().Next(5000), 1);
         var word = words.First();
         return word;
     }

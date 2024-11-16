@@ -8,14 +8,18 @@ namespace DailyWordA.Library.ViewModels;
 
 public class WordQuizViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
+    private IContentNavigationService _contentNavigationService;
 
-    public WordQuizViewModel(IWordStorage wordStorage) {
+    public WordQuizViewModel(IWordStorage wordStorage, 
+        IContentNavigationService contentNavigationService) {
         _wordStorage = wordStorage;
+        _contentNavigationService = contentNavigationService;
         
         UpdateCommand = new RelayCommand(Update);
         CommitCommand = new RelayCommand(Commit);
         RadioCheckedCommand = new RelayCommand<WordObject>(RadioChecked);
         SelectModeCommand = new RelayCommand<string>(SelectMode);
+        ShowDetailCommand = new RelayCommand(ShowDetail);
         
         Update();
     }
@@ -41,8 +45,8 @@ public class WordQuizViewModel : ViewModelBase {
         private set => SetProperty(ref _showMode1, value);
     }
     
+    // 点击按钮切换测验模式
     public ICommand SelectModeCommand { get; }
-
     private void SelectMode(string mode) {
         if (mode == QuizModes[0]) {
             SelectedMode = mode;
@@ -70,7 +74,7 @@ public class WordQuizViewModel : ViewModelBase {
         set => SetProperty(ref _hasAnswered, value);
     }
     
-    private bool _hasSelected; //已选择选项
+    private bool _hasSelected; //已选择某一选项
     public bool HasSelected {
         get => _hasSelected;
         set => SetProperty(ref _hasSelected, value);
@@ -88,6 +92,7 @@ public class WordQuizViewModel : ViewModelBase {
     }
     private bool _isLoading;
     
+    // 切换到下一题
     public ICommand UpdateCommand { get; }
     private void Update() {
         Task.Run(async () => {
@@ -105,14 +110,16 @@ public class WordQuizViewModel : ViewModelBase {
         });
     }
     
+    // 选中某个选项
     public ICommand RadioCheckedCommand { get; }
-    public void RadioChecked(WordObject selectedWordObject) {
+    private void RadioChecked(WordObject selectedWordObject) {
         HasSelected = true;
         SelectedOption = selectedWordObject;
     }
     
+    // 点击提交按钮
     public ICommand CommitCommand { get; }
-    public void Commit() {
+    private void Commit() {
         if (SelectedOption.Word == CorrectWord.Word) {
             ResultText = "恭喜您回答正确！";
         }
@@ -120,6 +127,13 @@ public class WordQuizViewModel : ViewModelBase {
             ResultText = "很遗憾，回答错误啦~";
         }
         HasAnswered = true;
+    }
+
+    // 跳转至单词详情页
+    public ICommand ShowDetailCommand { get; }
+    private void ShowDetail() {
+        _contentNavigationService.NavigateTo(
+            ContentNavigationConstant.WordDetailView, CorrectWord);
     }
 
 }

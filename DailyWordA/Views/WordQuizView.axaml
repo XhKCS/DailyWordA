@@ -21,7 +21,7 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <Label Margin="0 15 10 5" 
-                   Content="切换测验类型：" FontSize="18" 
+                   Content="切换测验模式：" FontSize="18" 
                    FontWeight="Bold">
             </Label>
             <Button HorizontalAlignment="Center"
@@ -173,12 +173,12 @@
                     Margin="5"
                     IsVisible="{Binding HasAnswered}">
             <Label Content="您选择的选项是："
-                   FontSize="20"
+                   FontSize="18"
                    Margin="0, 0, 5, 8"/>
             <TextBlock Text="{Binding SelectedOption.CnMeaning}"
                    IsVisible="{Binding ShowMode1}"
-                   FontSize="18"
-                   Width="400"
+                   FontSize="16"
+                   
                    TextWrapping="Wrap"
                    Margin="0, 0, 0, 8"/>
             <TextBlock Text="{Binding SelectedOption.Word}"
@@ -193,12 +193,12 @@
                     Margin="5"
                     IsVisible="{Binding HasAnswered}">
             <Label Content="正确的选项是："
-                   FontSize="20"
+                   FontSize="18"
                    Margin="0, 0, 5, 8"/>
             <TextBlock Text="{Binding CorrectWord.CnMeaning}"
                    IsVisible="{Binding ShowMode1}"
-                   FontSize="18"
-                   Width="400"
+                   FontSize="16"
+                   
                    TextWrapping="Wrap"
                    Margin="0, 0, 0, 8"/>
             <TextBlock Text="{Binding CorrectWord.Word}"
@@ -215,13 +215,23 @@
                    FontWeight="Bold"
                    Margin="5"
                    HorizontalAlignment="Center"/>
-        <Button HorizontalAlignment="Center"
-                IsVisible="{Binding HasAnswered}"
-                Margin="0,15,0,8"
-                Content="下一题"
-                FontSize="18"
-                Command="{Binding UpdateCommand}"
-                VerticalAlignment="Center" />
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+               <Button HorizontalAlignment="Center"
+                       IsVisible="{Binding HasAnswered}"
+                       Margin="0,15,20,8"
+                       Content="查看单词详情"
+                       FontSize="17"
+                       Command="{Binding ShowDetailCommand}"
+                       VerticalAlignment="Center" />
+               <Button HorizontalAlignment="Center"
+                       IsVisible="{Binding HasAnswered}"
+                       Margin="0,15,0,8"
+                       Content="下一题"
+                       FontSize="17"
+                       Command="{Binding UpdateCommand}"
+                       VerticalAlignment="Center" />
+        </StackPanel>
     </StackPanel>
    
 </UserControl>

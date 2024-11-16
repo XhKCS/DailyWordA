@@ -23,8 +23,6 @@ public class TodayWordViewModel : ViewModelBase {
         _contentNavigationService = contentNavigationService;
         _menuNavigationService = menuNavigationService;
         // if (_wordStorage.IsInitialized == false) {
-        //     // 不要使用RunSynchronously，否则似乎会一直卡住
-        //     Console.WriteLine("begin initializing wordStorage");
         //     _wordStorage.InitializeAsync();
         // }
         _wordStorage.InitializeAsync();
@@ -34,6 +32,8 @@ public class TodayWordViewModel : ViewModelBase {
         UpdateWordCommand = new AsyncRelayCommand(UpdateWordAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
         NavigateToTodayMottoViewCommand = new RelayCommand(NavigateToTodayMottoView);
+        
+        // _wordStorage.InitializeAsyncForFirstTime();  //测试用
     }
 
     // 今日推荐单词
@@ -84,7 +84,7 @@ public class TodayWordViewModel : ViewModelBase {
     // 跳转至单词详情页
     public ICommand ShowDetailCommand { get; }
     public void ShowDetail() {
-        // 跳转至详情页面，注意要传参：当前的TodayPoetry
+        // 跳转至详情页面，注意要传参：当前的TodayWord
         _contentNavigationService.NavigateTo(
             ContentNavigationConstant.WordDetailView, TodayWord);
     }
