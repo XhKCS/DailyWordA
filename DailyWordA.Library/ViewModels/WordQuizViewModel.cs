@@ -24,38 +24,37 @@ public class WordQuizViewModel : ViewModelBase {
         Update();
     }
     
+    // 正确答案对应的单词
     private WordObject _correctWord;
     public WordObject CorrectWord {
         get => _correctWord;
         set => SetProperty(ref _correctWord, value);
     }
+    
+    // 可选择的四个选项
+    public ObservableRangeCollection<WordObject> QuizOptions { get; } = new();
 
     public static ObservableRangeCollection<string> QuizModes { get; } 
         = ["英文选义", "中文选词"];
     
-    private string _selectedMode = QuizModes[0];
+    private string _selectedMode = QuizModes[0]; // 默认为英文选义模式
     public string SelectedMode {
         get => _selectedMode;
         private set => SetProperty(ref _selectedMode, value);
     }
 
-    private bool _showMode1 = true;
-    public bool ShowMode1 {
-        get => _showMode1;
-        private set => SetProperty(ref _showMode1, value);
-    }
+    // 我们可以写一个Converter将字符串转化为bool类型，这样就不需要下面的变量
+    // private bool _showMode1 = true; 
+    // public bool ShowMode1 {
+    //     get => _showMode1;
+    //     private set => SetProperty(ref _showMode1, value);
+    // }
     
     // 点击按钮切换测验模式
     public ICommand SelectModeCommand { get; }
     private void SelectMode(string mode) {
-        if (mode == QuizModes[0]) {
+        if (mode == QuizModes[0] || mode == QuizModes[1]) {
             SelectedMode = mode;
-            ShowMode1 = true;
-            Update();
-        }
-        else if (mode == QuizModes[1]) {
-            SelectedMode = mode;
-            ShowMode1 = false;
             Update();
         }
     }
@@ -65,8 +64,7 @@ public class WordQuizViewModel : ViewModelBase {
         get => _resultText;
         set => SetProperty(ref _resultText, value);
     }
-
-    public ObservableRangeCollection<WordObject> QuizOptions { get; } = new();
+    
     
     private bool _hasAnswered; //已提交答案
     public bool HasAnswered {
@@ -95,6 +93,7 @@ public class WordQuizViewModel : ViewModelBase {
     // 切换到下一题
     public ICommand UpdateCommand { get; }
     private void Update() {
+        // 初始化时也需要调用
         Task.Run(async () => {
             IsLoading = true;
             HasSelected = false;
@@ -110,14 +109,14 @@ public class WordQuizViewModel : ViewModelBase {
         });
     }
     
-    // 选中某个选项
+    // 选中某个选项时触发
     public ICommand RadioCheckedCommand { get; }
     private void RadioChecked(WordObject selectedWordObject) {
         HasSelected = true;
         SelectedOption = selectedWordObject;
     }
     
-    // 点击提交按钮
+    // 用户点击提交按钮
     public ICommand CommitCommand { get; }
     private void Commit() {
         if (SelectedOption.Word == CorrectWord.Word) {
