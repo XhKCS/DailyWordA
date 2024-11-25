@@ -23,7 +23,7 @@ public class TodayWordViewModel : ViewModelBase {
         _contentNavigationService = contentNavigationService;
         _menuNavigationService = menuNavigationService;
         
-        _wordStorage.InitializeAsync();
+        // _wordStorage.InitializeAsync();
         
         // OnInitializedCommand = new RelayCommand(OnInitialized);
         OnInitialized();

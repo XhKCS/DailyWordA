@@ -23,7 +23,8 @@ public class WordFavoriteStorage : IWordFavoriteStorage {
     
     public bool IsInitialized =>
         _preferenceStorage.Get(WordFavoriteStorageConstant.VersionKey,
-            default(int)) == WordFavoriteStorageConstant.Version;
+            default(int)) == WordFavoriteStorageConstant.Version &&
+        File.Exists(WordFavoriteDbPath);
     
     public async Task InitializeAsync() {
         Console.WriteLine("Initializing WordFavoriteStorage...");

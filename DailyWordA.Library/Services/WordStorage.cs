@@ -32,7 +32,8 @@ public class WordStorage : IWordStorage {
 
     public bool IsInitialized =>
         _preferenceStorage.Get(WordStorageConstant.VersionKey,
-            default(int)) == WordStorageConstant.Version;
+            default(int)) == WordStorageConstant.Version &&
+        File.Exists(WordDbPath);
 
     private const string Server = "百词斩单词服务器";
     
