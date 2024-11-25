@@ -29,13 +29,12 @@ public class MainWindowViewModel : ViewModelBase {
     
     public ICommand OnInitializedCommand { get; }
 
-    public void OnInitialized() {
+    private void OnInitialized() {
         if (!_wordStorage.IsInitialized || !_wordFavoriteStorage.IsInitialized) {
             _rootNavigationService.NavigateTo(RootNavigationConstant.InitializationView);
         }
         else {
             _rootNavigationService.NavigateTo(RootNavigationConstant.MainView);
         }
-        
     }
 }

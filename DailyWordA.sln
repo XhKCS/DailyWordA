@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyWordA", "DailyWordA\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyWordA.Library", "DailyWordA.Library\DailyWordA.Library.csproj", "{7330F206-01D1-4301-98ED-2C93FB850B3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyWordA.UnitTest", "DailyWordA.UnitTest\DailyWordA.UnitTest.csproj", "{80828C52-8C7D-4B80-98DA-84D5559433D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{7330F206-01D1-4301-98ED-2C93FB850B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7330F206-01D1-4301-98ED-2C93FB850B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7330F206-01D1-4301-98ED-2C93FB850B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80828C52-8C7D-4B80-98DA-84D5559433D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80828C52-8C7D-4B80-98DA-84D5559433D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80828C52-8C7D-4B80-98DA-84D5559433D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80828C52-8C7D-4B80-98DA-84D5559433D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

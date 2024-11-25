@@ -85,7 +85,7 @@ public class TodayImageStorage : ITodayImageStorage {
         }
 
         _preferenceStorage.Set(StartDateKey, todayImage.StartDate);
-        _preferenceStorage.Set(ExpiresAtKey, todayImage.ExpiresAt);
+        // _preferenceStorage.Set(ExpiresAtKey, todayImage.ExpiresAt);
         _preferenceStorage.Set(CopyrightKey, todayImage.Copyright);
         _preferenceStorage.Set(TitleKey, todayImage.Title);
 

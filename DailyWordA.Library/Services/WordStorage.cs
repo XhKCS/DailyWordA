@@ -7,12 +7,10 @@ using SQLite;
 namespace DailyWordA.Library.Services;
 
 public class WordStorage : IWordStorage {
+    public const int NumberOfWords = 7351;
+    
     public const string DbName = "wordsdb.sqlite3";
-
-    // public static readonly string WordDbPath =
-    //     Path.Combine(
-    //         Environment.GetFolderPath(Environment.SpecialFolder
-    //             .LocalApplicationData), DbName);
+    
     public static readonly string WordDbPath =
         PathHelper.GetLocalFilePath(DbName);
     

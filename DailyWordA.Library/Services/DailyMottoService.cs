@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using DailyWordA.Library.Helpers;
 using DailyWordA.Library.Models;
@@ -13,31 +14,35 @@ public class DailyMottoService : IDailyMottoService {
 
     public DailyMottoService(IAlertService alertService, 
         string domainName = "apis.juhe.cn/fapigx/everyday/query", 
-        string apiKey = "9b76218d1b3fc00ccb3a97899f2066d6")
-    {
+        string apiKey = "OWI3NjIxOGQxYjNmYzAwY2NiM2E5Nzg5OWYyMDY2ZDY=") {
         _alertService = alertService;
         _domainName = domainName;
         _apiKey = apiKey;
     }
+
+    private static string Decode(string base64EncodedData) {
+        var bytes = Convert.FromBase64String(base64EncodedData);
+        return Encoding.UTF8.GetString(bytes);
+    }
     
-    public async Task<DailyMotto> GetTodayMottoAsync()
-    {
+    public async Task<DailyMotto> GetTodayMottoAsync() {
         DailyMotto todayMotto = await MeiriyingyuMottoAsync() ?? 
                                 await ShanbaydanciMottoAsync();
         return todayMotto ?? new DailyMotto {
-            Content = "非常抱歉，今日该接口似乎出现了问题..."
+            Content = string.Empty,
+            Translation = "非常抱歉，今日该接口似乎出现了问题..."
         };
         
     }
 
-    public async Task<DailyMotto> MeiriyingyuMottoAsync() {
+    private async Task<DailyMotto> MeiriyingyuMottoAsync() {
         const string server = "每日英语服务器";
         using var httpClient = new HttpClient();
         HttpResponseMessage response;
         try {
             response =
                 await httpClient.GetAsync(
-                    $"http://{_domainName}?key={_apiKey}");
+                    $"http://{_domainName}?key={Decode(_apiKey)}");
             response.EnsureSuccessStatusCode();
         } catch (Exception e) {
             await _alertService.AlertAsync(
@@ -73,8 +78,8 @@ public class DailyMottoService : IDailyMottoService {
             Date = mottoResult.Date
         };
     }
-    
-    public async Task<DailyMotto> ShanbaydanciMottoAsync() {
+
+    private async Task<DailyMotto> ShanbaydanciMottoAsync() {
         const string server = "扇贝单词服务器";
         using var httpClient = new HttpClient();
         HttpResponseMessage response;
@@ -107,10 +112,10 @@ public class DailyMottoService : IDailyMottoService {
         }
         
         return new DailyMotto {
-            Content = shanbaydanciResponse.content,
-            Translation = shanbaydanciResponse.translation,
+            Content = shanbaydanciResponse.Content,
+            Translation = shanbaydanciResponse.Translation,
             Date = shanbaydanciResponse.assign_date,
-            Author = shanbaydanciResponse.author
+            Author = shanbaydanciResponse.Author
         };
     }
 }
@@ -129,10 +134,10 @@ public class MeiriyingyuResult {
 
 // 扇贝单词API的返回对象类；该API优势在于没有限制使用次数，缺点是同一天的请求只会返回相同的结果
 public class ShanbaydanciResponse {
-    public string content { get; set; }
-    public string author { get; set; }
+    public string Content { get; set; }
+    public string Author { get; set; }
     public string assign_date { get; set; }
-    public string translation { get; set; }
+    public string Translation { get; set; }
 }
 // public class Track_object {
 //     public string code { get; set; }

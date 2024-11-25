@@ -22,9 +22,7 @@ public class TodayWordViewModel : ViewModelBase {
         _todayImageService = todayImageService;
         _contentNavigationService = contentNavigationService;
         _menuNavigationService = menuNavigationService;
-        // if (_wordStorage.IsInitialized == false) {
-        //     _wordStorage.InitializeAsync();
-        // }
+        
         _wordStorage.InitializeAsync();
         
         // OnInitializedCommand = new RelayCommand(OnInitialized);
@@ -59,6 +57,7 @@ public class TodayWordViewModel : ViewModelBase {
     public void OnInitialized() {
         Task.Run(async () => {
             TodayImage = await _todayImageService.GetTodayImageAsync();
+            
             var updateResult = await _todayImageService.CheckUpdateAsync();
             if (updateResult.HasUpdate) {
                 TodayImage = updateResult.TodayImage;
@@ -67,8 +66,8 @@ public class TodayWordViewModel : ViewModelBase {
 
         Task.Run(async () => {
             IsLoading = true;
-            TodayWord = await _wordStorage.GetRandomWordAsync();
             await Task.Delay(200);
+            TodayWord = await _wordStorage.GetRandomWordAsync();
             IsLoading = false;
         });
     }
