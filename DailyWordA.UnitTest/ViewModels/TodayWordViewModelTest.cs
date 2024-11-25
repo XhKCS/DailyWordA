@@ -110,9 +110,9 @@ public class TodayWordViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
 
-        var todayViewModel = new TodayWordViewModel(null, null,
+        var todayWordViewModel = new TodayWordViewModel(null, null,
             mockContentNavigationService, null);
-        todayViewModel.ShowDetail();
+        todayWordViewModel.ShowDetail();
         contentNavigationServiceMock.Verify(
             p => p.NavigateTo(ContentNavigationConstant.WordDetailView, null),
             Times.Once);

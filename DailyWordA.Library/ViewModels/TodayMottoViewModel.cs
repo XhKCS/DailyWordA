@@ -61,7 +61,7 @@ public class TodayMottoViewModel : ViewModelBase {
     
     // 跳转至格言详情页
     public ICommand ShowDetailCommand { get; }
-    private void ShowDetail() {
+    public void ShowDetail() {
         // 跳转至详情页面，注意要传参：当前的TodayMotto
         _contentNavigationService.NavigateTo(
             ContentNavigationConstant.MottoDetailView, TodayMotto);
