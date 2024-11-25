@@ -92,7 +92,7 @@ public class WordQuizViewModel : ViewModelBase {
     
     // 切换到下一题
     public ICommand UpdateCommand { get; }
-    private void Update() {
+    public void Update() {
         // 初始化时也需要调用
         Task.Run(async () => {
             IsLoading = true;
@@ -130,7 +130,7 @@ public class WordQuizViewModel : ViewModelBase {
 
     // 跳转至单词详情页
     public ICommand ShowDetailCommand { get; }
-    private void ShowDetail() {
+    public void ShowDetail() {
         _contentNavigationService.NavigateTo(
             ContentNavigationConstant.WordDetailView, CorrectWord);
     }

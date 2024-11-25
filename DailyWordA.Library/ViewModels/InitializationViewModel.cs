@@ -21,7 +21,7 @@ public class InitializationViewModel : ViewModelBase {
     
     public ICommand OnInitializedCommand { get; }
 
-    private async Task OnInitializedAsync() {
+    public async Task OnInitializedAsync() {
         if (!_wordStorage.IsInitialized) {
             await _wordStorage.InitializeAsync();
         }

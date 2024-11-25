@@ -14,18 +14,20 @@ public class WordStorageTest : IDisposable {
     public void Dispose() => WordStorageHelper.RemoveDatabaseFile();
     
     [Fact]
-    public void IsInitialized_Default() {
+    public async Task IsInitialized_Default() {
         var preferenceStorageMock = new Mock<IPreferenceStorage>();
         preferenceStorageMock.Setup(p => p.Get(WordStorageConstant.VersionKey, default(int)))
             .Returns(WordStorageConstant.Version);
         var mockPreferenceStorage = preferenceStorageMock.Object;
         var alertStorageMock = new Mock<IAlertService>();
         var mockAlertService = alertStorageMock.Object;
-        var poetryStorage = new WordStorage(mockPreferenceStorage, mockAlertService);
-        Assert.True(poetryStorage.IsInitialized);
-
+        var wordStorage = new WordStorage(mockPreferenceStorage, mockAlertService);
+        await wordStorage.InitializeAsync();
+        
+        Assert.True(wordStorage.IsInitialized);
         preferenceStorageMock.Verify(p => p.Get(WordStorageConstant.VersionKey, default(int)),
             Times.Once);
+        await wordStorage.CloseAsync();
     }
     
     [Fact]
@@ -60,6 +62,17 @@ public class WordStorageTest : IDisposable {
             Expression.Lambda<Func<WordObject, bool>>(Expression.Constant(true),
                 Expression.Parameter(typeof(WordObject), "p")), 0, int.MaxValue);
         Assert.Equal(WordStorage.NumberOfWords, wordList.Count);
+        await wordStorage.CloseAsync();
+    }
+
+    [Fact]
+    public async Task GetWordQuizOptionsAsync_Default() {
+        var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
+        var wordObject = await wordStorage.GetRandomWordAsync();
+        var wordQuizOptions = await wordStorage.GetWordQuizOptionsAsync(wordObject);
+        Assert.Equal(4, wordQuizOptions.Count);
+        Assert.Distinct(wordQuizOptions);
+        Assert.Contains(wordObject, wordQuizOptions);
         await wordStorage.CloseAsync();
     }
 }

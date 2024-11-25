@@ -21,7 +21,12 @@ public class WordFavoriteStorageTest : IDisposable {
         var mockPreferenceStorage = preferenceStorageMock.Object;
 
         var favoriteStorage = new WordFavoriteStorage(mockPreferenceStorage);
+        await favoriteStorage.InitializeAsync();
+        
         Assert.True(favoriteStorage.IsInitialized);
+        preferenceStorageMock.Verify(p => p.Get(WordFavoriteStorageConstant.VersionKey, default(int)),
+            Times.Once);
+        await favoriteStorage.CloseAsync();
     }
     
     [Fact]
