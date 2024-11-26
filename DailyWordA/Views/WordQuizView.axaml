@@ -12,11 +12,6 @@
              d:DataContext="{Binding WordQuizViewModel, Source={StaticResource ServiceLocator}}"
              >
     
-    <!-- <i:Interaction.Behaviors> -->
-    <!--     <ia:EventTriggerBehavior EventName="Loaded"> -->
-    <!--         <ia:InvokeCommandAction Command="{Binding UpdateCommand}"></ia:InvokeCommandAction> -->
-    <!--     </ia:EventTriggerBehavior> -->
-    <!-- </i:Interaction.Behaviors> -->
     <UserControl.Resources>
            <lc:EqualStringToBoolConverter x:Key="EqualStringToBoolConverter"></lc:EqualStringToBoolConverter>
     </UserControl.Resources>
