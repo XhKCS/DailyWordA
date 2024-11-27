@@ -44,7 +44,8 @@ public class WordStorageTest : IDisposable {
         Assert.True(File.Exists(WordStorage.WordDbPath));
         
         preferenceStorageMock.Verify(
-            p => p.Set(WordStorageConstant.VersionKey, WordStorageConstant.Version), Times.Once);
+            p => p.Set(WordStorageConstant.VersionKey, WordStorageConstant.Version), 
+            Times.Once);
     }
 
     [Fact]
@@ -52,6 +53,16 @@ public class WordStorageTest : IDisposable {
         var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
         var wordObject = await wordStorage.GetWordAsync(5003);
         Assert.Equal("confidential", wordObject.Word);
+        await wordStorage.CloseAsync();
+    }
+
+    [Fact]
+    public async Task GetRandomWordAsync_Default() {
+        var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
+        var wordObject = await wordStorage.GetRandomWordAsync();
+        Assert.NotNull(wordObject);
+        Assert.True(wordObject.Word.Length > 0);
+        Assert.True(wordObject.Id > 0);
         await wordStorage.CloseAsync();
     }
     

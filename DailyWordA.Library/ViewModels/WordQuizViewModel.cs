@@ -52,7 +52,7 @@ public class WordQuizViewModel : ViewModelBase {
     
     // 点击按钮切换测验模式
     public ICommand SelectModeCommand { get; }
-    private void SelectMode(string mode) {
+    public void SelectMode(string mode) {
         if (mode == QuizModes[0] || mode == QuizModes[1]) {
             SelectedMode = mode;
             Update();
@@ -111,14 +111,14 @@ public class WordQuizViewModel : ViewModelBase {
     
     // 选中某个选项时触发
     public ICommand RadioCheckedCommand { get; }
-    private void RadioChecked(WordObject selectedWordObject) {
+    public void RadioChecked(WordObject selectedWordObject) {
         HasSelected = true;
         SelectedOption = selectedWordObject;
     }
     
     // 用户点击提交按钮
     public ICommand CommitCommand { get; }
-    private void Commit() {
+    public void Commit() {
         if (SelectedOption.Word == CorrectWord.Word) {
             ResultText = "恭喜您回答正确！";
         }

@@ -1,6 +1,7 @@
 using DailyWordA.Library.Models;
 using DailyWordA.Library.Services;
 using DailyWordA.Library.ViewModels;
+using DailyWordA.UnitTest.Helpers;
 using Moq;
 
 namespace DailyWordA.UnitTest.ViewModels;
@@ -28,7 +29,8 @@ public class TodayWordViewModelTest {
         var mockWordStorage = wordStorageMock.Object;
         
         // 注意构造函数中已经自动调用了OnInitialized方法
-        var todayWordViewModel = new TodayWordViewModel(mockWordStorage, mockImageService, null, null);
+        var todayWordViewModel = new TodayWordViewModel(mockWordStorage, mockImageService, 
+            null, null);
         
         var todayImageList = new List<TodayImage>();
         var isLoadingList = new List<bool>();
@@ -99,6 +101,7 @@ public class TodayWordViewModelTest {
         }
 
         Assert.Same(oldTodayImageToReturn, todayImageList[0]);
+        Assert.Same(todayWordToReturn, todayWordViewModel.TodayWord);
 
         todayImageServiceMock.Verify(p => p.GetTodayImageAsync(), Times.Once);
         todayImageServiceMock.Verify(p => p.CheckUpdateAsync(), Times.Once);
@@ -109,12 +112,15 @@ public class TodayWordViewModelTest {
     public async Task ShowDetailCommandFunction_Default() {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
+        var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
 
-        var todayWordViewModel = new TodayWordViewModel(null, null,
+        var todayWordViewModel = new TodayWordViewModel(wordStorage, null,
             mockContentNavigationService, null);
         todayWordViewModel.ShowDetail();
         contentNavigationServiceMock.Verify(
-            p => p.NavigateTo(ContentNavigationConstant.WordDetailView, null),
+            p => p.NavigateTo(
+                ContentNavigationConstant.WordDetailView, todayWordViewModel.TodayWord),
             Times.Once);
+        await wordStorage.CloseAsync();
     }
 }

@@ -22,18 +22,11 @@ public class WordStorage : IWordStorage {
     // 文件存储需要借助的接口
     private readonly IPreferenceStorage _preferenceStorage;
     private readonly IAlertService _alertService;
-
-
-    public WordStorage(IPreferenceStorage preferenceStorage, IAlertService alertService)
-    {
+    
+    public WordStorage(IPreferenceStorage preferenceStorage, IAlertService alertService) {
         _preferenceStorage = preferenceStorage;
         _alertService = alertService;
     }
-
-    public bool IsInitialized =>
-        _preferenceStorage.Get(WordStorageConstant.VersionKey,
-            default(int)) == WordStorageConstant.Version &&
-        File.Exists(WordDbPath);
 
     private const string Server = "百词斩单词服务器";
     
@@ -119,18 +112,20 @@ public class WordStorage : IWordStorage {
         await Connection.CloseAsync();
         Console.WriteLine("WordStorage initialization complete.");
     }
-
+    
+    public bool IsInitialized =>
+        _preferenceStorage.Get(WordStorageConstant.VersionKey,
+            default(int)) == WordStorageConstant.Version &&
+        File.Exists(WordDbPath);
     
     public async Task InitializeAsync() {
         // await InitializeAsyncForFirstTime();
-        
         //单词数据已经通过api整理保存到了数据库文件中；在此只需获取资源文件中的数据库文件，并将其复制到客户机的目标文件上
         await using var dbFileStream =
             new FileStream(WordDbPath, FileMode.OpenOrCreate);
-        
         // 加上using可以让该函数结束时自动关闭数据库连接
         await using var dbAssetStream =
-            typeof(WordStorage).Assembly.GetManifestResourceStream(DbName); //不能直接用DbName来找，前面还有前缀，否则找不到
+            typeof(WordStorage).Assembly.GetManifestResourceStream(DbName);
         //因为资源只能用流打开，所以我们用流对流拷贝
         if (dbAssetStream != null) await dbAssetStream.CopyToAsync(dbFileStream);
         
@@ -154,14 +149,12 @@ public class WordStorage : IWordStorage {
     }
 
     public async Task<IList<WordObject>> GetWordsAsync(
-        Expression<Func<WordObject, bool>> where, int skip, int take)
-    {
+        Expression<Func<WordObject, bool>> where, int skip, int take) {
         return await Connection.Table<WordObject>().Where(where).Skip(skip).Take(take)
             .ToListAsync();
     }
 
-    public async Task SaveWordAsync(WordObject wordObject)
-    {
+    public async Task SaveWordAsync(WordObject wordObject) {
         await Connection.InsertOrReplaceAsync(wordObject);
     }
 
@@ -170,7 +163,7 @@ public class WordStorage : IWordStorage {
         List<WordObject> wordList = await Connection.Table<WordObject>().Where(
                 p=>p.Word != correctWord.Word).Skip(random.Next(5000)).Take(3)
             .ToListAsync();
-        var randomIndex = random.Next(0,3);
+        var randomIndex = random.Next(0, 4); //含头不含尾
         wordList.Insert(randomIndex, correctWord);
         return wordList;
     }

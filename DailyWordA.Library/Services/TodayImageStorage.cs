@@ -39,8 +39,7 @@ public class TodayImageStorage : ITodayImageStorage {
     public async Task<TodayImage> GetTodayImageAsync(
         bool isIncludingImageStream) {
         var todayImage = new TodayImage {
-            StartDate =
-                _preferenceStorage.Get(StartDateKey, StartDateDefault),
+            StartDate = _preferenceStorage.Get(StartDateKey, StartDateDefault),
             ExpiresAt = _preferenceStorage.Get(ExpiresAtKey, ExpiresAtDefault),
             Copyright = _preferenceStorage.Get(CopyrightKey, CopyrightDefault),
             Title = _preferenceStorage.Get(TitleKey, TitleDefault),

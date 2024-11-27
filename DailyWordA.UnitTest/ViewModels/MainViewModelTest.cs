@@ -53,8 +53,13 @@ public class MainViewModelTest {
     
     [Fact]
     public void OnMenuTapped_SelectedMenuItemIsNull() {
-        var mainViewModel = new MainViewModel(null);
+        var menuNavigationServiceMock = new Mock<IMenuNavigationService>();
+        var mockMenuNavigationService = menuNavigationServiceMock.Object;
+        var mainViewModel = new MainViewModel(mockMenuNavigationService);
         mainViewModel.OnMenuTapped();
+        
+        menuNavigationServiceMock.Verify(p => 
+                p.NavigateTo(It.IsAny<string>(), null), Times.Never);
     }
     
     [Fact]
@@ -68,8 +73,8 @@ public class MainViewModelTest {
         mainViewModel.SelectedMenuItem = menuItem;
         mainViewModel.OnMenuTapped();
 
-        menuNavigationServiceMock.Verify(p => p.NavigateTo(menuItem.View, null),
-            Times.Once);
+        menuNavigationServiceMock.Verify(p => 
+                p.NavigateTo(menuItem.View, null), Times.Once);
     }
     
     [Fact]

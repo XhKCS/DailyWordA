@@ -25,6 +25,7 @@ public class WordDetailViewModelTest {
 
         var wordDetailViewModel = new WordDetailViewModel(null, mockFavoriteStorage);
         wordDetailViewModel.SetParameter(wordObject);
+        Assert.Same(wordObject, wordDetailViewModel.CurrentWord);
 
         var loadingList = new List<bool>();
         wordDetailViewModel.PropertyChanged += (sender, args) => {
@@ -44,29 +45,31 @@ public class WordDetailViewModelTest {
 
         await wordDetailViewModel.FavoriteSwitchClickedAsync();
         favoriteStorageMock.Verify(
-            p => p.GetFavoriteAsync(favoriteToReturn.WordId), Times.Once);
-        Assert.Same(favoriteToReturn, wordDetailViewModel.Favorite);
+            p => p.SaveFavoriteAsync(favoriteToReturn), Times.Once);
         Assert.Equal(4, loadingList.Count);
     }
     
     [Fact]
     public async Task Query_Default() {
         object parameter = null;
-        var menuNavigationService = new Mock<IMenuNavigationService>();
-        menuNavigationService
+        var menuNavigationServiceMock = new Mock<IMenuNavigationService>();
+        menuNavigationServiceMock
             .Setup(p => p.NavigateTo(MenuNavigationConstant.WordQueryView,
                 It.IsAny<object>()))
             .Callback<string, object>((s, o) => parameter = o);
-        var mockMenuNavigationService = menuNavigationService.Object;
+        var mockMenuNavigationService = menuNavigationServiceMock.Object;
 
         var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
+        
         var currentWord = await wordStorage.GetWordAsync(5003);
-
         var wordDetailViewModel =
             new WordDetailViewModel(mockMenuNavigationService, null);
         wordDetailViewModel.SetParameter(currentWord);
+        
         wordDetailViewModel.Query();
-
+        
+        menuNavigationServiceMock.Verify(p => p.NavigateTo(
+            MenuNavigationConstant.WordQueryView, parameter), Times.Once);
         Assert.IsType<WordQuery>(parameter);
         var wordQuery = (WordQuery)parameter;
         Assert.Equal(currentWord.Word, wordQuery.Word);

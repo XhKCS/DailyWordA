@@ -8,7 +8,7 @@ public interface IWordStorage {
 
     Task InitializeAsync();
 
-    Task InitializeAsyncForFirstTime(); //只在第一次获取单词保存为数据库表时用到
+    Task InitializeAsyncForFirstTime(); //用于爬取单词到本地，只在第一次获取单词保存为数据库表时用到
     
     Task<WordObject> GetWordAsync(int id);
     
