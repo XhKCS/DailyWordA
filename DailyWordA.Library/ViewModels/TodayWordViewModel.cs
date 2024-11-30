@@ -89,7 +89,7 @@ public class TodayWordViewModel : ViewModelBase {
     }
     
     public ICommand NavigateToTodayMottoViewCommand { get; }
-    private void NavigateToTodayMottoView() {
+    public void NavigateToTodayMottoView() {
        _menuNavigationService.NavigateTo(MenuNavigationConstant.TodayMottoView);
     }
 }

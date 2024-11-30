@@ -123,4 +123,19 @@ public class TodayWordViewModelTest {
             Times.Once);
         await wordStorage.CloseAsync();
     }
+
+    [Fact]
+    public async Task NavigateToTodayMottoView_Default() {
+        var menuNavigationServiceMock = new Mock<IMenuNavigationService>();
+        var mockMenuNavigationService = menuNavigationServiceMock.Object;
+        var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
+
+        var todayWordViewModel = new TodayWordViewModel(wordStorage, null,
+            null, mockMenuNavigationService);
+        todayWordViewModel.NavigateToTodayMottoView();
+        menuNavigationServiceMock.Verify(
+            p => p.NavigateTo(MenuNavigationConstant.TodayMottoView, null), 
+            Times.Once);
+        await wordStorage.CloseAsync();
+    }
 }

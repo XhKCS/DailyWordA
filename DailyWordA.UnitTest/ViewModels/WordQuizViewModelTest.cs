@@ -43,6 +43,7 @@ public class WordQuizViewModelTest {
         
         Assert.Equal("中文选词", wordQuizViewModel.SelectedMode);
         Assert.NotEqual(oldWord, wordQuizViewModel.CorrectWord);
+        await wordStorage.CloseAsync();
     }
 
     [Fact]
@@ -59,6 +60,7 @@ public class WordQuizViewModelTest {
         
         Assert.True(wordQuizViewModel.HasSelected);
         Assert.Equal(selectedWord, wordQuizViewModel.SelectedOption);
+        await wordStorage.CloseAsync();
     }
 
     [Fact]
@@ -75,6 +77,7 @@ public class WordQuizViewModelTest {
         
         Assert.True(wordQuizViewModel.HasAnswered);
         Assert.Equal("恭喜您回答正确！", wordQuizViewModel.ResultText);
+        await wordStorage.CloseAsync();
     }
     
     [Fact]
@@ -93,6 +96,7 @@ public class WordQuizViewModelTest {
         
         Assert.True(wordQuizViewModel.HasAnswered);
         Assert.Equal("很遗憾，回答错误啦~", wordQuizViewModel.ResultText);
+        await wordStorage.CloseAsync();
     }
     
     [Fact]
