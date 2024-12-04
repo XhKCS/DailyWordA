@@ -7,9 +7,9 @@
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DailyWordA.Views.WordQuizView"
+             x:Class="DailyWordA.Views.WordSelectionView"
              x:Name="TheWordQuizView"
-             d:DataContext="{Binding WordQuizViewModel, Source={StaticResource ServiceLocator}}"
+             d:DataContext="{Binding WordSelectionViewModel, Source={StaticResource ServiceLocator}}"
              >
     
     <UserControl.Resources>
@@ -227,15 +227,15 @@
                <Button HorizontalAlignment="Center"
                        IsVisible="{Binding HasAnswered}"
                        Margin="0,15,20,8"
-                       Content="查看单词详情"
-                       FontSize="17"
+                       Content="单词详情"
+                       FontSize="16"
                        Command="{Binding ShowDetailCommand}"
                        VerticalAlignment="Center" />
                <Button HorizontalAlignment="Center"
                        IsVisible="{Binding HasAnswered}"
                        Margin="0,15,0,8"
                        Content="下一题"
-                       FontSize="17"
+                       FontSize="16"
                        Command="{Binding UpdateCommand}"
                        VerticalAlignment="Center" />
         </StackPanel>

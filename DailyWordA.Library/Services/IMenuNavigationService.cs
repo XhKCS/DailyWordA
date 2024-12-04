@@ -17,5 +17,7 @@ public static class MenuNavigationConstant {
     
     public const string TranslateView = nameof(TranslateView);
     
-    public const string WordQuizView = nameof(WordQuizView); //单词测验
+    public const string WordSelectionView = nameof(WordSelectionView); //单词测验-中英选择
+    
+    public const string WordDictationView = nameof(WordDictationView); //单词测验-听音写词
 }

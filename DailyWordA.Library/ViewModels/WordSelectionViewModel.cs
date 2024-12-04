@@ -6,24 +6,22 @@ using MvvmHelpers;
 
 namespace DailyWordA.Library.ViewModels;
 
-public class WordQuizViewModel : ViewModelBase {
+// 单词测验-中英选择
+public class WordSelectionViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly IContentNavigationService _contentNavigationService;
-    private readonly IAudioPlayer _audioPlayer;
+    // private readonly IAudioPlayer _audioPlayer;
 
-    public WordQuizViewModel(IWordStorage wordStorage, 
-        IContentNavigationService contentNavigationService,
-        IAudioPlayer audioPlayer) {
+    public WordSelectionViewModel(IWordStorage wordStorage, 
+        IContentNavigationService contentNavigationService) {
         _wordStorage = wordStorage;
         _contentNavigationService = contentNavigationService;
-        _audioPlayer = audioPlayer;
         
         UpdateCommand = new RelayCommand(Update);
         CommitCommand = new RelayCommand(Commit);
         RadioCheckedCommand = new RelayCommand<WordObject>(RadioChecked);
         SelectModeCommand = new RelayCommand<string>(SelectMode);
         ShowDetailCommand = new RelayCommand(ShowDetail);
-        PlayAudioCommand = new AsyncRelayCommand(PlayAudio);
         
         Update();
     }
@@ -46,7 +44,7 @@ public class WordQuizViewModel : ViewModelBase {
         get => _selectedMode;
         private set => SetProperty(ref _selectedMode, value);
     }
-    public bool IsShowMode1 => SelectedMode == "英文选义";
+    
 
     // 我们可以写一个Converter将字符串转化为bool类型，这样就不需要下面的变量
     // private bool _showMode1 = true; 
@@ -69,7 +67,6 @@ public class WordQuizViewModel : ViewModelBase {
         get => _resultText;
         set => SetProperty(ref _resultText, value);
     }
-    
     
     private bool _hasAnswered; //已提交答案
     public bool HasAnswered {
@@ -140,9 +137,9 @@ public class WordQuizViewModel : ViewModelBase {
             ContentNavigationConstant.WordDetailView, CorrectWord);
     }
     
-    public ICommand PlayAudioCommand { get; }
-    public async Task PlayAudio() {
-        await _audioPlayer.PlayAudioAsync(CorrectWord.Word);
-    }
+    // public ICommand PlayAudioCommand { get; }
+    // public async Task PlayAudio() {
+    //     await _audioPlayer.PlayAudioAsync(CorrectWord.Word);
+    // }
 
 }

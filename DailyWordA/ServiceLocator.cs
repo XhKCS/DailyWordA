@@ -68,8 +68,11 @@ public class ServiceLocator {
     public WordFavoriteViewModel WordFavoriteViewModel =>
         _serviceProvider.GetRequiredService<WordFavoriteViewModel>();
     
-    public WordQuizViewModel WordQuizViewModel =>
-        _serviceProvider.GetRequiredService<WordQuizViewModel>();
+    public WordSelectionViewModel WordSelectionViewModel =>
+        _serviceProvider.GetRequiredService<WordSelectionViewModel>();
+    
+    public WordDictationViewModel WordDictationViewModel =>
+        _serviceProvider.GetRequiredService<WordDictationViewModel>();
     
     public ServiceLocator() {
         var serviceCollection = new ServiceCollection();
@@ -98,7 +101,8 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<WordQueryViewModel>();
         serviceCollection.AddSingleton<WordQueryResultViewModel>();
         serviceCollection.AddSingleton<WordFavoriteViewModel>();
-        serviceCollection.AddSingleton<WordQuizViewModel>();
+        serviceCollection.AddSingleton<WordSelectionViewModel>();
+        serviceCollection.AddSingleton<WordDictationViewModel>();
 
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }

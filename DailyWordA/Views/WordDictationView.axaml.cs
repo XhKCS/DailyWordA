@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace DailyWordA.Views;
 
-public partial class WordQuizView : UserControl
+public partial class WordDictationView : UserControl
 {
-    public WordQuizView()
+    public WordDictationView()
     {
         InitializeComponent();
     }

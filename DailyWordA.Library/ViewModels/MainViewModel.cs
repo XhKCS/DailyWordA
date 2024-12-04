@@ -106,11 +106,15 @@ public class MenuItem {
     private static MenuItem WordFavoriteView =>
         new() { Name = "单词收藏", View = MenuNavigationConstant.WordFavoriteView };
     
-    private static MenuItem WordQuizView =>
-        new() { Name = "单词测验", View = MenuNavigationConstant.WordQuizView };
+    private static MenuItem WordSelectionView =>
+        new() { Name = "单词测验-中英选择", View = MenuNavigationConstant.WordSelectionView };
+    
+    private static MenuItem WordDictationView =>
+        new() { Name = "单词测验-听音写词", View = MenuNavigationConstant.WordDictationView };
     
     public static IEnumerable<MenuItem> MenuItems { get; } = [
         TodayWordView, TodayMottoView, TranslateView, 
-        WordQueryView, WordFavoriteView, WordQuizView
+        WordQueryView, WordFavoriteView, WordSelectionView,
+        WordDictationView
     ];
 }
