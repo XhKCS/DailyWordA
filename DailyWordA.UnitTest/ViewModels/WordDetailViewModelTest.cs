@@ -23,7 +23,7 @@ public class WordDetailViewModelTest {
             .ReturnsAsync(favoriteToReturn);
         var mockFavoriteStorage = favoriteStorageMock.Object;
 
-        var wordDetailViewModel = new WordDetailViewModel(null, mockFavoriteStorage);
+        var wordDetailViewModel = new WordDetailViewModel(null, mockFavoriteStorage, null);
         wordDetailViewModel.SetParameter(wordObject);
         Assert.Same(wordObject, wordDetailViewModel.CurrentWord);
 
@@ -63,7 +63,7 @@ public class WordDetailViewModelTest {
         
         var currentWord = await wordStorage.GetWordAsync(5003);
         var wordDetailViewModel =
-            new WordDetailViewModel(mockMenuNavigationService, null);
+            new WordDetailViewModel(mockMenuNavigationService, null, null);
         wordDetailViewModel.SetParameter(currentWord);
         
         wordDetailViewModel.Query();

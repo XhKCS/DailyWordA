@@ -28,10 +28,14 @@
                    Margin="0,0,0,8"
                    HorizontalAlignment="Center"
                    Content="{Binding CurrentWord.Accent}" />
+            <Button HorizontalAlignment="Center"
+                    Content="单词发音"
+                    Command="{Binding PlayAudioCommand}"
+            />
             <!-- 注意下面的StackPanel内部是水平布局 -->
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        Margin="0,0,0,8">
+                        Margin="0,5,0,8">
                 <Label FontSize="18"
                        Content="中文释义： " />
                 <Label FontSize="18"

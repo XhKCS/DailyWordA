@@ -8,15 +8,19 @@ namespace DailyWordA.Library.ViewModels;
 public class WordDetailViewModel : ViewModelBase {
     private readonly IMenuNavigationService _menuNavigationService;
     private readonly IWordFavoriteStorage _wordFavoriteStorage;
+    private readonly IAudioPlayer _audioPlayer;
 
     public WordDetailViewModel(IMenuNavigationService menuNavigationService,
-        IWordFavoriteStorage wordFavoriteStorage) {
+        IWordFavoriteStorage wordFavoriteStorage,
+        IAudioPlayer audioPlayer) {
         _menuNavigationService = menuNavigationService;
         _wordFavoriteStorage = wordFavoriteStorage;
+        _audioPlayer = audioPlayer;
         
         OnLoadedCommand = new AsyncRelayCommand(OnLoadedAsync);
         FavoriteSwitchCommand = new AsyncRelayCommand(FavoriteSwitchClickedAsync);
         QueryCommand = new RelayCommand(Query);
+        PlayAudioCommand = new AsyncRelayCommand(PlayAudio);
     }
     
     private WordObject _currentWord;
@@ -72,6 +76,11 @@ public class WordDetailViewModel : ViewModelBase {
             new WordQuery {
                 Word = CurrentWord.Word, CnMeaning = CurrentWord.CnMeaning
             });
+    }
+    
+    public ICommand PlayAudioCommand { get; }
+    public async Task PlayAudio() {
+        await _audioPlayer.PlayAudioAsync(CurrentWord.Word);
     }
 
 }

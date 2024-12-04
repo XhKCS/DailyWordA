@@ -8,18 +8,22 @@ namespace DailyWordA.Library.ViewModels;
 
 public class WordQuizViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
-    private IContentNavigationService _contentNavigationService;
+    private readonly IContentNavigationService _contentNavigationService;
+    private readonly IAudioPlayer _audioPlayer;
 
     public WordQuizViewModel(IWordStorage wordStorage, 
-        IContentNavigationService contentNavigationService) {
+        IContentNavigationService contentNavigationService,
+        IAudioPlayer audioPlayer) {
         _wordStorage = wordStorage;
         _contentNavigationService = contentNavigationService;
+        _audioPlayer = audioPlayer;
         
         UpdateCommand = new RelayCommand(Update);
         CommitCommand = new RelayCommand(Commit);
         RadioCheckedCommand = new RelayCommand<WordObject>(RadioChecked);
         SelectModeCommand = new RelayCommand<string>(SelectMode);
         ShowDetailCommand = new RelayCommand(ShowDetail);
+        PlayAudioCommand = new AsyncRelayCommand(PlayAudio);
         
         Update();
     }
@@ -42,6 +46,7 @@ public class WordQuizViewModel : ViewModelBase {
         get => _selectedMode;
         private set => SetProperty(ref _selectedMode, value);
     }
+    public bool IsShowMode1 => SelectedMode == "英文选义";
 
     // 我们可以写一个Converter将字符串转化为bool类型，这样就不需要下面的变量
     // private bool _showMode1 = true; 
@@ -133,6 +138,11 @@ public class WordQuizViewModel : ViewModelBase {
     public void ShowDetail() {
         _contentNavigationService.NavigateTo(
             ContentNavigationConstant.WordDetailView, CorrectWord);
+    }
+    
+    public ICommand PlayAudioCommand { get; }
+    public async Task PlayAudio() {
+        await _audioPlayer.PlayAudioAsync(CorrectWord.Word);
     }
 
 }

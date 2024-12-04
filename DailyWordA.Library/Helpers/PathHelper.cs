@@ -30,4 +30,14 @@ public static class PathHelper {
     {
         return Path.Combine(LocalFolder, fileName);
     }
+
+    public static string GetLocalFolderPath(string folderName)
+    {
+        string folderPath = Path.Combine(LocalFolder, folderName);
+        if (!Directory.Exists(folderPath)) {
+            Directory.CreateDirectory(folderPath);
+        }
+        
+        return folderPath;
+    }
 }

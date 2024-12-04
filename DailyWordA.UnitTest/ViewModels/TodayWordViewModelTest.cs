@@ -30,7 +30,7 @@ public class TodayWordViewModelTest {
         
         // 注意构造函数中已经自动调用了OnInitialized方法
         var todayWordViewModel = new TodayWordViewModel(mockWordStorage, mockImageService, 
-            null, null);
+            null, null, null);
         
         var todayImageList = new List<TodayImage>();
         var isLoadingList = new List<bool>();
@@ -81,7 +81,7 @@ public class TodayWordViewModelTest {
         var mockWordStorage = wordStorageMock.Object;
 
         // 注意构造函数中已经自动调用了OnInitialized方法
-        var todayWordViewModel = new TodayWordViewModel(mockWordStorage, mockImageService, null, null);
+        var todayWordViewModel = new TodayWordViewModel(mockWordStorage, mockImageService, null, null, null);
         
         var todayImageList = new List<TodayImage>();
         var todayWordList = new List<WordObject>();
@@ -115,7 +115,7 @@ public class TodayWordViewModelTest {
         var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
 
         var todayWordViewModel = new TodayWordViewModel(wordStorage, null,
-            mockContentNavigationService, null);
+            mockContentNavigationService, null, null);
         todayWordViewModel.ShowDetail();
         contentNavigationServiceMock.Verify(
             p => p.NavigateTo(
@@ -131,7 +131,7 @@ public class TodayWordViewModelTest {
         var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
 
         var todayWordViewModel = new TodayWordViewModel(wordStorage, null,
-            null, mockMenuNavigationService);
+            null, mockMenuNavigationService, null);
         todayWordViewModel.NavigateToTodayMottoView();
         menuNavigationServiceMock.Verify(
             p => p.NavigateTo(MenuNavigationConstant.TodayMottoView, null), 

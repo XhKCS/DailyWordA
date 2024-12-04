@@ -32,7 +32,6 @@ public class DailyMottoService : IDailyMottoService {
             Content = string.Empty,
             Translation = "非常抱歉，今日该接口似乎出现了问题..."
         };
-        
     }
 
     private async Task<DailyMotto> MeiriyingyuMottoAsync() {

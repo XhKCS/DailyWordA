@@ -11,17 +11,20 @@ public class TodayWordViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly ITodayImageService _todayImageService;
     private readonly IContentNavigationService _contentNavigationService;
+    private readonly IAudioPlayer _audioPlayer;
     
     private readonly IMenuNavigationService _menuNavigationService;
     
     public  TodayWordViewModel(IWordStorage wordStorage, 
         ITodayImageService todayImageService,
         IContentNavigationService contentNavigationService,
-        IMenuNavigationService menuNavigationService) {
+        IMenuNavigationService menuNavigationService,
+        IAudioPlayer audioPlayer) {
         _wordStorage = wordStorage;
         _todayImageService = todayImageService;
         _contentNavigationService = contentNavigationService;
         _menuNavigationService = menuNavigationService;
+        _audioPlayer = audioPlayer;
         
         // _wordStorage.InitializeAsync();
         
@@ -30,6 +33,7 @@ public class TodayWordViewModel : ViewModelBase {
         UpdateWordCommand = new AsyncRelayCommand(UpdateWordAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
         NavigateToTodayMottoViewCommand = new RelayCommand(NavigateToTodayMottoView);
+        PlayAudioCommand = new AsyncRelayCommand(PlayAudio);
         
         // _wordStorage.InitializeAsyncForFirstTime();  //测试用
     }
@@ -91,5 +95,10 @@ public class TodayWordViewModel : ViewModelBase {
     public ICommand NavigateToTodayMottoViewCommand { get; }
     public void NavigateToTodayMottoView() {
        _menuNavigationService.NavigateTo(MenuNavigationConstant.TodayMottoView);
+    }
+    
+    public ICommand PlayAudioCommand { get; }
+    public async Task PlayAudio() {
+        await _audioPlayer.PlayAudioAsync(TodayWord.Word);
     }
 }
