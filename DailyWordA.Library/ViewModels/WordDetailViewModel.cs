@@ -9,18 +9,22 @@ public class WordDetailViewModel : ViewModelBase {
     private readonly IMenuNavigationService _menuNavigationService;
     private readonly IWordFavoriteStorage _wordFavoriteStorage;
     private readonly IAudioPlayer _audioPlayer;
+    private readonly IWordMistakeStorage _wordMistakeStorage;
 
     public WordDetailViewModel(IMenuNavigationService menuNavigationService,
         IWordFavoriteStorage wordFavoriteStorage,
-        IAudioPlayer audioPlayer) {
+        IAudioPlayer audioPlayer,
+        IWordMistakeStorage wordMistakeStorage) {
         _menuNavigationService = menuNavigationService;
         _wordFavoriteStorage = wordFavoriteStorage;
         _audioPlayer = audioPlayer;
+        _wordMistakeStorage = wordMistakeStorage;
         
         OnLoadedCommand = new AsyncRelayCommand(OnLoadedAsync);
         FavoriteSwitchCommand = new AsyncRelayCommand(FavoriteSwitchClickedAsync);
         QueryCommand = new RelayCommand(Query);
         PlayAudioCommand = new AsyncRelayCommand(PlayAudio);
+        MistakeSwitchCommand = new AsyncRelayCommand(MistakeSwitchClickedAsync);
     }
     
     private WordObject _currentWord;
@@ -43,6 +47,12 @@ public class WordDetailViewModel : ViewModelBase {
     }
     private WordFavorite _favorite;
     
+    public WordMistake Mistake {
+        get => _mistake;
+        set => SetProperty(ref _mistake, value);
+    }
+    private WordMistake _mistake;
+    
     public bool IsLoading {
         get => _isLoading;
         set => SetProperty(ref _isLoading, value);
@@ -59,14 +69,29 @@ public class WordDetailViewModel : ViewModelBase {
             };
         }
         Favorite = favorite;
+        
+        var mistake = await _wordMistakeStorage.GetMistakeAsync(CurrentWord.Id);
+        if (mistake == null) {
+            mistake = new WordMistake {
+                WordId = CurrentWord.Id
+            };
+        }
+        Mistake = mistake;
+        
         IsLoading = false;
     }
     
     public ICommand FavoriteSwitchCommand { get; }
-
     public async Task FavoriteSwitchClickedAsync() {
         IsLoading = true;
         await _wordFavoriteStorage.SaveFavoriteAsync(Favorite);
+        IsLoading = false;
+    }
+    
+    public ICommand MistakeSwitchCommand { get; }
+    public async Task MistakeSwitchClickedAsync() {
+        IsLoading = true;
+        await _wordMistakeStorage.SaveMistakeAsync(Mistake);
         IsLoading = false;
     }
     

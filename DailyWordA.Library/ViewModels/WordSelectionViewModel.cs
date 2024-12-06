@@ -10,15 +10,17 @@ namespace DailyWordA.Library.ViewModels;
 public class WordSelectionViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly IContentNavigationService _contentNavigationService;
-    // private readonly IAudioPlayer _audioPlayer;
+    private readonly IWordMistakeStorage _wordMistakeStorage;
 
     public WordSelectionViewModel(IWordStorage wordStorage, 
-        IContentNavigationService contentNavigationService) {
+        IContentNavigationService contentNavigationService,
+        IWordMistakeStorage wordMistakeStorage) {
         _wordStorage = wordStorage;
         _contentNavigationService = contentNavigationService;
+        _wordMistakeStorage = wordMistakeStorage;
         
         UpdateCommand = new RelayCommand(Update);
-        CommitCommand = new RelayCommand(Commit);
+        CommitCommand = new AsyncRelayCommand(CommitAsync);
         RadioCheckedCommand = new RelayCommand<WordObject>(RadioChecked);
         SelectModeCommand = new RelayCommand<string>(SelectMode);
         ShowDetailCommand = new RelayCommand(ShowDetail);
@@ -120,12 +122,17 @@ public class WordSelectionViewModel : ViewModelBase {
     
     // 用户点击提交按钮
     public ICommand CommitCommand { get; }
-    public void Commit() {
+    public async Task CommitAsync() {
         if (SelectedOption.Word == CorrectWord.Word) {
             ResultText = "恭喜您回答正确！";
         }
         else {
             ResultText = "很遗憾，回答错误啦~";
+            await _wordMistakeStorage.SaveMistakeAsync(new WordMistake {
+                WordId = CorrectWord.Id,
+                IsInNote = true,
+                Timestamp = DateTime.Now
+            });
         }
         HasAnswered = true;
     }

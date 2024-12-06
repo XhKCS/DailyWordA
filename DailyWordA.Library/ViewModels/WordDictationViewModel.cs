@@ -10,16 +10,19 @@ public class WordDictationViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly IContentNavigationService _contentNavigationService;
     private readonly IAudioPlayer _audioPlayer;
+    private readonly IWordMistakeStorage _wordMistakeStorage;
 
     public WordDictationViewModel(IWordStorage wordStorage, 
         IContentNavigationService contentNavigationService, 
-        IAudioPlayer audioPlayer) {
+        IAudioPlayer audioPlayer,
+        IWordMistakeStorage wordMistakeStorage) {
         _wordStorage = wordStorage;
         _contentNavigationService = contentNavigationService;
         _audioPlayer = audioPlayer;
+        _wordMistakeStorage = wordMistakeStorage;
         
         UpdateCommand = new RelayCommand(Update);
-        CommitCommand = new RelayCommand(Commit);
+        CommitCommand = new AsyncRelayCommand(CommitAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
         PlayAudioCommand = new AsyncRelayCommand(PlayAudio);
         
@@ -74,8 +77,18 @@ public class WordDictationViewModel : ViewModelBase {
     
     // 用户点击提交按钮
     public ICommand CommitCommand { get; }
-    public void Commit() {
-        ResultText = InputWord == CorrectWord.Word ? "恭喜您回答正确！" : "很遗憾，回答错误啦~";
+    public async Task CommitAsync() {
+        if (InputWord == CorrectWord.Word) {
+            ResultText = "恭喜您回答正确！";
+        }
+        else {
+            ResultText = "很遗憾，回答错误啦~";
+            await _wordMistakeStorage.SaveMistakeAsync(new WordMistake {
+                WordId = CorrectWord.Id,
+                IsInNote = true,
+                Timestamp = DateTime.Now
+            });
+        }
         HasAnswered = true;
     }
 

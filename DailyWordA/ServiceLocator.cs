@@ -74,6 +74,13 @@ public class ServiceLocator {
     public WordDictationViewModel WordDictationViewModel =>
         _serviceProvider.GetRequiredService<WordDictationViewModel>();
     
+    public WordMistakeNoteViewModel WordMistakeNoteViewModel =>
+        _serviceProvider.GetRequiredService<WordMistakeNoteViewModel>();
+    
+    
+    public WordleGameViewModel WordleGameViewModel =>
+        _serviceProvider.GetRequiredService<WordleGameViewModel>();
+    
     public ServiceLocator() {
         var serviceCollection = new ServiceCollection();
 
@@ -89,6 +96,7 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<ITodayImageStorage, TodayImageStorage>();
         serviceCollection.AddSingleton<IWordFavoriteStorage, WordFavoriteStorage>();
         serviceCollection.AddSingleton<IAudioPlayer, WordAudioPlayer>();
+        serviceCollection.AddSingleton<IWordMistakeStorage, WordMistakeStorage>();
         
         serviceCollection.AddSingleton<MainWindowViewModel>();
         serviceCollection.AddSingleton<TodayWordViewModel>();
@@ -103,6 +111,9 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<WordFavoriteViewModel>();
         serviceCollection.AddSingleton<WordSelectionViewModel>();
         serviceCollection.AddSingleton<WordDictationViewModel>();
+        serviceCollection.AddSingleton<WordMistakeNoteViewModel>();
+        
+        serviceCollection.AddSingleton<WordleGameViewModel>();
 
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }

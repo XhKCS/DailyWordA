@@ -12,7 +12,7 @@ public class WordSelectionViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
         
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService);
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
         await Task.Delay(1000);
         
         Assert.Equal(4, wordQuizViewModel.QuizOptions.Count);
@@ -33,7 +33,7 @@ public class WordSelectionViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
         
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService);
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
         await Task.Delay(1000);
         var oldWord = wordQuizViewModel.CorrectWord;
         
@@ -52,7 +52,7 @@ public class WordSelectionViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
         
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService);
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
         await Task.Delay(1000);
         
         var selectedWord = wordQuizViewModel.QuizOptions[new Random().Next(0, 4)];
@@ -69,11 +69,11 @@ public class WordSelectionViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
         
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService);
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
         await Task.Delay(1000);
         
         wordQuizViewModel.RadioChecked(wordQuizViewModel.CorrectWord);
-        wordQuizViewModel.Commit();
+        wordQuizViewModel.CommitAsync();
         
         Assert.True(wordQuizViewModel.HasAnswered);
         Assert.Equal("恭喜您回答正确！", wordQuizViewModel.ResultText);
@@ -86,13 +86,13 @@ public class WordSelectionViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
         
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService);
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
         await Task.Delay(1000);
 
         var index = wordQuizViewModel.QuizOptions.IndexOf(wordQuizViewModel.CorrectWord);
         var wrongWord = wordQuizViewModel.QuizOptions[(index + 1) % 4];
         wordQuizViewModel.RadioChecked(wrongWord);
-        wordQuizViewModel.Commit();
+        wordQuizViewModel.CommitAsync();
         
         Assert.True(wordQuizViewModel.HasAnswered);
         Assert.Equal("很遗憾，回答错误啦~", wordQuizViewModel.ResultText);
@@ -104,7 +104,7 @@ public class WordSelectionViewModelTest {
         var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService);
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
 
         await Task.Delay(1000);
         wordQuizViewModel.ShowDetail();

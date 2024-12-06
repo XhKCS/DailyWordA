@@ -21,6 +21,8 @@ public class MenuNavigationService : IMenuNavigationService {
                 WordSelectionViewModel,
             MenuNavigationConstant.WordDictationView => ServiceLocator.Current.
                 WordDictationViewModel,
+            MenuNavigationConstant.WordMistakeNoteView => ServiceLocator.Current.
+                WordMistakeNoteViewModel,
             _ => throw new Exception("未知的视图。")
         };
 

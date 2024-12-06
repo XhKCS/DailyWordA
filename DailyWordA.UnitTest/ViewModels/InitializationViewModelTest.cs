@@ -19,7 +19,7 @@ public class InitializationViewModelTest {
         var mockRootNavigationService = rootNavigationServiceMock.Object;
         
         var initializationViewModel = new InitializationViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
 
         await initializationViewModel.OnInitializedAsync();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);
@@ -44,7 +44,7 @@ public class InitializationViewModelTest {
         var mockRootNavigationService = rootNavigationServiceMock.Object;
         
         var initializationViewModel = new InitializationViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
 
         await initializationViewModel.OnInitializedAsync();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);

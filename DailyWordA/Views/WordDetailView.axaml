@@ -134,6 +134,7 @@
                         IsVisible="{Binding IsLoading, Converter={StaticResource NegativeConverter}}">
                    <ToggleSwitch OnContent="已收藏"
                                  OffContent="未收藏"
+                                 Margin="0,0,10,0"
                                  IsChecked="{Binding Favorite.IsFavorite}"
                                  Command="{Binding FavoriteSwitchCommand}">
                           <!-- IsToggled="{Binding Favorite.IsFavorite}"> -->
@@ -145,6 +146,12 @@
                           <!--         </b:MauiActionCollection> -->
                           <!--     </b:MauiEventHandlerBehavior> -->
                           <!-- </Switch.Behaviors> -->
+                   </ToggleSwitch>
+                   
+                   <ToggleSwitch OnContent="已加入错题本"
+                                 OffContent="未加入错题本"
+                                 IsChecked="{Binding Mistake.IsInNote}"
+                                 Command="{Binding MistakeSwitchCommand}">
                    </ToggleSwitch>
             </StackPanel>
             <Button HorizontalAlignment="Center"

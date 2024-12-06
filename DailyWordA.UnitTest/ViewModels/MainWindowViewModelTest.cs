@@ -19,7 +19,7 @@ public class MainWindowViewModelTest {
         var mockRootNavigationService = rootNavigationServiceMock.Object;
 
         var mainWindowViewModel = new MainWindowViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
 
         mainWindowViewModel.OnInitialized();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);
@@ -43,7 +43,7 @@ public class MainWindowViewModelTest {
         var mockRootNavigationService = rootNavigationServiceMock.Object;
 
         var mainWindowViewModel = new MainWindowViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
 
         mainWindowViewModel.OnInitialized();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);

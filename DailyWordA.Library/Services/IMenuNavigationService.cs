@@ -20,4 +20,6 @@ public static class MenuNavigationConstant {
     public const string WordSelectionView = nameof(WordSelectionView); //单词测验-中英选择
     
     public const string WordDictationView = nameof(WordDictationView); //单词测验-听音写词
+    
+    public const string WordMistakeNoteView = nameof(WordMistakeNoteView); //单词错题本
 }
