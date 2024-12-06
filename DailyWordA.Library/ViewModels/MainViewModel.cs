@@ -115,9 +115,12 @@ public class MenuItem {
     private static MenuItem WordMistakeNoteView =>
         new() { Name = "单词错题本", View = MenuNavigationConstant.WordMistakeNoteView };
     
+    private static MenuItem WordleGameView =>
+        new() { Name = "Wordle游戏", View = MenuNavigationConstant.WordleGameView };
+    
     public static IEnumerable<MenuItem> MenuItems { get; } = [
         TodayWordView, TodayMottoView, TranslateView, 
         WordQueryView, WordFavoriteView, WordSelectionView,
-        WordDictationView, WordMistakeNoteView
+        WordDictationView, WordMistakeNoteView, WordleGameView
     ];
 }

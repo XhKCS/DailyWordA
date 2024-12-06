@@ -22,4 +22,6 @@ public static class MenuNavigationConstant {
     public const string WordDictationView = nameof(WordDictationView); //单词测验-听音写词
     
     public const string WordMistakeNoteView = nameof(WordMistakeNoteView); //单词错题本
+    
+    public const string WordleGameView = nameof(WordleGameView); //Wordle游戏
 }
