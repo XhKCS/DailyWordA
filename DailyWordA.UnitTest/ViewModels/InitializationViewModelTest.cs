@@ -15,11 +15,15 @@ public class InitializationViewModelTest {
         favoriteStorageMock.Setup(p => p.IsInitialized).Returns(false);
         var mockFavoriteStorage = favoriteStorageMock.Object;
 
+        var mistakeStorageMock = new Mock<IWordMistakeStorage>();
+        mistakeStorageMock.Setup(p => p.IsInitialized).Returns(false);
+        var mockMistakeStorage = mistakeStorageMock.Object;
+
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
         
         var initializationViewModel = new InitializationViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
 
         await initializationViewModel.OnInitializedAsync();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);
@@ -39,12 +43,16 @@ public class InitializationViewModelTest {
         var favoriteStorageMock = new Mock<IWordFavoriteStorage>();
         favoriteStorageMock.Setup(p => p.IsInitialized).Returns(true);
         var mockFavoriteStorage = favoriteStorageMock.Object;
+        
+        var mistakeStorageMock = new Mock<IWordMistakeStorage>();
+        mistakeStorageMock.Setup(p => p.IsInitialized).Returns(true);
+        var mockMistakeStorage = mistakeStorageMock.Object;
 
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
         
         var initializationViewModel = new InitializationViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
 
         await initializationViewModel.OnInitializedAsync();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);

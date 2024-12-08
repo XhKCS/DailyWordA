@@ -74,7 +74,7 @@ public class WordFavoriteStorageTest : IDisposable {
     }
     
     [Fact]
-    public async Task GetFavoritesAsync_Default() {
+    public async Task GetFavoriteListAsync_Default() {
         var favoriteStorage = new WordFavoriteStorage(GetEmptyPreferenceStorage());
         await favoriteStorage.InitializeAsync();
 

@@ -105,13 +105,13 @@ public class WordFavoriteViewModelTest {
             IsFavorite = false,
             Timestamp = wordFavoriteList[2].Favorite.Timestamp
         };
-        var poetryToReturn = new WordObject {
+        var wordToReturn = new WordObject {
             Id = favoriteUpdated.WordId
         };
 
         var wordStorageMock = new Mock<IWordStorage>();
-        wordStorageMock.Setup(p => p.GetWordAsync(poetryToReturn.Id))
-            .ReturnsAsync(poetryToReturn);
+        wordStorageMock.Setup(p => p.GetWordAsync(wordToReturn.Id))
+            .ReturnsAsync(wordToReturn);
         var mockWordStorage = wordStorageMock.Object;
 
         var favoritePageViewModel =

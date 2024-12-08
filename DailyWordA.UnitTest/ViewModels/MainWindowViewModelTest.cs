@@ -14,12 +14,16 @@ public class MainWindowViewModelTest {
         var favoriteStorageMock = new Mock<IWordFavoriteStorage>();
         favoriteStorageMock.Setup(p => p.IsInitialized).Returns(false);
         var mockFavoriteStorage = favoriteStorageMock.Object;
+        
+        var mistakeStorageMock = new Mock<IWordMistakeStorage>();
+        mistakeStorageMock.Setup(p => p.IsInitialized).Returns(false);
+        var mockMistakeStorage = mistakeStorageMock.Object;
 
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
 
         var mainWindowViewModel = new MainWindowViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
 
         mainWindowViewModel.OnInitialized();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);
@@ -38,12 +42,16 @@ public class MainWindowViewModelTest {
         var favoriteStorageMock = new Mock<IWordFavoriteStorage>();
         favoriteStorageMock.Setup(p => p.IsInitialized).Returns(true);
         var mockFavoriteStorage = favoriteStorageMock.Object;
+        
+        var mistakeStorageMock = new Mock<IWordMistakeStorage>();
+        mistakeStorageMock.Setup(p => p.IsInitialized).Returns(true);
+        var mockMistakeStorage = mistakeStorageMock.Object;
 
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
 
         var mainWindowViewModel = new MainWindowViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, null);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
 
         mainWindowViewModel.OnInitialized();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);

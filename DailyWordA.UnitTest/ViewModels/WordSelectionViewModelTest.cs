@@ -1,3 +1,4 @@
+using DailyWordA.Library.Models;
 using DailyWordA.Library.Services;
 using DailyWordA.Library.ViewModels;
 using DailyWordA.UnitTest.Helpers;
@@ -69,11 +70,14 @@ public class WordSelectionViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
         
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
+        var mistakeStorageMock = new Mock<IWordMistakeStorage>();
+        var mockMistakeStorage = mistakeStorageMock.Object;
+        
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, mockMistakeStorage);
         await Task.Delay(1000);
         
         wordQuizViewModel.RadioChecked(wordQuizViewModel.CorrectWord);
-        wordQuizViewModel.CommitAsync();
+        await wordQuizViewModel.CommitAsync();
         
         Assert.True(wordQuizViewModel.HasAnswered);
         Assert.Equal("恭喜您回答正确！", wordQuizViewModel.ResultText);
@@ -86,16 +90,20 @@ public class WordSelectionViewModelTest {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
         
-        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, null);
+        var mistakeStorageMock = new Mock<IWordMistakeStorage>();
+        var mockMistakeStorage = mistakeStorageMock.Object;
+        
+        var wordQuizViewModel = new WordSelectionViewModel(wordStorage, mockContentNavigationService, mockMistakeStorage);
         await Task.Delay(1000);
 
         var index = wordQuizViewModel.QuizOptions.IndexOf(wordQuizViewModel.CorrectWord);
         var wrongWord = wordQuizViewModel.QuizOptions[(index + 1) % 4];
         wordQuizViewModel.RadioChecked(wrongWord);
-        wordQuizViewModel.CommitAsync();
+        await wordQuizViewModel.CommitAsync();
         
         Assert.True(wordQuizViewModel.HasAnswered);
         Assert.Equal("很遗憾，回答错误啦~", wordQuizViewModel.ResultText);
+        
         await wordStorage.CloseAsync();
     }
     
