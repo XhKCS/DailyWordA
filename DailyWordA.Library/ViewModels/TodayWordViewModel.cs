@@ -45,6 +45,7 @@ public class TodayWordViewModel : ViewModelBase {
         set => SetProperty(ref _todayWord, value);
     }
     
+    // 背景图片
     private TodayImage _todayImage;
     public TodayImage TodayImage {
         get => _todayImage;
@@ -58,6 +59,7 @@ public class TodayWordViewModel : ViewModelBase {
     }
     
     // public ICommand OnInitializedCommand { get; }
+    // 页面初始化方法
     public void OnInitialized() {
         Task.Run(async () => {
             TodayImage = await _todayImageService.GetTodayImageAsync();
@@ -75,7 +77,8 @@ public class TodayWordViewModel : ViewModelBase {
             IsLoading = false;
         });
     }
-
+    
+    // 切换单词
     public ICommand UpdateWordCommand { get; }
     private async Task UpdateWordAsync() {
         IsLoading = true;

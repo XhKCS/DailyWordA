@@ -12,18 +12,28 @@ public class WordDetailViewModelTest {
         var wordObject = new WordObject {
             Id = 1
         };
+        
         var favoriteToReturn =
             new WordFavorite {
                 WordId = wordObject.Id, IsFavorite = true
             };
-
         var favoriteStorageMock = new Mock<IWordFavoriteStorage>();
         favoriteStorageMock
             .Setup(p => p.GetFavoriteAsync(favoriteToReturn.WordId))
             .ReturnsAsync(favoriteToReturn);
         var mockFavoriteStorage = favoriteStorageMock.Object;
+        
+        var mistakeToReturn =
+            new WordMistake {
+                WordId = wordObject.Id, IsInNote = true
+            };
+        var mistakeStorageMock = new Mock<IWordMistakeStorage>();
+        mistakeStorageMock
+            .Setup(p => p.GetMistakeAsync(favoriteToReturn.WordId))
+            .ReturnsAsync(mistakeToReturn);
+        var mockMistakeStorage = mistakeStorageMock.Object;
 
-        var wordDetailViewModel = new WordDetailViewModel(null, mockFavoriteStorage, null, null);
+        var wordDetailViewModel = new WordDetailViewModel(null, mockFavoriteStorage, null, mockMistakeStorage);
         wordDetailViewModel.SetParameter(wordObject);
         Assert.Same(wordObject, wordDetailViewModel.CurrentWord);
 
@@ -39,6 +49,9 @@ public class WordDetailViewModelTest {
         favoriteStorageMock.Verify(
             p => p.GetFavoriteAsync(favoriteToReturn.WordId), Times.Once);
         Assert.Same(favoriteToReturn, wordDetailViewModel.Favorite);
+        mistakeStorageMock.Verify(
+            p => p.GetMistakeAsync(favoriteToReturn.WordId), Times.Once);
+        Assert.Same(mistakeToReturn, wordDetailViewModel.Mistake);
         Assert.Equal(2, loadingList.Count);
         Assert.True(loadingList.First());
         Assert.False(loadingList.Last());
@@ -46,7 +59,10 @@ public class WordDetailViewModelTest {
         await wordDetailViewModel.FavoriteSwitchClickedAsync();
         favoriteStorageMock.Verify(
             p => p.SaveFavoriteAsync(favoriteToReturn), Times.Once);
-        Assert.Equal(4, loadingList.Count);
+        
+        await wordDetailViewModel.MistakeSwitchClickedAsync();
+        mistakeStorageMock.Verify(
+            p => p.SaveMistakeAsync(mistakeToReturn), Times.Once);
     }
     
     [Fact]

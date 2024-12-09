@@ -32,14 +32,15 @@ public class WordDetailViewModel : ViewModelBase {
         get => _currentWord;
         set => SetProperty(ref _currentWord, value);
     }
+    
+    public override void SetParameter(object parameter) {
+        CurrentWord = parameter as WordObject;
+    }
 
     public bool CanShowPhrase => _currentWord.Phrase is { Length: > 0 };
     
     public bool CanShowEtyma => _currentWord.Etyma is { Length: > 0 };
 
-    public override void SetParameter(object parameter) {
-        CurrentWord = parameter as WordObject;
-    }
     
     public WordFavorite Favorite {
         get => _favorite;
@@ -59,6 +60,7 @@ public class WordDetailViewModel : ViewModelBase {
     }
     private bool _isLoading;
     
+    // 页面初始化
     public ICommand OnLoadedCommand { get; }
     public async Task OnLoadedAsync() {
         IsLoading = true;

@@ -19,6 +19,7 @@ public class WordAudioPlayer : IAudioPlayer {
     
     private static HttpClient _httpClient = new();
     
+    // 播放单词音频
     public async Task PlayAudioAsync(string word) {
         string filePath = GetPathFromWord(word);
         bool flag = true;
@@ -44,7 +45,8 @@ public class WordAudioPlayer : IAudioPlayer {
         
         _audioFileReader?.Dispose();
     }
-
+    
+    // 下载单词音频
     public async Task<bool> DownloadAudioAsync(string word) {
         string saveFilePath = GetPathFromWord(word);
         string url = $"https://dict.youdao.com/dictvoice?type=0&audio={word}";
