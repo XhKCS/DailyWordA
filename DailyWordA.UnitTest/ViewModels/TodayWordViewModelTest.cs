@@ -61,6 +61,19 @@ public class TodayWordViewModelTest {
     }
 
     [Fact]
+    public async Task UpdateWordAsync_Default()
+    {
+        var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
+        var todayWordViewModel = new TodayWordViewModel(wordStorage, null, null, null, null);
+        await Task.Delay(1000);
+        Assert.NotNull(todayWordViewModel.TodayWord);
+        var oldWord = todayWordViewModel.TodayWord;
+        await todayWordViewModel.UpdateWordAsync();
+        Assert.NotEqual(oldWord, todayWordViewModel.TodayWord);
+        // await wordStorage.CloseAsync();
+    }
+
+    [Fact]
     public async Task OnInitialized_ImageNotUpdated() {
         var oldTodayImageToReturn = new TodayImage();
         var updateResultToReturn = new TodayImageServiceCheckUpdateResult {
@@ -112,30 +125,34 @@ public class TodayWordViewModelTest {
     public async Task ShowDetailCommandFunction_Default() {
         var contentNavigationServiceMock = new Mock<IContentNavigationService>();
         var mockContentNavigationService = contentNavigationServiceMock.Object;
-        var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
+        var wordStorageMock = new Mock<IWordStorage>();
+        var wordToReturn = new WordObject { Word = "apple"};
+        wordStorageMock.Setup(p => p.GetRandomWordAsync()).ReturnsAsync(wordToReturn);
+        var mockWordStorage = wordStorageMock.Object;
 
-        var todayWordViewModel = new TodayWordViewModel(wordStorage, null,
+        var todayWordViewModel = new TodayWordViewModel(mockWordStorage, null,
             mockContentNavigationService, null, null);
         todayWordViewModel.ShowDetail();
         contentNavigationServiceMock.Verify(
             p => p.NavigateTo(
                 ContentNavigationConstant.WordDetailView, todayWordViewModel.TodayWord),
             Times.Once);
-        await wordStorage.CloseAsync();
     }
 
     [Fact]
     public async Task NavigateToTodayMottoView_Default() {
         var menuNavigationServiceMock = new Mock<IMenuNavigationService>();
         var mockMenuNavigationService = menuNavigationServiceMock.Object;
-        var wordStorage = await WordStorageHelper.GetInitializedWordStorage();
+        var wordStorageMock = new Mock<IWordStorage>();
+        var wordToReturn = new WordObject { Word = "apple"};
+        wordStorageMock.Setup(p => p.GetRandomWordAsync()).ReturnsAsync(wordToReturn);
+        var mockWordStorage = wordStorageMock.Object;
 
-        var todayWordViewModel = new TodayWordViewModel(wordStorage, null,
+        var todayWordViewModel = new TodayWordViewModel(mockWordStorage, null,
             null, mockMenuNavigationService, null);
         todayWordViewModel.NavigateToTodayMottoView();
         menuNavigationServiceMock.Verify(
             p => p.NavigateTo(MenuNavigationConstant.TodayMottoView, null), 
             Times.Once);
-        await wordStorage.CloseAsync();
     }
 }

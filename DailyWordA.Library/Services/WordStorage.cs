@@ -47,6 +47,7 @@ public class WordStorage : IWordStorage {
                 ErrorMessageHelper.GetHttpClientError(Server, e.Message));
             return;
         }
+        
         var json = await response.Content.ReadAsStringAsync();
         BaicizhanListResult baicizhanListResult;
         try {
@@ -61,8 +62,7 @@ public class WordStorage : IWordStorage {
                     e.Message));
             return;
         }
-
-      
+        
         baicizhanListResult.List[7769] = "may";
         baicizhanListResult.List[7913] = "pacific";
         baicizhanListResult.List[7916] = "Turkey";
@@ -100,7 +100,7 @@ public class WordStorage : IWordStorage {
             Console.WriteLine($"{i+1}: {wordObject.Word}");
             // await Connection.InsertAsync(wordObject);
             if ((i + 1) % 50 == 0) {
-                // await Connection.InsertAllAsync(wordObjects);
+                await Connection.InsertAllAsync(wordObjects);
                 wordObjects.Clear();
                 Console.WriteLine("Inserted---");
             }
@@ -108,7 +108,6 @@ public class WordStorage : IWordStorage {
         
         _preferenceStorage.Set(WordStorageConstant.VersionKey,
             WordStorageConstant.Version);
-
         await Connection.CloseAsync();
         Console.WriteLine("WordStorage initialization complete.");
     }
@@ -143,7 +142,7 @@ public class WordStorage : IWordStorage {
         var words = await GetWordsAsync(
             Expression.Lambda<Func<WordObject, bool>>(Expression.Constant(true),
                 Expression.Parameter(typeof(WordObject), "p")),
-            new Random().Next(5000), 1);
+            new Random().Next(7000), 1);
         var word = words.First();
         return word;
     }
@@ -157,11 +156,12 @@ public class WordStorage : IWordStorage {
     public async Task SaveWordAsync(WordObject wordObject) {
         await Connection.InsertOrReplaceAsync(wordObject);
     }
-
+    
+    // 获取单词选择题的选项
     public async Task<IList<WordObject>> GetWordQuizOptionsAsync(WordObject correctWord) {
         Random random = new Random();
         List<WordObject> wordList = await Connection.Table<WordObject>().Where(
-                p=>p.Word != correctWord.Word).Skip(random.Next(5000)).Take(3)
+                p=>p.Word != correctWord.Word).Skip(random.Next(7000)).Take(3)
             .ToListAsync();
         var randomIndex = random.Next(0, 4); //含头不含尾
         wordList.Insert(randomIndex, correctWord);

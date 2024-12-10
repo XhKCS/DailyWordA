@@ -80,7 +80,7 @@ public class TodayWordViewModel : ViewModelBase {
     
     // 切换单词
     public ICommand UpdateWordCommand { get; }
-    private async Task UpdateWordAsync() {
+    public async Task UpdateWordAsync() {
         IsLoading = true;
         TodayWord = await _wordStorage.GetRandomWordAsync();
         await Task.Delay(300);

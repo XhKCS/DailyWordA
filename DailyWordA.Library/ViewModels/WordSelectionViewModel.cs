@@ -37,7 +37,8 @@ public class WordSelectionViewModel : ViewModelBase {
     
     // 可选择的四个选项
     public ObservableRangeCollection<WordObject> QuizOptions { get; } = new();
-
+    
+    // 测验模式
     public static ObservableRangeCollection<string> QuizModes { get; } 
         = ["英文选义", "中文选词"];
     

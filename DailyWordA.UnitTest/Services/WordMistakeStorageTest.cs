@@ -41,7 +41,7 @@ public class WordMistakeStorageTest : IDisposable {
     }
     
     [Fact]
-    public async Task SaveFavoriteAsync_GetFavoriteAsync_Default() {
+    public async Task SaveMistakeAsync_GetMistakeAsync_Default() {
         var updated = false;
         WordMistake updatedMistake = null;
 

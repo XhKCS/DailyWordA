@@ -17,7 +17,7 @@
                Foreground="#3498DB"
                FontSize="22"
                FontWeight="Bold"
-               Margin="0, 10, 0, 10" />
+               Margin="0, 5, 0, 5" />
         <ItemsControl ItemsSource="{Binding GridLetters}"
                       HorizontalAlignment="Center"
                       Margin="10">
@@ -26,7 +26,7 @@
                      <ItemsControl ItemsSource="{Binding }">
                          <ItemsControl.ItemsPanel>
                              <ItemsPanelTemplate>
-                                 <!-- 一行TextBlock -->
+                                 <!-- 一行TextBlock，应该为水平布局 -->
                                  <StackPanel Orientation="Horizontal"></StackPanel>
                              </ItemsPanelTemplate>
                          </ItemsControl.ItemsPanel>
@@ -56,7 +56,11 @@
         
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
-           <MaskedTextBox 
+            <TextBlock Text="{Binding HintText}" 
+                       Foreground="#3498DB"
+                       FontSize="18"
+                       Margin="0,0,8,12"/>
+            <MaskedTextBox 
                AsciiOnly="True"
                Mask="{Binding Mask}"
                MaxLength="{Binding CorrectWord.Word.Length}"

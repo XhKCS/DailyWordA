@@ -22,11 +22,13 @@ public class WordStorageTest : IDisposable {
         var alertStorageMock = new Mock<IAlertService>();
         var mockAlertService = alertStorageMock.Object;
         var wordStorage = new WordStorage(mockPreferenceStorage, mockAlertService);
-        await wordStorage.InitializeAsync();
+        var first = wordStorage.IsInitialized;
+        Assert.False(first);
         
+        await wordStorage.InitializeAsync();
         Assert.True(wordStorage.IsInitialized);
         preferenceStorageMock.Verify(p => p.Get(WordStorageConstant.VersionKey, default(int)),
-            Times.Once);
+            Times.AtLeastOnce);
         await wordStorage.CloseAsync();
     }
     
