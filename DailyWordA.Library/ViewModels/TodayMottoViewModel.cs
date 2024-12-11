@@ -25,7 +25,7 @@ public class TodayMottoViewModel : ViewModelBase {
         
         UpdateCommand = new RelayCommand(UpdateAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
-        NavigateToResultViewCommand = new RelayCommand(NavigateToTodayWordView);
+        NavigateToTodayWordViewCommand = new RelayCommand(NavigateToTodayWordView);
     }
     
     private DailyMotto _todayMotto;
@@ -67,8 +67,8 @@ public class TodayMottoViewModel : ViewModelBase {
             ContentNavigationConstant.MottoDetailView, TodayMotto);
     }
     
-    public ICommand NavigateToResultViewCommand { get; }
-    private void NavigateToTodayWordView() {
+    public ICommand NavigateToTodayWordViewCommand { get; }
+    public void NavigateToTodayWordView() {
         _menuNavigationService.NavigateTo(MenuNavigationConstant.TodayWordView);
     }
 }

@@ -26,6 +26,12 @@ public class WordQueryViewModel : ViewModelBase {
         get => _commentText;
         private set => SetProperty(ref _commentText, value);
     }
+
+    private Expression<Func<WordObject, bool>> _where;
+    public Expression<Func<WordObject, bool>> Where {
+        get => _where;
+        set => SetProperty(ref _where, value);
+    }
     
     public override void SetParameter(object parameter) {
         if (parameter is not WordQuery wordQuery) {
@@ -44,10 +50,10 @@ public class WordQueryViewModel : ViewModelBase {
 
     public void Query() {
         var parameter = Expression.Parameter(typeof(WordObject), "p");
-        var expression = GetExpression(parameter, _filter);
-        var where = 
+        var expression = GetExpression(parameter, Filter);
+        Where = 
             Expression.Lambda<Func<WordObject, bool>>(expression, parameter);
-        _contentNavigationService.NavigateTo(ContentNavigationConstant.WordQueryResultView, where);
+        _contentNavigationService.NavigateTo(ContentNavigationConstant.WordQueryResultView, Where);
     }
     
     private static Expression GetExpression(ParameterExpression parameter,

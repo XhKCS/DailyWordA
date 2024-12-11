@@ -7,12 +7,27 @@ using Moq;
 
 namespace DailyWordA.UnitTest.ViewModels;
 
-public class WordQueryResultViewModelTest : IDisposable
+public class WordQueryResultViewModelTest
 {
-    public WordQueryResultViewModelTest() =>
-        WordStorageHelper.RemoveDatabaseFile();
+    // public WordQueryResultViewModelTest() =>
+    //     WordStorageHelper.RemoveDatabaseFile();
 
-    public void Dispose() => WordStorageHelper.RemoveDatabaseFile();
+    // public void Dispose() => WordStorageHelper.RemoveDatabaseFile();
+
+    [Fact]
+    public async Task SetParameter_WrongType() {
+        var wordStorage =
+            await WordStorageHelper.GetInitializedWordStorage();
+        var contentNavigationServiceMock =
+            new Mock<IContentNavigationService>();
+        var mockContentNavigationService =
+            contentNavigationServiceMock.Object;
+        
+        var resultViewModel = new WordQueryResultViewModel(wordStorage, mockContentNavigationService);
+        var wrongParameter = "Wrong Parameter";
+        resultViewModel.SetParameter(wrongParameter);
+        Assert.Null(resultViewModel._where);
+    }
     
     [Fact]
     public async Task WordCollection_Default() {
@@ -22,7 +37,12 @@ public class WordQueryResultViewModelTest : IDisposable
 
         var wordStorage =
             await WordStorageHelper.GetInitializedWordStorage();
-        var resultViewModel = new WordQueryResultViewModel(wordStorage, null);
+        var contentNavigationServiceMock =
+            new Mock<IContentNavigationService>();
+        var mockContentNavigationService =
+            contentNavigationServiceMock.Object;
+        
+        var resultViewModel = new WordQueryResultViewModel(wordStorage, mockContentNavigationService);
         resultViewModel.SetParameter(where);
 
         var statusList = new List<string>();

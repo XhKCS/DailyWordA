@@ -5,7 +5,7 @@ using Moq;
 namespace DailyWordA.UnitTest.Services;
 
 public class TodayImageServiceTest {
-    [Fact(Skip = "依赖远程服务的测试")]
+    [Fact]
     public async Task CheckUpdateAsync_TodayImageNotExpired() {
         var todayImageToReturn = new TodayImage {
             StartDate = "19700101",
@@ -37,7 +37,7 @@ public class TodayImageServiceTest {
             Times.Never);
     }
     
-    [Fact(Skip = "依赖远程服务的测试")]
+    [Fact]
     public async Task CheckUpdateAsync_TodayImageExpired() {
         var todayImageToReturn = new TodayImage {
             StartDate = "19700101",
@@ -67,5 +67,47 @@ public class TodayImageServiceTest {
         alertServiceMock.Verify(
             p => p.AlertAsync(It.IsAny<string>(), It.IsAny<string>()),
             Times.Never);
+    }
+    
+    [Fact]
+    public async Task GetTodayImageAsync_Default() {
+        var todayImageStorage = GetTodayImageStorage();
+
+        var alertServiceMock = new Mock<IAlertService>();
+        var mockAlertService = alertServiceMock.Object;
+
+        var todayImageService =
+            new TodayImageService(mockAlertService, todayImageStorage);
+        
+        var todayImage = await todayImageService.GetTodayImageAsync();
+        Assert.NotNull(todayImage);
+        Assert.NotNull(todayImage.ImageBytes);
+    }
+    
+    [Fact]
+    public async Task GetRandomImageAsync_Default() {
+        var todayImageStorage = GetTodayImageStorage();
+
+        var alertServiceMock = new Mock<IAlertService>();
+        var mockAlertService = alertServiceMock.Object;
+
+        var todayImageService =
+            new TodayImageService(mockAlertService, todayImageStorage);
+        
+        var oldImage = await todayImageService.GetRandomImageAsync();
+        Assert.NotNull(oldImage);
+        Assert.NotNull(oldImage.ImageBytes);
+        
+        var newImage = await todayImageService.GetRandomImageAsync();
+        Assert.NotNull(newImage);
+        Assert.NotNull(newImage.ImageBytes);
+        
+        Assert.NotEqual(oldImage.StartDate, newImage.StartDate);
+    }
+
+    private static ITodayImageStorage GetTodayImageStorage() {
+        var preferenceStorageMock = new Mock<IPreferenceStorage>();
+        var todayImageStorage = new TodayImageStorage(preferenceStorageMock.Object);
+        return todayImageStorage;
     }
 }

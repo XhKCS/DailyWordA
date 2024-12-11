@@ -54,6 +54,12 @@ public class WordDictationViewModel : ViewModelBase {
         set => SetProperty(ref _hasAnswered, value);
     }
     
+    private bool _isShowCnMeaning;
+    public bool IsShowCnMeaning {
+        get => _isShowCnMeaning;
+        set => SetProperty(ref _isShowCnMeaning, value);
+    }
+    
     public bool IsLoading {
         get => _isLoading;
         set => SetProperty(ref _isLoading, value);
@@ -67,6 +73,7 @@ public class WordDictationViewModel : ViewModelBase {
         Task.Run(async () => {
             IsLoading = true;
             HasAnswered = false;
+            IsShowCnMeaning = false;
             InputWord = string.Empty;
         
             CorrectWord = await _wordStorage.GetRandomWordAsync();
@@ -74,6 +81,11 @@ public class WordDictationViewModel : ViewModelBase {
             IsLoading = false;
         });
     }
+    
+    // public ICommand ShowCnMeaningCommand { get; }
+    // public void ShowCnMeaning() {
+    //     IsShowCnMeaning = true;
+    // }
     
     // 用户点击提交按钮
     public ICommand CommitCommand { get; }

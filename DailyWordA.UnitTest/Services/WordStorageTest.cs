@@ -8,10 +8,13 @@ namespace DailyWordA.UnitTest.Services;
 
 public class WordStorageTest : IDisposable {
     public WordStorageTest() {
-        WordStorageHelper.RemoveDatabaseFile();
+        // WordStorageHelper.RemoveDatabaseFile();
     }
 
-    public void Dispose() => WordStorageHelper.RemoveDatabaseFile();
+    public void Dispose()
+    {
+        
+    }
     
     [Fact]
     public async Task IsInitialized_Default() {

@@ -25,18 +25,27 @@
                 FontSize="18"
                 FontWeight="Normal"
                 Command="{Binding PlayAudioCommand}"
-                VerticalAlignment="Center" />
+                HorizontalContentAlignment="Center" />
+        
+        <ToggleSwitch OnContent="显示中文释义"
+                      OffContent="不显示中文释义"
+                      FontSize="16"
+                      IsChecked="{Binding IsShowCnMeaning}"
+                      HorizontalAlignment="Center"
+                      >
+        </ToggleSwitch>
         
         <StackPanel HorizontalAlignment="Center"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    IsVisible="{Binding IsShowCnMeaning}">
             <Label Content="中文释义："
                    HorizontalAlignment="Center"
-                   FontSize="18"
+                   FontSize="16"
                    Margin="0, 0, 10, 12"
                    FontWeight="Bold"/> 
             <Label Content="{Binding CorrectWord.CnMeaning}"
                    HorizontalAlignment="Center"
-                   FontSize="18"
+                   FontSize="16"
                    Margin="0, 0, 0, 12"
                    /> 
         </StackPanel>
@@ -44,9 +53,11 @@
         <MaskedTextBox 
             AsciiOnly="True"
             Text="{Binding InputWord}"
-            FontSize="18"
+            FontSize="16"
             IsEnabled="{Binding !HasAnswered}"
-            Margin="0,0,0,12"/>
+            Watermark="请在此输入您听到的单词"
+            Width="300"
+            Margin="0,25,0,12"/>
         
         <Button HorizontalAlignment="Center"
                 Margin="0,20,0,8"

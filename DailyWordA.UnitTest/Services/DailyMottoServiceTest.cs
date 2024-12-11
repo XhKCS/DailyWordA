@@ -11,7 +11,7 @@ public class DailyMottoServiceTest {
         _testOutputHelper = testOutputHelper;
     }
 
-    [Fact(Skip = "依赖远程服务的测试")]
+    [Fact]
     public async Task GetTodayMottoAsync_Default() {
         var alertServiceMock = new Mock<IAlertService>();
         var mockAlertService = alertServiceMock.Object;

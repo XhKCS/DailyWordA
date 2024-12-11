@@ -11,7 +11,7 @@ public class WordQueryResultViewModel : ViewModelBase {
     
     private readonly IContentNavigationService _contentNavigationService;
 
-    private Expression<Func<WordObject, bool>> _where;
+    public Expression<Func<WordObject, bool>> _where;
 
     public WordQueryResultViewModel(IWordStorage wordStorage, 
         IContentNavigationService contentNavigationService) {

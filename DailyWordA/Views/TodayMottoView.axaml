@@ -85,7 +85,7 @@
             
             <StackPanel Orientation="Horizontal" Spacing="5"
                         HorizontalAlignment="Right">
-                <Button Command="{Binding NavigateToResultViewCommand}" 
+                <Button Command="{Binding NavigateToTodayWordViewCommand}" 
                         Content="今日单词推荐" />
             </StackPanel>
 

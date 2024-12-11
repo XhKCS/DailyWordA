@@ -60,4 +60,17 @@ public class TodayMottoViewModelTest {
             p => p.NavigateTo(ContentNavigationConstant.MottoDetailView, null),
             Times.Once);
     }
+    
+    [Fact]
+    public async Task NavigateToTodayWordView_Default() {
+        var menuNavigationServiceMock = new Mock<IMenuNavigationService>();
+        var mockMenuNavigationService = menuNavigationServiceMock.Object;
+
+        var todayMottoViewModel = new TodayMottoViewModel(null, null,
+            null, mockMenuNavigationService);
+        todayMottoViewModel.NavigateToTodayWordView();
+        menuNavigationServiceMock.Verify(
+            p => p.NavigateTo(MenuNavigationConstant.TodayWordView, null), 
+            Times.Once);
+    }
 }
