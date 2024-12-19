@@ -7,15 +7,19 @@ namespace DailyWordA.Library.Services;
 
 public class DailyMottoService : IDailyMottoService {
     private readonly IAlertService _alertService;
+    private readonly ITranslateService _translateService;
     
     private string _domainName;
 
     private string _apiKey;
 
-    public DailyMottoService(IAlertService alertService, 
+    public DailyMottoService(IAlertService alertService,
+        ITranslateService translateService,
         string domainName = "apis.juhe.cn/fapigx/everyday/query", 
         string apiKey = "OWI3NjIxOGQxYjNmYzAwY2NiM2E5Nzg5OWYyMDY2ZDY=") {
         _alertService = alertService;
+        _translateService = translateService;
+        
         _domainName = domainName;
         _apiKey = apiKey;
     }
@@ -25,9 +29,12 @@ public class DailyMottoService : IDailyMottoService {
         return Encoding.UTF8.GetString(bytes);
     }
     
-    public async Task<DailyMotto> GetTodayMottoAsync() {
-        DailyMotto todayMotto = await MeiriyingyuMottoAsync() ?? 
+    public async Task<DailyMotto> GetTodayMottoAsync()
+    {
+        DailyMotto todayMotto = await MeiriyingyuMottoAsync() ??
+                                await HitokotoMottoAsync() ??
                                 await ShanbaydanciMottoAsync();
+        
         return todayMotto ?? new DailyMotto {
             Content = string.Empty,
             Translation = "非常抱歉，今日该接口似乎出现了问题..."
@@ -117,6 +124,100 @@ public class DailyMottoService : IDailyMottoService {
             Author = shanbaydanciResponse.Author
         };
     }
+
+    private async Task<DailyMotto> HitokotoMottoAsync() {
+        const string server = "hitokoto服务器";
+        using var httpClient = new HttpClient();
+        HttpResponseMessage response;
+        try {
+            response =
+                await httpClient.GetAsync(
+                    "https://v1.hitokoto.cn/");
+            response.EnsureSuccessStatusCode();
+        } catch (Exception e) {
+            await _alertService.AlertAsync(
+                ErrorMessageHelper.HttpClientErrorTitle,
+                ErrorMessageHelper.GetHttpClientError(server, e.Message));
+            return null;
+        }
+        
+        var json = await response.Content.ReadAsStringAsync();
+        // Console.WriteLine(json);
+        HitokotoResponse hitokotoResponse;
+        try {
+            hitokotoResponse = JsonSerializer.Deserialize<HitokotoResponse>(
+                json,
+                new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true
+                }) ?? throw new JsonException();
+        } catch (Exception e) {
+            await _alertService.AlertAsync(
+                ErrorMessageHelper.JsonDeserializationErrorTitle,
+                ErrorMessageHelper.GetJsonDeserializationError(server,
+                    e.Message));
+            return null;
+        }
+    
+        var englishContent = await _translateService.Translate(hitokotoResponse.Hitokoto, "auto", "en");
+        
+        // Console.WriteLine(englishContent);
+        return new DailyMotto {
+            Content = englishContent,
+            Translation = hitokotoResponse.Hitokoto,
+            Date = GetDateStr(),
+            Source = hitokotoResponse.From,
+            Author = hitokotoResponse.from_who
+        };
+    }
+    
+    private async Task<DailyMotto> OneMottoAsync() {
+        const string server = "One服务器";
+        using var httpClient = new HttpClient();
+        HttpResponseMessage response;
+        try {
+            response =
+                await httpClient.GetAsync(
+                    "https://api.xygeng.cn/one");
+            response.EnsureSuccessStatusCode();
+        } catch (Exception e) {
+            await _alertService.AlertAsync(
+                ErrorMessageHelper.HttpClientErrorTitle,
+                ErrorMessageHelper.GetHttpClientError(server, e.Message));
+            return null;
+        }
+        
+        var json = await response.Content.ReadAsStringAsync();
+        // Console.WriteLine(json);
+        OneApiResponse oneApiResponse;
+        try {
+            oneApiResponse = JsonSerializer.Deserialize<OneApiResponse>(
+                json,
+                new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true
+                }) ?? throw new JsonException();
+        } catch (Exception e) {
+            await _alertService.AlertAsync(
+                ErrorMessageHelper.JsonDeserializationErrorTitle,
+                ErrorMessageHelper.GetJsonDeserializationError(server,
+                    e.Message));
+            return null;
+        }
+    
+        var englishContent = await _translateService.Translate(oneApiResponse.Data.content, "auto", "en");
+        
+        // Console.WriteLine(englishContent);
+        return new DailyMotto {
+            Content = englishContent,
+            Translation = oneApiResponse.Data.content,
+            Date = GetDateStr(),
+            Source = oneApiResponse.Data.origin
+        };
+    }
+
+    private static string GetDateStr()
+    {
+        return DateTime.Now.ToString("yyyy-MM-dd");
+    }
 }
 
 // 每日英语API的返回对象类；该API优势在于同一天多次请求返回的内容并不会重复，缺点是每天限制使用50次
@@ -138,16 +239,37 @@ public class ShanbaydanciResponse {
     public string assign_date { get; set; }
     public string Translation { get; set; }
 }
-// public class Track_object {
-//     public string code { get; set; }
-//     public string share_url { get; set; }
-//     public int object_id { get; set; }
-// }
-// public class Share_urls {
-//     public string wechat { get; set; }
-//     public string wechat_user { get; set; }
-//     public string qzone { get; set; }
-//     public string weibo { get; set; }
-//     public string shanbay { get; set; }
-// }
+
+public class HitokotoResponse {
+    public int Id { get; set; }
+    public string Uuid { get; set; }
+    public string Hitokoto { get; set; }
+    public string Type { get; set; }
+    public string From { get; set; }
+    public string from_who { get; set; }
+}
+
+public class OneApiResponse
+{
+    public int Code { get; set; }
+    public OneApiData Data { get; set; }
+    public object Error { get; set; }
+    public long UpdateTime { get; set; }
+}
+
+public class OneApiData
+{
+    public int id { get; set; }
+    public string tag { get; set; }
+    public string name { get; set; }
+    public string origin { get; set; }
+    public string content { get; set; }
+    public string created_at { get; set; }
+    public string updated_at { get; set; }
+}
+
+
+
+
+
 

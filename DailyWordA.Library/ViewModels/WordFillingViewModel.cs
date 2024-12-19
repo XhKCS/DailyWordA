@@ -5,27 +5,23 @@ using DailyWordA.Library.Services;
 
 namespace DailyWordA.Library.ViewModels;
 
-// 单词测验-听音写词
-public class WordDictationViewModel : ViewModelBase {
+// 单词测验-例句填空
+public class WordFillingViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly IContentNavigationService _contentNavigationService;
-    private readonly IAudioPlayer _audioPlayer;
     private readonly IWordMistakeStorage _wordMistakeStorage;
-
-    public WordDictationViewModel(IWordStorage wordStorage, 
-        IContentNavigationService contentNavigationService, 
-        IAudioPlayer audioPlayer,
+    
+    public WordFillingViewModel(IWordStorage wordStorage, 
+        IContentNavigationService contentNavigationService,
         IWordMistakeStorage wordMistakeStorage) {
         _wordStorage = wordStorage;
         _contentNavigationService = contentNavigationService;
-        _audioPlayer = audioPlayer;
         _wordMistakeStorage = wordMistakeStorage;
-        
+            
         UpdateCommand = new RelayCommand(Update);
         CommitCommand = new AsyncRelayCommand(CommitAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
-        PlayAudioCommand = new AsyncRelayCommand(PlayAudio);
-        
+            
         Update();
     }
     
@@ -35,17 +31,26 @@ public class WordDictationViewModel : ViewModelBase {
         get => _correctWord;
         set => SetProperty(ref _correctWord, value);
     }
-
-    private string _inputWord = string.Empty; //用户输入的单词文本
+    
+    // 填空的正确答案，与CorrectWord.Word不一定相同哦
+    private string _correctFillingText;
+    public string CorrectFillingText {
+        get => _correctFillingText;
+        set => SetProperty(ref _correctFillingText, value);
+    }
+    
+    // 展示给用户的填空题目
+    private string _showBlankText;
+    public string ShowBlankText {
+        get => _showBlankText;
+        set => SetProperty(ref _showBlankText, value);
+    }
+    
+    //用户输入的单词文本
+    private string _inputWord = string.Empty; 
     public string InputWord {
         get => _inputWord;
         set => SetProperty(ref _inputWord, value.Replace(" ", "").ToLower());
-    }
-    
-    private string _resultText = string.Empty;
-    public string ResultText {
-        get => _resultText;
-        set => SetProperty(ref _resultText, value);
     }
     
     private bool _hasAnswered; //已提交答案
@@ -54,10 +59,10 @@ public class WordDictationViewModel : ViewModelBase {
         set => SetProperty(ref _hasAnswered, value);
     }
     
-    private bool _isShowCnMeaning;
-    public bool IsShowCnMeaning {
-        get => _isShowCnMeaning;
-        set => SetProperty(ref _isShowCnMeaning, value);
+    private string _resultText = string.Empty;
+    public string ResultText {
+        get => _resultText;
+        set => SetProperty(ref _resultText, value);
     }
     
     public bool IsLoading {
@@ -73,24 +78,41 @@ public class WordDictationViewModel : ViewModelBase {
         Task.Run(async () => {
             IsLoading = true;
             HasAnswered = false;
-            IsShowCnMeaning = false;
+            ShowBlankText = string.Empty;
             InputWord = string.Empty;
         
             CorrectWord = await _wordStorage.GetRandomWordAsync();
+            
+            string[] splitWords = CorrectWord.Sentence.Split(new char[] { ' ', ',', '.', '!','?', '\'', ':','/','~' }, StringSplitOptions.RemoveEmptyEntries);
+            CorrectFillingText = splitWords[0];
+            string tempWord = CorrectWord.Word;
+            bool hasFound = false;
+            do {
+                foreach (var word in splitWords) {
+                    if (word.Contains(tempWord)) {
+                        CorrectFillingText = word;
+                        hasFound = true;
+                    }
+                }
+                tempWord = tempWord.Substring(0, tempWord.Length - 1);
+            } while (hasFound == false && tempWord.Length > 0);
+            
+            var blank = ""+CorrectFillingText[0];
+            for (int i = 1; i < CorrectFillingText.Length; i++) {
+                blank += "_";
+            }
+            ShowBlankText = CorrectWord.Sentence.Replace(CorrectFillingText, blank);
+            // Console.WriteLine(ShowBlankText);
+            // Console.WriteLine(CorrectFillingText);
         
             IsLoading = false;
         });
     }
     
-    // public ICommand ShowCnMeaningCommand { get; }
-    // public void ShowCnMeaning() {
-    //     IsShowCnMeaning = true;
-    // }
-    
     // 用户点击提交按钮
     public ICommand CommitCommand { get; }
     public async Task CommitAsync() {
-        if (InputWord == CorrectWord.Word) {
+        if (InputWord == CorrectFillingText) {
             ResultText = "恭喜您回答正确！";
         }
         else {
@@ -109,10 +131,5 @@ public class WordDictationViewModel : ViewModelBase {
     public void ShowDetail() {
         _contentNavigationService.NavigateTo(
             ContentNavigationConstant.WordDetailView, CorrectWord);
-    }
-    
-    public ICommand PlayAudioCommand { get; }
-    public async Task PlayAudio() {
-        await _audioPlayer.PlayAudioAsync(CorrectWord.Word);
     }
 }

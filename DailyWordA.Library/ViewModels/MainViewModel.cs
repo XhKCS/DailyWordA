@@ -112,6 +112,9 @@ public class MenuItem {
     private static MenuItem WordDictationView =>
         new() { Name = "单词测验-听音写词", View = MenuNavigationConstant.WordDictationView };
     
+    private static MenuItem WordFillingView =>
+        new() { Name = "单词测验-例句填空", View = MenuNavigationConstant.WordFillingView };
+    
     private static MenuItem WordMistakeNoteView =>
         new() { Name = "单词错题本", View = MenuNavigationConstant.WordMistakeNoteView };
     
@@ -121,6 +124,6 @@ public class MenuItem {
     public static IEnumerable<MenuItem> MenuItems { get; } = [
         TodayWordView, TodayMottoView, TranslateView, 
         WordQueryView, WordFavoriteView, WordSelectionView,
-        WordDictationView, WordMistakeNoteView, WordleGameView
+        WordDictationView, WordFillingView, WordMistakeNoteView, WordleGameView
     ];
 }

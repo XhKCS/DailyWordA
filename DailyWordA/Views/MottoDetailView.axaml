@@ -48,7 +48,7 @@
             </StackPanel>
             
             <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Right"
                         Margin="0,0,0,8"
                         IsVisible="{Binding CanShowAuthor}">
                    <Label FontSize="18"

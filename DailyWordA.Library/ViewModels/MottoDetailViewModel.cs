@@ -16,9 +16,9 @@ public class MottoDetailViewModel : ViewModelBase {
         private set => SetProperty(ref _todayMotto, value);
     }
     
-    public bool CanShowSource => _todayMotto.Source.Length > 0;
+    public bool CanShowSource => _todayMotto.Source!=null && _todayMotto.Source.Length > 0;
     
-    public bool CanShowAuthor => _todayMotto.Author.Length > 0;
+    public bool CanShowAuthor => _todayMotto.Author!=null && _todayMotto.Author.Length > 0;
     
     public override void SetParameter(object parameter) {
         TodayMotto = parameter as DailyMotto;

@@ -77,9 +77,11 @@ public class ServiceLocator {
     public WordMistakeNoteViewModel WordMistakeNoteViewModel =>
         _serviceProvider.GetRequiredService<WordMistakeNoteViewModel>();
     
-    
     public WordleGameViewModel WordleGameViewModel =>
         _serviceProvider.GetRequiredService<WordleGameViewModel>();
+    
+    public WordFillingViewModel WordFillingViewModel =>
+        _serviceProvider.GetRequiredService<WordFillingViewModel>();
     
     public ServiceLocator() {
         var serviceCollection = new ServiceCollection();
@@ -112,8 +114,8 @@ public class ServiceLocator {
         serviceCollection.AddSingleton<WordSelectionViewModel>();
         serviceCollection.AddSingleton<WordDictationViewModel>();
         serviceCollection.AddSingleton<WordMistakeNoteViewModel>();
-        
         serviceCollection.AddSingleton<WordleGameViewModel>();
+        serviceCollection.AddSingleton<WordFillingViewModel>();
 
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }
