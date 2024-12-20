@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using DailyWordA.Library.Models;
@@ -11,19 +12,23 @@ public class WordSelectionViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly IContentNavigationService _contentNavigationService;
     private readonly IWordMistakeStorage _wordMistakeStorage;
+    private readonly IAlertService _alertService;
 
     public WordSelectionViewModel(IWordStorage wordStorage, 
         IContentNavigationService contentNavigationService,
-        IWordMistakeStorage wordMistakeStorage) {
+        IWordMistakeStorage wordMistakeStorage,
+        IAlertService alertService) {
         _wordStorage = wordStorage;
         _contentNavigationService = contentNavigationService;
         _wordMistakeStorage = wordMistakeStorage;
+        _alertService = alertService;
         
         UpdateCommand = new RelayCommand(Update);
         CommitCommand = new AsyncRelayCommand(CommitAsync);
         RadioCheckedCommand = new RelayCommand<WordObject>(RadioChecked);
         SelectModeCommand = new RelayCommand<string>(SelectMode);
         ShowDetailCommand = new RelayCommand(ShowDetail);
+        ChangeSourceCommand = new AsyncRelayCommand(ChangeSource);
         
         Update();
     }
@@ -37,6 +42,16 @@ public class WordSelectionViewModel : ViewModelBase {
     
     // 可选择的四个选项
     public ObservableRangeCollection<WordObject> QuizOptions { get; } = new();
+    
+    // 单词是否来源于错题本
+    private bool _isFromMistakes = false;
+    public bool IsFromMistake
+    {
+        get => _isFromMistakes;
+        set => SetProperty(ref _isFromMistakes, value);
+    }
+    
+    private ObservableRangeCollection<WordObject> WordsFromMistakes { get; } = new();
     
     // 测验模式
     public static ObservableRangeCollection<string> QuizModes { get; } 
@@ -62,6 +77,27 @@ public class WordSelectionViewModel : ViewModelBase {
         if (mode == QuizModes[0] || mode == QuizModes[1]) {
             SelectedMode = mode;
             Update();
+        }
+    }
+    
+    // 点击按钮切换单词来源
+    public ICommand ChangeSourceCommand { get; }
+    public async Task ChangeSource() {
+        // 当触发该函数时，IsFromMistake的值已经改变了
+        Update();
+        if (IsFromMistake == true) {
+            var mistakeList = await _wordMistakeStorage.GetMistakeListAsync();
+            if (mistakeList.Count() == 0) {
+                IsFromMistake = false;
+                await _alertService.AlertAsync("当前错题本为空", "当前错题本还没有单词哦，已自动切换回默认来源~");
+            }
+            else {
+                await _alertService.AlertAsync("切换成功", "测验单词来源已切换为：仅来自错题本");
+            }
+            
+        }
+        else {
+            await _alertService.AlertAsync("切换成功", "测验单词来源已切换为：默认来源（从所有单词中随机抽取）");
         }
     }
 
@@ -103,9 +139,30 @@ public class WordSelectionViewModel : ViewModelBase {
             IsLoading = true;
             HasSelected = false;
             HasAnswered = false;
-        
-            CorrectWord = await _wordStorage.GetRandomWordAsync();
-        
+
+            if (_isFromMistakes) {
+                WordsFromMistakes.Clear();
+                var mistakeList = await _wordMistakeStorage.GetMistakeListAsync();
+
+                WordsFromMistakes.AddRange((await Task.WhenAll(
+                    mistakeList.Select(p => Task.Run(async () => await _wordStorage.GetWordAsync(p.WordId)))
+                )).ToList());
+                
+                if (WordsFromMistakes.Count == 0) {
+                    CorrectWord = await _wordStorage.GetRandomWordAsync();
+                    // 输出提示信息：错题本已空，自动退出错题练习模式
+                    // await _alertService.AlertAsync("当前错题本为空", "当前错题本还没有单词哦，已自动退出错题练习模式~");
+                    IsFromMistake = false;
+                }
+                else {
+                    CorrectWord = WordsFromMistakes[new Random().Next(0, WordsFromMistakes.Count)];
+                }
+            }
+            else
+            {
+                CorrectWord = await _wordStorage.GetRandomWordAsync();
+            }
+            
             QuizOptions.Clear();
             var wordList = await _wordStorage.GetWordQuizOptionsAsync(_correctWord);
             QuizOptions.AddRange(wordList);
@@ -126,6 +183,13 @@ public class WordSelectionViewModel : ViewModelBase {
     public async Task CommitAsync() {
         if (SelectedOption.Word == CorrectWord.Word) {
             ResultText = "恭喜您回答正确！";
+            if (IsFromMistake) {
+                await _wordMistakeStorage.SaveMistakeAsync(new WordMistake {
+                    WordId = CorrectWord.Id,
+                    IsInNote = false,
+                    Timestamp = DateTime.Now
+                });
+            }
         }
         else {
             ResultText = "很遗憾，回答错误啦~";

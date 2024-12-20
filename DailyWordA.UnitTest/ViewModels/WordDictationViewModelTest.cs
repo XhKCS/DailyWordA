@@ -21,7 +21,7 @@ public class WordDictationViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage);
+        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         var oldWord = wordDictationViewModel.CorrectWord;
@@ -48,7 +48,7 @@ public class WordDictationViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage);
+        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         wordDictationViewModel.InputWord = wordDictationViewModel.CorrectWord.Word;
@@ -72,7 +72,7 @@ public class WordDictationViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage);
+        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         wordDictationViewModel.InputWord = "***";
@@ -96,7 +96,7 @@ public class WordDictationViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage);
+        var wordDictationViewModel = new WordDictationViewModel(mockWordStorage, mockContentNavigationService, null, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         wordDictationViewModel.ShowDetail();

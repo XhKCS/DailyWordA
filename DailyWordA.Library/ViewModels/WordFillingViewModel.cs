@@ -2,6 +2,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using DailyWordA.Library.Models;
 using DailyWordA.Library.Services;
+using MvvmHelpers;
 
 namespace DailyWordA.Library.ViewModels;
 
@@ -10,17 +11,21 @@ public class WordFillingViewModel : ViewModelBase {
     private readonly IWordStorage _wordStorage;
     private readonly IContentNavigationService _contentNavigationService;
     private readonly IWordMistakeStorage _wordMistakeStorage;
+    private readonly IAlertService _alertService;
     
     public WordFillingViewModel(IWordStorage wordStorage, 
         IContentNavigationService contentNavigationService,
-        IWordMistakeStorage wordMistakeStorage) {
+        IWordMistakeStorage wordMistakeStorage,
+        IAlertService alertService) {
         _wordStorage = wordStorage;
         _contentNavigationService = contentNavigationService;
         _wordMistakeStorage = wordMistakeStorage;
+        _alertService = alertService;
             
         UpdateCommand = new RelayCommand(Update);
         CommitCommand = new AsyncRelayCommand(CommitAsync);
         ShowDetailCommand = new RelayCommand(ShowDetail);
+        ChangeSourceCommand = new AsyncRelayCommand(ChangeSource);
             
         Update();
     }
@@ -30,6 +35,37 @@ public class WordFillingViewModel : ViewModelBase {
     public WordObject CorrectWord {
         get => _correctWord;
         set => SetProperty(ref _correctWord, value);
+    }
+    
+    // 单词是否来源于错题本
+    private bool _isFromMistakes = false;
+    public bool IsFromMistake
+    {
+        get => _isFromMistakes;
+        set => SetProperty(ref _isFromMistakes, value);
+    }
+    
+    private ObservableRangeCollection<WordObject> WordsFromMistakes { get; } = new();
+    
+    // 点击按钮切换单词来源
+    public ICommand ChangeSourceCommand { get; }
+    public async Task ChangeSource() {
+        // 当触发该函数时，IsFromMistake的值已经改变了
+        Update();
+        if (IsFromMistake == true) {
+            var mistakeList = await _wordMistakeStorage.GetMistakeListAsync();
+            if (mistakeList.Count() == 0) {
+                IsFromMistake = false;
+                await _alertService.AlertAsync("当前错题本为空", "当前错题本还没有单词哦，已自动切换回默认来源~");
+            }
+            else {
+                await _alertService.AlertAsync("切换成功", "测验单词来源已切换为：仅来自错题本");
+            }
+            
+        }
+        else {
+            await _alertService.AlertAsync("切换成功", "测验单词来源已切换为：默认来源（从所有单词中随机抽取）");
+        }
     }
     
     // 填空的正确答案，与CorrectWord.Word不一定相同哦
@@ -81,7 +117,28 @@ public class WordFillingViewModel : ViewModelBase {
             ShowBlankText = string.Empty;
             InputWord = string.Empty;
         
-            CorrectWord = await _wordStorage.GetRandomWordAsync();
+            if (_isFromMistakes) {
+                WordsFromMistakes.Clear();
+                var mistakeList = await _wordMistakeStorage.GetMistakeListAsync();
+
+                WordsFromMistakes.AddRange((await Task.WhenAll(
+                    mistakeList.Select(p => Task.Run(async () => await _wordStorage.GetWordAsync(p.WordId)))
+                )).ToList());
+                
+                if (WordsFromMistakes.Count == 0) {
+                    CorrectWord = await _wordStorage.GetRandomWordAsync();
+                    // 输出提示信息：错题本已空，自动退出错题练习模式
+                    // await _alertService.AlertAsync("当前错题本为空", "当前错题本还没有单词哦，已自动退出错题练习模式~");
+                    IsFromMistake = false;
+                }
+                else {
+                    CorrectWord = WordsFromMistakes[new Random().Next(0, WordsFromMistakes.Count)];
+                }
+            }
+            else
+            {
+                CorrectWord = await _wordStorage.GetRandomWordAsync();
+            }
             
             string[] splitWords = CorrectWord.Sentence.Split(new char[] { ' ', ',', '.', '!','?', '\'', ':','/','~' }, StringSplitOptions.RemoveEmptyEntries);
             CorrectFillingText = splitWords[0];
@@ -114,6 +171,13 @@ public class WordFillingViewModel : ViewModelBase {
     public async Task CommitAsync() {
         if (InputWord == CorrectFillingText) {
             ResultText = "恭喜您回答正确！";
+            if (IsFromMistake) {
+                await _wordMistakeStorage.SaveMistakeAsync(new WordMistake {
+                    WordId = CorrectWord.Id,
+                    IsInNote = false,
+                    Timestamp = DateTime.Now
+                });
+            }
         }
         else {
             ResultText = "很遗憾，回答错误啦~";

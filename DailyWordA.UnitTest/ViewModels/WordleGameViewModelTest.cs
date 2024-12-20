@@ -21,7 +21,7 @@ public class WordleGameViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage);
+        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         Assert.False(wordleGameViewModel.HasFinished);
@@ -56,7 +56,7 @@ public class WordleGameViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage);
+        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         wordleGameViewModel.InputWord = wordleGameViewModel.CorrectWord.Word;
@@ -80,7 +80,7 @@ public class WordleGameViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage);
+        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         wordleGameViewModel.InputWord = "***";
@@ -105,7 +105,7 @@ public class WordleGameViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage);
+        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage, null);
         await Task.Delay(1000);
 
         wordleGameViewModel.CurrentAttemptRow = 5;
@@ -128,7 +128,7 @@ public class WordleGameViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         var mockMistakeStorage = mistakeStorageMock.Object;
         
-        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage);
+        var wordleGameViewModel = new WordleGameViewModel(mockWordStorage, mockContentNavigationService, mockMistakeStorage, null);
         await Task.Delay(1000);
         
         wordleGameViewModel.ShowDetail();
