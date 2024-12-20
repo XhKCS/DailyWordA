@@ -27,6 +27,8 @@ public class MenuNavigationService : IMenuNavigationService {
                 WordleGameViewModel,
             MenuNavigationConstant.WordFillingView => ServiceLocator.Current.
                 WordFillingViewModel,
+            MenuNavigationConstant.SentenceOrganizationView => ServiceLocator.Current.
+                SentenceOrganizationViewModel,
             _ => throw new Exception("未知的视图。")
         };
 

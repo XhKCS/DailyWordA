@@ -25,5 +25,7 @@ public static class MenuNavigationConstant {
     
     public const string WordleGameView = nameof(WordleGameView); //Wordle游戏
     
-    public const string WordFillingView = nameof(WordFillingView); //Wordle游戏
+    public const string WordFillingView = nameof(WordFillingView); //单词例句填空
+    
+    public const string SentenceOrganizationView = nameof(SentenceOrganizationView); 
 }

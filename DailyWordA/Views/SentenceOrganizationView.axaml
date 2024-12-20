@@ -1,0 +1,132 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.SentenceOrganizationView"
+             x:Name="TheSentenceOrganizationView"
+             d:DataContext="{Binding SentenceOrganizationViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    
+    <StackPanel>
+        <Label Content="Sentence Organization"
+               HorizontalAlignment="Center"
+               Foreground="#3498DB"
+               FontSize="22"
+               FontWeight="Bold"
+               Margin="0, 5, 0, 5" />
+        
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center">
+            <Label Content="句子翻译："
+                   FontSize="20"
+                   Foreground="#3498DB"/>
+            <TextBlock Text="{Binding CorrectSentence.Translation}"
+                       FontSize="20"
+                       FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    Margin="0 10 0 0">
+            <Label Content="您当前的句子："
+                   FontSize="20"
+                   Foreground="#3498DB"/>
+            <TextBlock Text="{Binding CurrentSentence}"
+                       FontSize="20"
+                       FontWeight="Bold"/>
+        </StackPanel>
+        
+        <ItemsControl ItemsSource="{Binding WordStatusGroup}"
+                      HorizontalAlignment="Center"
+                      Margin="10">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding }"
+                                  HorizontalAlignment="Center"
+                                  Margin="10">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <!-- 水平布局 -->
+                                <StackPanel Orientation="Horizontal">
+                                </StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="2"
+                                        BorderBrush="Black"
+                                        Margin="5 5 10 10">
+                                    <i:Interaction.Behaviors>
+                                        <ia:EventTriggerBehavior EventName="Tapped">
+                                            <ia:InvokeCommandAction
+                                                Command="{Binding DataContext.SelectWordCommand, ElementName=TheSentenceOrganizationView}"
+                                                CommandParameter="{Binding Location}">
+                                            </ia:InvokeCommandAction>
+                                        </ia:EventTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                    <TextBlock Text="{Binding Word}"
+                                               Background="{Binding Background}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center"
+                                               FontSize="22"
+                                               Padding="3"
+                                               Height="40"
+                                    />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button HorizontalAlignment="Center"
+                    Margin="0,10,30,8"
+                    Content="提交"
+                    FontWeight="Bold"
+                    IsEnabled="{Binding !HasAnswered}"
+                    FontSize="18"
+                    Command="{Binding CommitCommand}"
+                    VerticalAlignment="Center" />
+            <Button HorizontalAlignment="Center"
+                    Margin="0,10,0,8"
+                    Content="跳过本题"
+                    FontWeight="Normal"
+                    IsEnabled="{Binding !HasAnswered}"
+                    FontSize="18"
+                    Command="{Binding UpdateCommand}"
+                    VerticalAlignment="Center" />
+        </StackPanel>
+        
+        <StackPanel Orientation="Vertical" 
+                    HorizontalAlignment="Center"
+                    IsVisible="{Binding HasAnswered}">
+            <StackPanel Orientation="Vertical">
+                <Label Content="正确答案是："
+                       FontSize="20"
+                       Foreground="#3498DB"
+                       HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CorrectSentence.Content}"
+                           FontSize="20"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+            <TextBlock  Text="{Binding ResultText}"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Foreground="#3498DB"
+                        FontSize="20"
+                        Margin="0,10,0,8"/>
+            <Button HorizontalAlignment="Center"
+                    Margin="0,10,0,8"
+                    Content="下一题"
+                    FontSize="16"
+                    Command="{Binding UpdateCommand}"
+                    VerticalAlignment="Center" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

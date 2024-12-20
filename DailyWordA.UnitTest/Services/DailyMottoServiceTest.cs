@@ -16,7 +16,7 @@ public class DailyMottoServiceTest {
         var alertServiceMock = new Mock<IAlertService>();
         var mockAlertService = alertServiceMock.Object;
         
-        var dailyMottoService = new DailyMottoService(mockAlertService);
+        var dailyMottoService = new DailyMottoService(mockAlertService, new TranslateService(mockAlertService));
         var todayMotto = await dailyMottoService.GetTodayMottoAsync();
         _testOutputHelper.WriteLine(todayMotto.Content);
         
