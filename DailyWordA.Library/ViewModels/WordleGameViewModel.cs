@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using DailyWordA.Library.Helpers;
 using DailyWordA.Library.Models;
 using DailyWordA.Library.Services;
 using MvvmHelpers;
@@ -189,10 +190,10 @@ public class WordleGameViewModel : ViewModelBase {
             var letter = InputWord.Substring(j, 1);
             var letterStatus = new LetterStatus { Letter = letter };
             if (!CorrectWord.Word.Contains(letter)) {
-                letterStatus.Background = "Gray";
+                letterStatus.Background = ColorConstant.CommonGrey;
             }
             else {
-                letterStatus.Background = CorrectWord.Word[j]==letter[0] ? "Green" : "Yellow";
+                letterStatus.Background = CorrectWord.Word[j]==letter[0] ? ColorConstant.CommonGreen : ColorConstant.CommonYellow;
             }
             GridLetters[CurrentAttemptRow][j] = letterStatus;
         }

@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using DailyWordA.Library.Helpers;
 using DailyWordA.Library.Models;
 using DailyWordA.Library.Services;
 
@@ -111,7 +112,7 @@ public class SentenceOrganizationViewModel : ViewModelBase {
         else
         {
             wordStatus.IsSelected = true;
-            wordStatus.Background = "Green";
+            wordStatus.Background = ColorConstant.CommonGreen;
             CurrentWords.Add(wordStatus.Word);
         }
         

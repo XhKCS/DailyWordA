@@ -73,12 +73,14 @@
                             Margin="0,0,0,8"
                             Content="查看详情"
                             Command="{Binding ShowDetailCommand}"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Background="White" />
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"
                             Content="切换短句"
                             Command="{Binding UpdateCommand}"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Background="White" />
                     
                 </StackPanel>
             </StackPanel>
@@ -86,7 +88,9 @@
             <StackPanel Orientation="Horizontal" Spacing="5"
                         HorizontalAlignment="Right">
                 <Button Command="{Binding NavigateToTodayWordViewCommand}" 
-                        Content="今日单词推荐" />
+                        Content="今日单词推荐"
+                        Background="White"
+                        Margin="0 0 0 15"/>
             </StackPanel>
 
             <StackPanel Background="#66000000">

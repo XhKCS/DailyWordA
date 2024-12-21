@@ -43,7 +43,7 @@ public class WordSelectionViewModel : ViewModelBase {
     // 可选择的四个选项
     public ObservableRangeCollection<WordObject> QuizOptions { get; } = new();
     
-    // 单词是否来源于错题本
+    // 单词是否仅来源于错题本
     private bool _isFromMistakes = false;
     public bool IsFromMistake
     {
@@ -80,7 +80,7 @@ public class WordSelectionViewModel : ViewModelBase {
         }
     }
     
-    // 点击按钮切换单词来源
+    // 用户点击按钮切换单词来源
     public ICommand ChangeSourceCommand { get; }
     public async Task ChangeSource() {
         // 当触发该函数时，IsFromMistake的值已经改变了
@@ -150,7 +150,6 @@ public class WordSelectionViewModel : ViewModelBase {
                 
                 if (WordsFromMistakes.Count == 0) {
                     CorrectWord = await _wordStorage.GetRandomWordAsync();
-                    // 输出提示信息：错题本已空，自动退出错题练习模式
                     // await _alertService.AlertAsync("当前错题本为空", "当前错题本还没有单词哦，已自动退出错题练习模式~");
                     IsFromMistake = false;
                 }

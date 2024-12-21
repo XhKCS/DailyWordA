@@ -62,7 +62,8 @@
                     <Button Margin="5,0,0,8"
                             Content="单词发音"
                             Command="{Binding PlayAudioCommand}"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Background="White"/>
                 </StackPanel>
                 
                 <Label FontSize="18"
@@ -85,12 +86,14 @@
                             Margin="0,0,0,8"
                             Content="查看详情"
                             Command="{Binding ShowDetailCommand}"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Background="White" />
                     <Button HorizontalAlignment="Left"
                             Margin="0,0,0,8"
                             Content="切换单词"
                             Command="{Binding UpdateWordCommand}"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Background="White" />
                 </StackPanel>
                 
             </StackPanel>
@@ -98,7 +101,9 @@
             <StackPanel Orientation="Horizontal" Spacing="5"
                         HorizontalAlignment="Right">
                 <Button Command="{Binding NavigateToTodayMottoViewCommand}" 
-                        Content="今日短句推荐" />
+                        Content="今日短句推荐"
+                        Background="White"
+                        Margin="0 0 15 0"/>
             </StackPanel>
             
             <StackPanel Background="#66000000">
