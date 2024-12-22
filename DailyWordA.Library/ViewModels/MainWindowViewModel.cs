@@ -9,15 +9,18 @@ public class MainWindowViewModel : ViewModelBase {
     private readonly IRootNavigationService _rootNavigationService;
     private readonly IWordFavoriteStorage _wordFavoriteStorage;
     private readonly IWordMistakeStorage _wordMistakeStorage;
+    private readonly IMottoFavoriteStorage _mottoFavoriteStorage;
 
     public MainWindowViewModel(IWordStorage wordStorage, 
         IRootNavigationService rootNavigationService,
         IWordFavoriteStorage wordFavoriteStorage,
-        IWordMistakeStorage wordMistakeStorage) {
+        IWordMistakeStorage wordMistakeStorage,
+        IMottoFavoriteStorage mottoFavoriteStorage) {
         _wordStorage = wordStorage;
         _rootNavigationService = rootNavigationService;
         _wordFavoriteStorage = wordFavoriteStorage;
         _wordMistakeStorage = wordMistakeStorage;
+        _mottoFavoriteStorage = mottoFavoriteStorage;
         
         OnInitializedCommand = new RelayCommand(OnInitialized);
     }
@@ -34,7 +37,7 @@ public class MainWindowViewModel : ViewModelBase {
 
     public void OnInitialized() {
         if (!_wordStorage.IsInitialized || !_wordFavoriteStorage.IsInitialized
-            || !_wordMistakeStorage.IsInitialized) {
+            || !_wordMistakeStorage.IsInitialized || !_mottoFavoriteStorage.IsInitialized) {
             _rootNavigationService.NavigateTo(RootNavigationConstant.InitializationView);
         }
         else {

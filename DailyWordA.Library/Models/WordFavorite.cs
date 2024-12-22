@@ -13,4 +13,15 @@ public class WordFavorite : ObservableObject {
     }
     
     public DateTime Timestamp { get; set; }
+    
+    public override bool Equals(object obj)
+    {
+        if (obj is WordFavorite favorite) {
+            if (favorite.WordId == WordId &&
+                favorite.IsFavorite == IsFavorite) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

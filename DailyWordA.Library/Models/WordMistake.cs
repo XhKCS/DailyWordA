@@ -13,4 +13,15 @@ public class WordMistake  : ObservableObject {
     }
     
     public DateTime Timestamp { get; set; }
+    
+    public override bool Equals(object obj)
+    {
+        if (obj is WordMistake wordMistake) {
+            if (wordMistake.WordId == WordId && 
+                wordMistake.IsInNote == IsInNote) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

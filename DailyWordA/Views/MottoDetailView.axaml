@@ -2,25 +2,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:lc="using:DailyWordA.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DailyWordA.Views.MottoDetailView"
              DataContext="{Binding MottoDetailViewModel, Source={StaticResource ServiceLocator}}"
              >
+       <i:Interaction.Behaviors>
+              <ia:EventTriggerBehavior EventName="Loaded">
+                     <ia:InvokeCommandAction Command="{Binding OnLoadedCommand}"></ia:InvokeCommandAction>
+              </ia:EventTriggerBehavior>
+       </i:Interaction.Behaviors>
     
-    <ScrollViewer>
+       <ScrollViewer>
         <StackPanel Margin="8">
             <Label FontSize="24"
                    Margin="0,0,0,8"
                    HorizontalAlignment="Center"
-                   Content="{Binding TodayMotto.Date}" />
+                   Content="{Binding CurrentMotto.Date}" />
             <Label FontSize="20"
                    Margin="0,0,0,8"
                    HorizontalAlignment="Center"
-                   Content="今日短句详情" />
-            <TextBlock FontSize="24"
-                   Margin="0,0,0,8"
+                   Content="今日短句详情"
+                   Foreground="#3498DB"/>
+            <TextBlock FontSize="22"
+                   Margin="0,0,0,10"
                    HorizontalAlignment="Center"
-                   Text="{Binding TodayMotto.Content}"
+                   Text="{Binding CurrentMotto.Content}"
                    Width="800"
                    TextWrapping="Wrap"
                    />
@@ -31,7 +40,7 @@
                 <Label FontSize="18"
                        Content="中文释义： " />
                 <TextBlock FontSize="18"
-                       Text="{Binding TodayMotto.Translation}"
+                       Text="{Binding CurrentMotto.Translation}"
                        Width="600"
                        TextWrapping="Wrap"
                        />
@@ -39,23 +48,37 @@
             
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        Margin="0,0,0,8"
+                        Margin="0,15,0,8"
                         IsVisible="{Binding CanShowSource}">
                    <Label FontSize="18"
                           Content="来源： " />
                    <Label FontSize="18"
-                          Content="{Binding TodayMotto.Source}" />
+                          Content="{Binding CurrentMotto.Source}" />
             </StackPanel>
             
             <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right"
+                        HorizontalAlignment="Center"
                         Margin="0,0,0,8"
                         IsVisible="{Binding CanShowAuthor}">
                    <Label FontSize="18"
-                          Content="————by： " />
+                          Content="——————  " />
                    <Label FontSize="18"
-                          Content="{Binding TodayMotto.Author}" />
+                          Content="{Binding CurrentMotto.Author}" />
             </StackPanel>
+            
+            <StackPanel Margin="0,5,0,12"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        IsVisible="{Binding !IsLoading}"
+                        >
+                   <ToggleSwitch OnContent="已收藏"
+                                 OffContent="未收藏"
+                                 IsChecked="{Binding IsFavorite}"
+                                 Command="{Binding FavoriteSwitchCommand}"
+                   >
+                   </ToggleSwitch>
+            </StackPanel>
+            
             
         </StackPanel>
     </ScrollViewer>

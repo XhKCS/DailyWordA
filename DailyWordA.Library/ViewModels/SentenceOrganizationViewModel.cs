@@ -9,18 +9,22 @@ namespace DailyWordA.Library.ViewModels;
 
 public class SentenceOrganizationViewModel : ViewModelBase {
     private readonly IDailyMottoService _dailyMottoService;
+    private readonly IContentNavigationService _contentNavigationService;
 
-    public SentenceOrganizationViewModel(IDailyMottoService dailyMottoService) {
+    public SentenceOrganizationViewModel(IDailyMottoService dailyMottoService,
+        IContentNavigationService contentNavigationService) {
         _dailyMottoService = dailyMottoService;
+        _contentNavigationService = contentNavigationService;
         
         UpdateCommand = new RelayCommand(Update);
         CommitCommand = new RelayCommand(Commit);
         SelectWordCommand = new RelayCommand<Location>(SelectWord);
+        ShowMottoDetailCommand = new RelayCommand(ShowMottoDetail);
         
         Update();
     }
     
-    // 单词列表，可点击选中组成句子
+    // 所有可选单词的列表，绑定到前端，用户可通过点击选中组成句子
     public ObservableCollection<ObservableCollection<WordStatus>> WordStatusGroup { get; set; } = new();
     
     // 正确的句子
@@ -30,7 +34,7 @@ public class SentenceOrganizationViewModel : ViewModelBase {
         set => SetProperty(ref _correctSentence, value);
     }
     
-    // 用户当前选择的单词组
+    // 用户当前已经选择的单词组
     private ObservableCollection<string> _currentWords = new();
     public ObservableCollection<string> CurrentWords {
         get => _currentWords;
@@ -82,10 +86,9 @@ public class SentenceOrganizationViewModel : ViewModelBase {
             for (int i=0; wordList.Count > 0; i++)
             {
                 var row = new ObservableCollection<WordStatus>();
-                for (int j=0; wordList.Count > 0 && row.Count < 6; j++) {
+                for (int j=0; wordList.Count > 0 && row.Count < 8; j++) {
                     int randomIndex = random.Next(wordList.Count);
-                    row.Add(new WordStatus
-                    {
+                    row.Add(new WordStatus {
                         Word = wordList[randomIndex], IsSelected = false, Background = "White",
                         Location = new Location{RowIndex = i, ColumnIndex = j}
                     });
@@ -94,7 +97,8 @@ public class SentenceOrganizationViewModel : ViewModelBase {
                 WordStatusGroup.Add(row);
             }
             OnPropertyChanged(nameof(WordStatusGroup));
-        
+            
+            await Task.Delay(1000);
             IsLoading = false;
         });
     }
@@ -132,6 +136,11 @@ public class SentenceOrganizationViewModel : ViewModelBase {
         }
         HasAnswered = true;
     }
+    
+    public ICommand ShowMottoDetailCommand { get; }
+    public void ShowMottoDetail() {
+        _contentNavigationService.NavigateTo(ContentNavigationConstant.MottoDetailView, CorrectSentence);
+    }
 }
 
 public class WordStatus {
@@ -145,8 +154,8 @@ public class WordStatus {
     public string Background { get; set; }
 }
 
-public class Location
-{
+// 行列位置下标
+public class Location {
     public int RowIndex { get; set; }
     
     public int ColumnIndex { get; set; }

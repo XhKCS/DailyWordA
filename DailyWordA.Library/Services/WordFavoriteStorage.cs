@@ -9,7 +9,7 @@ public class WordFavoriteStorage : IWordFavoriteStorage {
     public static readonly string WordFavoriteDbPath =
         PathHelper.GetLocalFilePath(DbName);
     
-    public event EventHandler<FavoriteStorageUpdatedEventArgs>? Updated;
+    public event EventHandler<WordFavoriteStorageUpdatedEventArgs>? Updated;
     
     private SQLiteAsyncConnection _connection;
     private SQLiteAsyncConnection Connection =>
@@ -47,7 +47,7 @@ public class WordFavoriteStorage : IWordFavoriteStorage {
         favorite.Timestamp = DateTime.Now;
         await Connection.InsertOrReplaceAsync(favorite);
         // 触发更新事件
-        Updated?.Invoke(this, new FavoriteStorageUpdatedEventArgs(favorite));
+        Updated?.Invoke(this, new WordFavoriteStorageUpdatedEventArgs(favorite));
     }
 
     public async Task CloseAsync() {

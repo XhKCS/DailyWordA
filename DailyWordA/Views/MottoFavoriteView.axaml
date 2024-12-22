@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:lc="using:DailyWordA.Converters"
+             xmlns:ais="using:AvaloniaInfiniteScrolling"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DailyWordA.Views.MottoFavoriteView"
+             x:Name="TheMottoFavoriteView"
+             d:DataContext="{Binding MottoFavoriteViewModel, Source={StaticResource ServiceLocator}}"
+             >
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding OnInitializedCommand}"></ia:InvokeCommandAction>
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <UserControl.Resources>
+        <lc:MottoToStringConverter x:Key="MottoToStringConverter"></lc:MottoToStringConverter>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <Label Content="已载入结果条数："
+                   Foreground="#3498DB"
+                   FontWeight="Bold"
+                   Margin="8,5,0,0"></Label>
+            <Label Content="{Binding FavoriteMottoCollection.Count}"
+                   Margin="0,5,0,0"></Label>
+        </StackPanel>
+        <ais:AvaloniaInfiniteScrollControl Grid.Row="1"
+                                           ItemsSource="{Binding FavoriteMottoCollection}"
+                                           Margin="12">
+            <ais:AvaloniaInfiniteScrollControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,0,0,12"
+                                Background="Transparent">
+                        <i:Interaction.Behaviors>
+                            <ia:EventTriggerBehavior EventName="Tapped">
+                                <ia:InvokeCommandAction
+                                    Command="{Binding DataContext.ShowMottoDetailCommand, ElementName=TheMottoFavoriteView}"
+                                    CommandParameter="{Binding }">
+                                </ia:InvokeCommandAction>
+                            </ia:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                        <TextBlock Text="{Binding Date}"
+                                   FontWeight="Bold" />
+                        <TextBlock
+                            Text="{Binding Converter={StaticResource MottoToStringConverter}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ais:AvaloniaInfiniteScrollControl.ItemTemplate>
+        </ais:AvaloniaInfiniteScrollControl>
+    </Grid>
+</UserControl>

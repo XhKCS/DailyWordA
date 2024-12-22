@@ -13,7 +13,7 @@ public static class MenuNavigationConstant {
 
     public const string WordFavoriteView = nameof(WordFavoriteView);
     
-    // public const string MottoFavoriteView = nameof(MottoFavoriteView);
+    public const string MottoFavoriteView = nameof(MottoFavoriteView);
     
     public const string TranslateView = nameof(TranslateView);
     

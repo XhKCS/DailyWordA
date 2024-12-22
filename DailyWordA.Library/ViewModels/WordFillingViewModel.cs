@@ -51,7 +51,6 @@ public class WordFillingViewModel : ViewModelBase {
     public ICommand ChangeSourceCommand { get; }
     public async Task ChangeSource() {
         // 当触发该函数时，IsFromMistake的值已经改变了
-        Update();
         if (IsFromMistake == true) {
             var mistakeList = await _wordMistakeStorage.GetMistakeListAsync();
             if (mistakeList.Count() == 0) {
@@ -59,11 +58,13 @@ public class WordFillingViewModel : ViewModelBase {
                 await _alertService.AlertAsync("当前错题本为空", "当前错题本还没有单词哦，已自动切换回默认来源~");
             }
             else {
+                Update();
                 await _alertService.AlertAsync("切换成功", "测验单词来源已切换为：仅来自错题本");
             }
             
         }
         else {
+            Update();
             await _alertService.AlertAsync("切换成功", "测验单词来源已切换为：默认来源（从所有单词中随机抽取）");
         }
     }

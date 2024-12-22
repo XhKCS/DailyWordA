@@ -122,7 +122,7 @@ public class WordFavoriteViewModelTest {
             wordFavoriteList);
 
         favoriteStorageMock.Raise(p => p.Updated += null, mockFavoriteStorage,
-            new FavoriteStorageUpdatedEventArgs(favoriteUpdated));
+            new WordFavoriteStorageUpdatedEventArgs(favoriteUpdated));
         Assert.Equal(wordFavoriteList.Count - 1,
             favoritePageViewModel.WordFavoriteCollection.Count);
         Assert.DoesNotContain(favoritePageViewModel.WordFavoriteCollection, p =>
@@ -130,7 +130,7 @@ public class WordFavoriteViewModelTest {
 
         favoriteUpdated.IsFavorite = true;
         favoriteStorageMock.Raise(p => p.Updated += null, mockFavoriteStorage,
-            new FavoriteStorageUpdatedEventArgs(favoriteUpdated));
+            new WordFavoriteStorageUpdatedEventArgs(favoriteUpdated));
         Assert.Equal(wordFavoriteList.Count,
             favoritePageViewModel.WordFavoriteCollection.Count);
         Assert.Equal(favoriteUpdated.WordId - 1,

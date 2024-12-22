@@ -29,6 +29,8 @@ public class MenuNavigationService : IMenuNavigationService {
                 WordFillingViewModel,
             MenuNavigationConstant.SentenceOrganizationView => ServiceLocator.Current.
                 SentenceOrganizationViewModel,
+            MenuNavigationConstant.MottoFavoriteView => ServiceLocator.Current.
+                MottoFavoriteViewModel,
             _ => throw new Exception("未知的视图。")
         };
 

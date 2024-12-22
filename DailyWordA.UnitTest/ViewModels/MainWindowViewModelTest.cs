@@ -11,23 +11,27 @@ public class MainWindowViewModelTest {
         wordStorageMock.Setup(p => p.IsInitialized).Returns(false);
         var mockWordStorage = wordStorageMock.Object;
 
-        var favoriteStorageMock = new Mock<IWordFavoriteStorage>();
-        favoriteStorageMock.Setup(p => p.IsInitialized).Returns(false);
-        var mockFavoriteStorage = favoriteStorageMock.Object;
+        var wordFavoriteStorageMock = new Mock<IWordFavoriteStorage>();
+        wordFavoriteStorageMock.Setup(p => p.IsInitialized).Returns(false);
+        var mockFavoriteStorage = wordFavoriteStorageMock.Object;
         
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         mistakeStorageMock.Setup(p => p.IsInitialized).Returns(false);
         var mockMistakeStorage = mistakeStorageMock.Object;
+        
+        var mottoFavoriteStorageMock = new Mock<IMottoFavoriteStorage>();
+        mottoFavoriteStorageMock.Setup(p => p.IsInitialized).Returns(false);
+        var mockFavoriteMottoStorage = mottoFavoriteStorageMock.Object;
 
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
 
         var mainWindowViewModel = new MainWindowViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage, mockFavoriteMottoStorage);
 
         mainWindowViewModel.OnInitialized();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);
-        favoriteStorageMock.Verify(p => p.IsInitialized, Times.Never);
+        wordFavoriteStorageMock.Verify(p => p.IsInitialized, Times.Never);
         rootNavigationServiceMock.Verify(
             p => p.NavigateTo(RootNavigationConstant.InitializationView),
             Times.Once);
@@ -46,12 +50,16 @@ public class MainWindowViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         mistakeStorageMock.Setup(p => p.IsInitialized).Returns(true);
         var mockMistakeStorage = mistakeStorageMock.Object;
+        
+        var mottoFavoriteStorageMock = new Mock<IMottoFavoriteStorage>();
+        mottoFavoriteStorageMock.Setup(p => p.IsInitialized).Returns(true);
+        var mockFavoriteMottoStorage = mottoFavoriteStorageMock.Object;
 
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
 
         var mainWindowViewModel = new MainWindowViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage, mockFavoriteMottoStorage);
 
         mainWindowViewModel.OnInitialized();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);

@@ -31,13 +31,15 @@ public class DailyMottoService : IDailyMottoService {
     
     public async Task<DailyMotto> GetTodayMottoAsync()
     {
-        DailyMotto todayMotto = await MeiriyingyuMottoAsync() ??
-                                await HitokotoMottoAsync() ??
-                                await ShanbaydanciMottoAsync();
+        DailyMotto todayMotto = await MeiriyingyuMottoAsync();
+        if (todayMotto == null) {
+            todayMotto = await HitokotoMottoAsync() ??
+                         await ShanbaydanciMottoAsync();
+        }
         
         return todayMotto ?? new DailyMotto {
-            Content = string.Empty,
-            Translation = "非常抱歉，今日该接口似乎出现了问题..."
+            Content = "Failed to fetch today motto",
+            Translation = "非常抱歉，今天的每日短句接口可能出现了问题..."
         };
     }
 

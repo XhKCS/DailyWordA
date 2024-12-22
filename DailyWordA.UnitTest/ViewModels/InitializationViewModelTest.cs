@@ -18,12 +18,16 @@ public class InitializationViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         mistakeStorageMock.Setup(p => p.IsInitialized).Returns(false);
         var mockMistakeStorage = mistakeStorageMock.Object;
+        
+        var mottoFavoriteStorageMock = new Mock<IMottoFavoriteStorage>();
+        mottoFavoriteStorageMock.Setup(p => p.IsInitialized).Returns(false);
+        var mockFavoriteMottoStorage = mottoFavoriteStorageMock.Object;
 
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
         
         var initializationViewModel = new InitializationViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage, mockFavoriteMottoStorage);
 
         await initializationViewModel.OnInitializedAsync();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);
@@ -47,12 +51,16 @@ public class InitializationViewModelTest {
         var mistakeStorageMock = new Mock<IWordMistakeStorage>();
         mistakeStorageMock.Setup(p => p.IsInitialized).Returns(true);
         var mockMistakeStorage = mistakeStorageMock.Object;
+        
+        var mottoFavoriteStorageMock = new Mock<IMottoFavoriteStorage>();
+        mottoFavoriteStorageMock.Setup(p => p.IsInitialized).Returns(true);
+        var mockFavoriteMottoStorage = mottoFavoriteStorageMock.Object;
 
         var rootNavigationServiceMock = new Mock<IRootNavigationService>();
         var mockRootNavigationService = rootNavigationServiceMock.Object;
         
         var initializationViewModel = new InitializationViewModel(
-            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage);
+            mockWordStorage, mockRootNavigationService, mockFavoriteStorage, mockMistakeStorage, mockFavoriteMottoStorage);
 
         await initializationViewModel.OnInitializedAsync();
         wordStorageMock.Verify(p => p.IsInitialized, Times.Once);

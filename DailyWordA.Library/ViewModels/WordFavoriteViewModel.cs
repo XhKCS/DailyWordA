@@ -55,7 +55,7 @@ public class WordFavoriteViewModel : ViewModelBase {
     }
     
     private async void FavoriteStorageOnUpdated(object sender,
-        FavoriteStorageUpdatedEventArgs e) {
+        WordFavoriteStorageUpdatedEventArgs e) {
         var favorite = e.UpdatedFavorite;
         WordFavoriteCollection.Remove(
             WordFavoriteCollection.FirstOrDefault(p =>

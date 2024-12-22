@@ -96,15 +96,18 @@ public class MenuItem {
 
     private static MenuItem TodayMottoView =>
         new() { Name = "今日短句推荐", View = MenuNavigationConstant.TodayMottoView };
+
+    private static MenuItem WordFavoriteView =>
+        new() { Name = "单词收藏", View = MenuNavigationConstant.WordFavoriteView };
+    
+    private static MenuItem MottoFavoriteView =>
+        new() { Name = "短句收藏", View = MenuNavigationConstant.MottoFavoriteView };
     
     private static MenuItem TranslateView =>
         new() { Name = "文本翻译", View = MenuNavigationConstant.TranslateView };
     
     private static MenuItem WordQueryView =>
         new() { Name = "单词查找", View = MenuNavigationConstant.WordQueryView };
-
-    private static MenuItem WordFavoriteView =>
-        new() { Name = "单词收藏", View = MenuNavigationConstant.WordFavoriteView };
     
     private static MenuItem WordSelectionView =>
         new() { Name = "单词测验-中英选择", View = MenuNavigationConstant.WordSelectionView };
@@ -125,10 +128,10 @@ public class MenuItem {
         new() { Name = "短句选择", View = MenuNavigationConstant.SentenceOrganizationView };
     
     public static IEnumerable<MenuItem> MenuItems { get; } = [
-        TodayWordView, TodayMottoView, TranslateView, 
-        WordQueryView, WordFavoriteView, WordMistakeNoteView,
-        WordSelectionView, WordDictationView, WordFillingView,  
-        SentenceOrganizationView, WordleGameView,
+        TodayWordView, TodayMottoView, WordFavoriteView, 
+        MottoFavoriteView, TranslateView, WordQueryView, 
+        WordMistakeNoteView, WordSelectionView, WordDictationView, 
+        WordFillingView, SentenceOrganizationView, WordleGameView,
         
     ];
 }

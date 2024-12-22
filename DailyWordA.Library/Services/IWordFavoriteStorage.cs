@@ -13,13 +13,13 @@ public interface IWordFavoriteStorage {
 
     Task SaveFavoriteAsync(WordFavorite favorite);
 
-    event EventHandler<FavoriteStorageUpdatedEventArgs> Updated;
+    event EventHandler<WordFavoriteStorageUpdatedEventArgs> Updated;
 }
 
-public class FavoriteStorageUpdatedEventArgs : EventArgs {
+public class WordFavoriteStorageUpdatedEventArgs : EventArgs {
     public WordFavorite UpdatedFavorite { get; }
 
-    public FavoriteStorageUpdatedEventArgs(WordFavorite favorite) {
+    public WordFavoriteStorageUpdatedEventArgs(WordFavorite favorite) {
         UpdatedFavorite = favorite;
     }
 }

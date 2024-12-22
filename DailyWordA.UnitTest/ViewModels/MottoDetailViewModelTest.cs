@@ -9,9 +9,9 @@ public class MottoDetailViewModelTest {
         var todayMotto = new DailyMotto {
             Content = "Once you surrender to your vision, success begins to chase you."
         };
-
+        
         var todayMottoViewModel = new MottoDetailViewModel(null);
         todayMottoViewModel.SetParameter(todayMotto);
-        Assert.Equal(todayMottoViewModel.TodayMotto, todayMotto);
+        Assert.Equal(todayMottoViewModel.CurrentMotto, todayMotto);
     }
 }

@@ -51,11 +51,8 @@ public class TodayMottoViewModel : ViewModelBase {
         Task.Run(async () => {
             IsLoading = true;
             TodayImage = await _todayImageService.GetRandomImageAsync();
-            IsLoading = false;
-        });
-
-        Task.Run(async () => {
             TodayMotto = await _dailyMottoService.GetTodayMottoAsync();
+            IsLoading = false;
         });
     }
     
