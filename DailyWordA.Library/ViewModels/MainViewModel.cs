@@ -103,11 +103,11 @@ public class MenuItem {
     private static MenuItem MottoFavoriteView =>
         new() { Name = "短句收藏", View = MenuNavigationConstant.MottoFavoriteView };
     
-    private static MenuItem TranslateView =>
-        new() { Name = "文本翻译", View = MenuNavigationConstant.TranslateView };
-    
     private static MenuItem WordQueryView =>
         new() { Name = "单词查找", View = MenuNavigationConstant.WordQueryView };
+     
+    private static MenuItem TranslateView =>
+        new() { Name = "文本翻译", View = MenuNavigationConstant.TranslateView };
     
     private static MenuItem WordSelectionView =>
         new() { Name = "单词测验-中英选择", View = MenuNavigationConstant.WordSelectionView };
@@ -129,9 +129,9 @@ public class MenuItem {
     
     public static IEnumerable<MenuItem> MenuItems { get; } = [
         TodayWordView, TodayMottoView, WordFavoriteView, 
-        MottoFavoriteView, TranslateView, WordQueryView, 
-        WordMistakeNoteView, WordSelectionView, WordDictationView, 
-        WordFillingView, SentenceOrganizationView, WordleGameView,
+        MottoFavoriteView,  WordQueryView, TranslateView,
+        WordSelectionView, WordDictationView, WordFillingView, 
+        WordMistakeNoteView, WordleGameView, SentenceOrganizationView,
         
     ];
 }

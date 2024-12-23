@@ -103,7 +103,7 @@
                 <Button Command="{Binding NavigateToTodayMottoViewCommand}" 
                         Content="今日短句推荐"
                         Background="White"
-                        Margin="0 0 15 0"/>
+                        Margin="0 0 15 5"/>
             </StackPanel>
             
             <StackPanel Background="#66000000">

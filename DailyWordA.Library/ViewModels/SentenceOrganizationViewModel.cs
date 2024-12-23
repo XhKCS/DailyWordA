@@ -103,8 +103,8 @@ public class SentenceOrganizationViewModel : ViewModelBase {
         });
     }
     
+    // 单词块被点击（选中 / 取消选中）
     public ICommand SelectWordCommand { get; }
-
     public void SelectWord(Location location)
     {
         var wordStatus = WordStatusGroup[location.RowIndex][location.ColumnIndex];
@@ -113,8 +113,7 @@ public class SentenceOrganizationViewModel : ViewModelBase {
             wordStatus.Background = "White";
             CurrentWords.Remove(wordStatus.Word);
         }
-        else
-        {
+        else {
             wordStatus.IsSelected = true;
             wordStatus.Background = ColorConstant.CommonGreen;
             CurrentWords.Add(wordStatus.Word);

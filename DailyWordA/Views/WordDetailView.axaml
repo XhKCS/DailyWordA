@@ -61,13 +61,13 @@
                           Margin="0,0,0,8"
                           HorizontalAlignment="Center"
                           Content="例句：" />
-                   <TextBlock FontSize="16"
+                   <SelectableTextBlock FontSize="16"
                           Margin="0,0,0,8"
                           HorizontalAlignment="Center"
                           Text="{Binding CurrentWord.Sentence}"
                           Width="600"
                           TextWrapping="Wrap"
-                          />
+                   />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
@@ -76,13 +76,13 @@
                           Margin="0,0,0,8"
                           HorizontalAlignment="Center"
                           Content="例句翻译：" />
-                   <TextBlock FontSize="16"
+                   <SelectableTextBlock FontSize="16"
                           Margin="0,0,0,8"
                           HorizontalAlignment="Center"
                           Text="{Binding CurrentWord.SentenceTrans}"
                           Width="500"
                           TextWrapping="Wrap"
-                          />
+                   />
             </StackPanel>
             
             <StackPanel Orientation="Horizontal"

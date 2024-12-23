@@ -26,7 +26,7 @@
                    HorizontalAlignment="Center"
                    Content="今日短句详情"
                    Foreground="#3498DB"/>
-            <TextBlock FontSize="22"
+            <SelectableTextBlock FontSize="22"
                    Margin="0,0,0,10"
                    HorizontalAlignment="Center"
                    Text="{Binding CurrentMotto.Content}"
@@ -39,7 +39,7 @@
                         Margin="0,0,0,8">
                 <Label FontSize="18"
                        Content="中文释义： " />
-                <TextBlock FontSize="18"
+                <SelectableTextBlock FontSize="18"
                        Text="{Binding CurrentMotto.Translation}"
                        Width="600"
                        TextWrapping="Wrap"

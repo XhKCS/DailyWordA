@@ -90,7 +90,7 @@
                 <Button Command="{Binding NavigateToTodayWordViewCommand}" 
                         Content="今日单词推荐"
                         Background="White"
-                        Margin="0 0 0 15"/>
+                        Margin="0 0 15 5"/>
             </StackPanel>
 
             <StackPanel Background="#66000000">
