@@ -150,6 +150,7 @@ public class WordFillingViewModel : ViewModelBase {
                     if (word.Contains(tempWord)) {
                         CorrectFillingText = word;
                         hasFound = true;
+                        break;
                     }
                 }
                 tempWord = tempWord.Substring(0, tempWord.Length - 1);

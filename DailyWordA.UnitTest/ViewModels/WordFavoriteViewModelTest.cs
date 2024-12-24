@@ -101,9 +101,9 @@ public class WordFavoriteViewModelTest {
         }
 
         var favoriteUpdated = new WordFavorite {
-            WordId = wordFavoriteList[2].Favorite.WordId,
+            WordId = wordFavoriteList[4].Favorite.WordId,
             IsFavorite = false,
-            Timestamp = wordFavoriteList[2].Favorite.Timestamp
+            Timestamp = wordFavoriteList[4].Favorite.Timestamp
         };
         var wordToReturn = new WordObject {
             Id = favoriteUpdated.WordId

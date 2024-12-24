@@ -101,9 +101,9 @@ public class WordMistakeNoteViewModelTest {
         }
 
         var mistakeUpdated = new WordMistake {
-            WordId = wordMistakeList[2].WordMistake.WordId,
+            WordId = wordMistakeList[4].WordMistake.WordId,
             IsInNote = false,
-            Timestamp = wordMistakeList[2].WordMistake.Timestamp
+            Timestamp = wordMistakeList[4].WordMistake.Timestamp
         };
         var wordToReturn = new WordObject {
             Id = mistakeUpdated.WordId
