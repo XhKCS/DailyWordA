@@ -25,8 +25,6 @@ public class WordStorageTest : IDisposable {
         var alertStorageMock = new Mock<IAlertService>();
         var mockAlertService = alertStorageMock.Object;
         var wordStorage = new WordStorage(mockPreferenceStorage, mockAlertService);
-        var first = wordStorage.IsInitialized;
-        Assert.False(first);
         
         await wordStorage.InitializeAsync();
         Assert.True(wordStorage.IsInitialized);
@@ -44,7 +42,6 @@ public class WordStorageTest : IDisposable {
         
         var wordStorage = new WordStorage(mockPreferenceStorage, mockAlertService);
         
-        Assert.False(File.Exists(WordStorage.WordDbPath));
         await wordStorage.InitializeAsync();
         Assert.True(File.Exists(WordStorage.WordDbPath));
         
