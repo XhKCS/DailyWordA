@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using DailyWordA.Library.Helpers;
 
 namespace DailyWordA.Library.Services;
@@ -37,10 +38,26 @@ public class TranslateService : ITranslateService {
         HttpResponseMessage response;
         try {
             // Console.WriteLine("2");
+            
+            // using StringContent jsonContent = new StringContent(
+            //     JsonSerializer.Serialize((new
+            //     {
+            //         q = HttpUtility.UrlEncode(q),
+            //         from = from,
+            //         to = to,
+            //         appid = GetOriginal1(BaiduArgs.GetId()),
+            //         salt = salt,
+            //         sign = sign
+            //     })), 
+            //     Encoding.UTF8, "application/x-www-form-urlencoded");
+            // response = await httpClient.PostAsync("https://fanyi-api.baidu.com/api/trans/vip/translate", jsonContent);
+            
+            // 还是用GET请求吧，注意在发送请求时需要对 q 字段做 URL encode！！
             response =
                 await httpClient.GetAsync(
-                    $"http://api.fanyi.baidu.com/api/trans/vip/translate?q={q}&from={from}&to={to}" +
+                    $"http://api.fanyi.baidu.com/api/trans/vip/translate?q={HttpUtility.UrlEncode(q)}&from={from}&to={to}" +
                     $"&appid={GetOriginal1(BaiduArgs.GetId())}&salt={salt}&sign={sign}");
+            
             response.EnsureSuccessStatusCode();
             // Console.WriteLine("3");
         } catch (Exception e) {
@@ -66,7 +83,10 @@ public class TranslateService : ITranslateService {
                     e.Message));
             return string.Empty;
         }
-        
+
+        if (baiduTranslateResponse.trans_result == null) {
+            return "Response Error";
+        }
         return baiduTranslateResponse.trans_result[0].Dst;
     }
     
@@ -92,7 +112,8 @@ public class TranslateService : ITranslateService {
         return sb.ToString();
     }
 
-    private static string GetSign(string q, string salt) {
+    private static string GetSign(string q, string salt)
+    {
         string originalSign = GetOriginal1(BaiduArgs.GetId()) + q + salt + GetOriginal2(BaiduArgs.GetKey());
         return Md5Crypto(originalSign);
     }

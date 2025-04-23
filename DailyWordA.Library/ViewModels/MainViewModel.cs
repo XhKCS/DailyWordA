@@ -125,7 +125,7 @@ public class MenuItem {
         new() { Name = "Wordle游戏", View = MenuNavigationConstant.WordleGameView };
     
     private static MenuItem SentenceOrganizationView =>
-        new() { Name = "短句选择", View = MenuNavigationConstant.SentenceOrganizationView };
+        new() { Name = "连词成句", View = MenuNavigationConstant.SentenceOrganizationView };
     
     public static IEnumerable<MenuItem> MenuItems { get; } = [
         TodayWordView, TodayMottoView, WordFavoriteView, 

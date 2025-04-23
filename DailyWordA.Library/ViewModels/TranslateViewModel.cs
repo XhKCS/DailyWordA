@@ -33,8 +33,10 @@ public class TranslateViewModel : ViewModelBase {
 
     public ICommand TranslateCommand { get; }
     public async Task TranslateAsync() {
-        string text = SourceText.Replace("\n", "").Replace(" ","").Replace("\t","").Replace("\r","");
-        // Console.WriteLine("Translating---");
+        // string text = SourceText.Replace("\n", "").Replace(" ","").Replace("\t","").Replace("\r","");
+        // 空格需要保留
+        string text = SourceText.Replace("\n", "").Replace("\t","").Replace("\r","");
+        // Console.WriteLine(text);
         TargetText = await _translateService.Translate(text, "auto", LanguageType.ToLanguage);
     }
 }
