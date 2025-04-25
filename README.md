@@ -1,6 +1,13 @@
 # DailyWordA
-全栈开发技术大作业项目。感兴趣者请多多支持张引老师和Avalonia技术社区~
+全栈开发技术大作业设计项目。感兴趣者请多多支持张引老师和Avalonia技术社区~
 
+### 运行要求
+建议使用JetBrains Rider打开本项目，运行要求包括：
+- 需要安装.NET 8.0环境
+- 需要在JetBrains Rider中安装AvaloniaRider插件：
+![img.png](images/AvaloniaRider.png)
+
+### 功能介绍
 本项目是类似百词斩的单词学习桌面应用，功能包括：
 ### 1. 单词推荐和短句推荐
 今日单词推荐页：
@@ -26,7 +33,7 @@
 ![img.png](images/WordQueryResultView.png)
 
 ### 4. 文本翻译
-自动识别源语言类型，可选择翻译成多种目标语言类型
+调用API进行文本翻译，会自动识别源语言类型，可选择翻译成多种目标语言类型
 ![img.png](images/TranslateView_1.png)
 ![img.png](images/TranslateView_2.png)
 
